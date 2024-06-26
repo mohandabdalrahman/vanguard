@@ -1,0 +1,187 @@
+
+<app-ou-hierarchy-tree
+  *ngIf="authService.getUserType() === 'corporate' && authService.isOuEnabled()"></app-ou-hierarchy-tree>
+
+<app-ou-tabs #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"
+             [title]="'corporateVehicle.name'"
+             (onNodeSelect)="selectOu($event)"></app-ou-tabs>
+
+<app-data-table [viewLink]="'main-info'" [gridData]="gridData" [colData]="colData" (onItemSelect)="onItemSelect($event)"
+                [entityName]="'ASSET'" [enableCheckBox]="isRepeatedPolicy">
+
+  <ng-container header>
+    <app-left-table-header [title]="(!showCreateBtn)?  'corporateVehicle.title' : ''"
+                           [name]="'corporateVehicle.name'" [length]="totalElements" [icon]="'./assets/img/icons-truck-merchants.svg'">
+    </app-left-table-header>
+
+    <div class="d-flex  justify-content-end">
+      <app-right-table-header
+        [showCreateBtn]="showCreateBtn"
+        [role]="'ASSET_CREATE'" >
+
+        <div  *ngIf="authService.isAdminCorporateOuEnabled()">
+          
+          <button 
+          *appHasRole="['ASSET_TRANSFER']"
+            class="ui mx-2 button btn-primary"
+            [routerLink]="[
+              '/admin/corporates',
+              corporateId,
+              'assetTransfer'
+              ]"
+          >
+            <nb-icon icon="car-outline"></nb-icon>
+            {{ "unit.assetTransfer" | translate }}
+          </button> 
+        </div>
+
+
+        <app-filter-btn #filterBtn></app-filter-btn>
+        <ng-container *ngIf="corporateVehicles?.length && showCreateBtn">
+          <div class="separator"></div>
+          <app-button-with-menu *ngIf="showCreateBtn" [menu]="menu"
+                                [text]="'corporatePolicy.customizePolicy'"></app-button-with-menu>
+        </ng-container>
+        <button style="margin: 0 5px" *ngIf="showAssignPolicyBtn" (click)="openAssignPolicy();" type="button" class="ui button btn-success">
+          {{ 'corporatePolicy.selectPolicy' | translate}} </button>
+
+      </app-right-table-header>
+      <app-popover-button *ngIf="showCreateBtn" [popoverIcon]="'./assets/img/icons-distance.svg'" [popoverContent]="'corporateVehicle.addReadingManually'" [routerLink]="'manual-mileage'"></app-popover-button>
+    </div>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form"
+          (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="ids" [placeholder]="'corporateVehicle.id'" [label]="'corporateVehicle.id'">
+          </app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="modelYear" [placeholder]="'corporateVehicle.modelYear'"
+                           [label]="'corporateVehicle.modelYear'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="brand" [placeholder]="'corporateVehicle.brand'"
+                           [label]="'corporateVehicle.brand'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field ngModel name="vehiclePlateNumber" [placeholder]="'corporateVehicle.plateNumber'"
+                           [label]="'corporateVehicle.plateNumber'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field ngModel name="vehicleCode" [placeholder]="'corporateVehicle.vehicleCode'"
+                           [label]="'corporateVehicle.vehicleCode'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'user.nfcId'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="nfcId" placeholder="{{'user.nfcId' | translate}}">
+            <ng-option *ngFor="let nfc of nfcTags" [value]="nfc.id">
+              {{nfc.serialNumber}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.vehicleType'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="vehicleTypeId"
+                     placeholder="{{'corporateVehicle.vehicleType' | translate}}">
+            <ng-option *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType.id">
+              {{currentLang === 'en' ? vehicleType.enName : vehicleType.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.fuelType'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="fuelType"
+                     placeholder="{{'corporateVehicle.fuelType' | translate}}">
+            <ng-option *ngFor="let fuelType of vehicleFuelTypes | keyvalue" [value]="fuelType.key">
+              {{fuelType.value | translate}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.assetTag'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="assetTagId"
+                     placeholder="{{'corporateVehicle.assetTag' | translate}}">
+            <ng-option *ngFor="let assetTag of assetTags" [value]="assetTag.id">
+              {{assetTag.enName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.authUser'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] [multiple]="true" name="authorizedUserIds"
+                     placeholder="{{'corporateVehicle.authUser' | translate}}">
+            <ng-option *ngFor="let user of corporateUsers"
+                       [value]="user.id">{{currentLang === 'en' ? user.enName : user.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'corporateVehicle.policy'"></app-label>
+          <ng-select [ngModel] [multiple]="true" name="policiesIds"
+                     placeholder="{{'corporateVehicle.policy' | translate}}">
+            <ng-option *ngFor="let policy of policies" [value]="policy.id">
+              {{currentLang === 'en' ? policy.enName : policy.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)">
+</app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'corporateVehicle.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteCorporateVehicle()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>
+
+
+<!--assign policy modal -->
+<app-modal #assignPolicyModal>
+  <h4 head class="modal-title">{{'corporateVehicle.assignPolicy' | translate}}</h4>
+  <form body class="ui form">
+    <ng-select [multiple]="true" [(ngModel)]="assignedPolicy" name="assignedPolicy">
+      <ng-option *ngFor="let policy of policies"
+                 [value]="policy.id">{{currentLang === 'en' ? policy.enName : policy.localeName}}</ng-option>
+    </ng-select>
+    <br/><br/>
+    <button class="ui button btn-primary" type="submit" (click)="assignPolicy()">
+      {{'corporateVehicle.assignPolicy' | translate}}</button>
+
+  </form>
+
+</app-modal>
+
+
+<app-overwrite-confirm-modal [title]="'app.policyOverwriteTitle'" [body]="'app.policyOverwriteBody'"
+                             #overwritePolicy>
+  <button rightButton class="btn btn-primary"
+          (click)="AssignPolicyForCorporateVehicle(false)">{{'corporateVehicle.dontOverwrite' | translate}}</button>
+  <button leftButton class="btn btn-danger"
+          (click)="AssignPolicyForCorporateVehicle(true)">{{'corporateVehicle.overwrite' | translate}}</button>
+
+</app-overwrite-confirm-modal>
+
+

@@ -1,0 +1,18 @@
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 head class="modal-title" id="modal-title">{{'app.delete' | translate}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p><strong>{{'app.deleteAction.header' | translate}}</strong></p>
+    <p>{{'app.deleteAction.firstBody' | translate}}<strong>{{name | translate}}</strong> {{'app.deleteAction.secondBody' | translate}}
+      <span class="text-danger">{{'app.deleteAction.disclaimer' | translate}}</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="closeModal()">{{'app.cancel' | translate}}</button>
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</ng-template>

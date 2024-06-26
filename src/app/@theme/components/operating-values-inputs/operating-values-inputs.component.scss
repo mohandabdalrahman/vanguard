@@ -1,0 +1,11 @@
+.field-inputs {
+  display: flex;
+
+  .exchange-icon {
+    margin: 25px 2px 0 2px;
+  }
+
+  & ::ng-deep app-label {
+    display: block;
+  }
+}

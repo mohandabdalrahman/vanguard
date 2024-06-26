@@ -1,0 +1,23 @@
+.advance-search {
+  padding: 0.5rem 1.5rem;
+}
+
+.VCardContainer {
+  margin-top: 5%;
+  padding: 2% 0;
+  background-color: #ffffff !important;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+
+  button {
+    align-self: center;
+  }
+}
+
+
+app-filter-btn {
+  margin: 0 0.2em;
+}

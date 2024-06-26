@@ -1,0 +1,27 @@
+
+<div class="create">
+    <div class="ui dividing header"></div>
+    <form #topupForm="ngForm" class="ui form">
+      <div class="fields">
+       
+        <div class="field">
+          <app-input-field [ref]="amount" #amount="ngModel"  [required]="true" [type]="'number'" name="corporateId" [placeholder]="'topup.amount'" [label]="'topup.amount'" [(ngModel)]="topup.amount"></app-input-field>
+          <app-error [ref]="amount" [message]="'app.required'"></app-error>
+        </div>
+      
+        <div class="field">
+          <app-input-field [ref]="transactionReference" name="transactionReference" [required]="true" #transactionReference="ngModel" [placeholder]="'topup.transactionReference'"  [label]="'topup.transactionReference'" [(ngModel)]="topup.transactionReference"></app-input-field>
+          <app-error [ref]="transactionReference" [message]="'app.required'"></app-error>
+        </div>
+
+        <div class="field">
+            <app-input-field [ref]="transactionDate" name="transactionDate" [type]="'date'" [required]="true" #transactionDate="ngModel" [placeholder]="'topup.transactionDate'"  [label]="'topup.transactionDate'" [(ngModel)]="topup.transactionDate"></app-input-field>
+            <app-error [ref]="transactionDate" [message]="'app.required'"></app-error>
+          </div>
+     
+      </div>
+      <div class="row">
+        <button  class="ui button btn-primary" [disabled]="!topupForm.form.valid" (click)="updateTopup()">{{'topup.topup'| translate}}</button>
+      </div>
+    </form>
+  </div>

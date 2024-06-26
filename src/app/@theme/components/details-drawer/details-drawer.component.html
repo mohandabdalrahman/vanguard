@@ -1,0 +1,129 @@
+<div class="drawer" *ngIf="showDrawer">
+  <div class="drawer__header">
+    <a (click)="closeDrawer()" class="close-btn">
+      <div class="icon">
+        <img src="./assets/img/icons-close.svg" alt="close">
+      </div>
+    </a>
+  </div>
+  <div class="drawer__info">
+    <div class="unit-title">{{currentLang === 'en' ? corporateOuBrief?.enName : corporateOuBrief?.localeName}}</div>
+    <div class="drawer__info__container">
+      <div class="data-row">
+        <div class="inactive-highlight">
+          {{policyCount?.countsPerOu[0]?.policyCounts['RECURRING'] ?? 0}}
+          {{'unit.recurringPolicy' | translate}}
+        </div>
+        <div class="inactive-highlight">
+          {{policyCount?.countsPerOu[0]?.policyCounts['ONE_TIME'] ?? 0}}
+          {{'unit.oneTimePolicy' | translate}}
+        </div>
+      </div>
+      <div class="data-row">
+        <div class="data-label">
+          <div class="icon">
+            <img src="./assets/img/icons-user-card.svg" alt="user card">
+          </div>
+          {{corporateOuService?.assetCountsMap?.get(node.id)?.USER ?? 0}}
+          {{'cardHolder.title' | translate}}
+        </div>
+        <div class="data-label"
+        >
+          <div class="icon">
+            <img src="./assets/img/icons-truck-merchants.svg" alt="vehicles">
+          </div>
+          {{corporateOuService?.assetCountsMap?.get(node.id)?.VEHICLE ?? 0}}
+          {{'app.assetType.VEHICLE' | translate}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="drawer__divider"></div>
+  <div class="drawer__details">
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img
+            [src]="corporateOuBrief?.type === 'MAIN'?'./assets/img/pending-requests/icons-master-corporate.svg':'./assets/img/icons-corporates.svg'"
+            alt="main Icon">
+        </div>
+        {{'unit.type' | translate}}
+      </div>
+      <div *ngIf="corporateOuBrief?.type === 'BRANCH'" class="round-highlight round-highlight--branchPink">
+        {{'unit.' + corporateOuBrief?.type | translate}}
+      </div>
+      <div *ngIf="corporateOuBrief?.type === 'MAIN'" class="round-highlight round-highlight--mainBlue">
+        {{'unit.' + corporateOuBrief?.type | translate}}
+      </div>
+    </div>
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img src="./assets/img/icons-admin.svg" alt="admin icon">
+        </div>
+        {{'app.official' | translate}}
+      </div>
+      <div class="round-highlight">
+        {{
+        corporateOuService?.corporateOuUsersMap?.get(node.id) ?
+          currentLang === 'en' ? corporateOuService?.corporateOuUsersMap?.get(node.id)[0]['enName'] : corporateOuService?.corporateOuUsersMap?.get(node.id)[0]['localeName'] :
+          currentLang === "en" ? "No admin found" : "لا يوجد مسئول"
+        }}
+        <span class="count-ou-admin-users"
+              (click)="corporateOuService?.showRestAdminUsers(corporateOuService?.corporateOuUsersMap?.get(node.id))"
+              *ngIf="corporateOuService?.corporateOuUsersMap?.get(node.id) && corporateOuService?.corporateOuUsersMap?.get(node.id)?.length -1 ">
+          +{{corporateOuService?.corporateOuUsersMap?.get(node.id)?.length - 1 }}</span>
+      </div>
+    </div>
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img src="./assets/img/icons-user-management.svg" alt="user management icon">
+        </div>
+        {{'app.noOfusers' | translate}}
+      </div>
+      <div class="round-highlight">
+        {{corporateOuService?.userCountsMap?.get(node.id) ?? 0}}
+        {{'assetType.USER' | translate}}
+      </div>
+    </div>
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img src="./assets/img/icons-balance-type.svg" alt="balance type">
+        </div>
+        {{'unit.balanceTypeDist' | translate}}
+      </div>
+      <div class="data-value">
+        {{ 'unit.' + corporateOuBrief?.balanceDistributionMode | translate}}
+      </div>
+    </div>
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img src="./assets/img/icons-billing-account.svg" alt="billing account">
+        </div>
+        {{ (corporateOuBrief?.balanceDistributionMode === 'BY_BALANCE' ? 'app.currentBalance' : 'app.availableLimit') | translate}}
+      </div>
+      <div class="data-value">
+        {{ corporateOuBrief?.balanceDistributionMode === 'BY_BALANCE' ? corporateOuBrief?.currentBalance?.toFixed(2) ?? 0 : corporateOuBrief?.availableLimit?.toFixed(2) ?? 0}}
+      </div>
+    </div>
+    <div class="drawer__details__row">
+      <div class="data-label">
+        <div class="icon">
+          <img src="./assets/img/icons-transactions.svg" alt="transactions">
+        </div>
+        {{'unit.monthlyConsumption' | translate}}
+      </div>
+      <div class="data-value">
+        {{corporateOuBrief?.monthlyConsumption?.toFixed(2) ?? 0}}
+      </div>
+    </div>
+  </div>
+  <div class="drawer__footer">
+    <a class="ui button" [routerLink]="[node.id + '/details/main-info']">
+      <img src="./assets/img/icons-information.svg" alt="info icon">
+      {{'app.showMoreDetails' | translate}}</a>
+  </div>
+</div>

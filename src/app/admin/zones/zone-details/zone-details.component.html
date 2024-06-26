@@ -1,0 +1,22 @@
+
+<app-back-button></app-back-button>
+
+<div class="details">
+  <h5>{{ currentLang === 'en' ? zone["enName"] : zone["localeName"]}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of zone | keyvalue">
+        <app-item-details [head]="'zone.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column ng-star-inserted">
+        <app-item-details [head]="'app.status'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>
+  </div>
+
+  <app-update-button
+    [path]="['/admin/countries/',countryId,'cities',cityId,'zones',zoneId,'update']" [role]="'ZONE_UPDATE'"></app-update-button>
+</div>

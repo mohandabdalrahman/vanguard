@@ -1,0 +1,47 @@
+@import "../../../scss/variables";
+
+.searchInput {
+  position: relative;
+
+  label {
+    display: block;
+    color: $misty;
+  }
+
+  input {
+    width: 224px;
+    height: 40px;
+
+    padding: 8px 16px 12px;
+    border-radius: 8px;
+    border: solid 1px $misty;
+  }
+
+  img {
+    position: absolute;
+    top: 55%;
+    //transform: translateY(-66%);
+  }
+}
+
+.BoxContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 18px;
+  margin: 36px 0;
+}
+
+@media (max-width: 970px) {
+  .BoxContainer {
+    display: block;
+  }
+}
+
+::ng-deep app-right-table-header {
+  .right-header {
+    align-items: flex-end;
+  }
+}

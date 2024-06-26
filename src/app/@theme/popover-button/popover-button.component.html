@@ -1,0 +1,5 @@
+<button  [nbPopover]="popoverContent | translate" [nbPopoverPlacement]="popoverPlacement" [nbPopoverTrigger]="popoverTrigger"
+         [routerLink]="routerLink">
+  <span *ngIf="popoverText">{{popoverText | translate}}</span>
+  <img *ngIf="popoverIcon" [src]="popoverIcon" alt="popover icon">
+</button>

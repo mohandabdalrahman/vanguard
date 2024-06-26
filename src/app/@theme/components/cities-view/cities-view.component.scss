@@ -1,0 +1,42 @@
+@import "../../../scss/variables";
+
+.citiesAndRegion {
+    background-color: #ffff;
+    padding: 24px 24px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+
+    height: 172px;
+    .scrollContainer {
+        direction: ltr;
+        height: 80% !important;
+        overflow-y: scroll !important;
+     }
+    p {
+        height: 47px;
+        margin: 15px 12px 4px 0;
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    p:hover {
+        background-color: $ray;
+    }
+
+}
+
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: $light !important;
+    border-radius: 2px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: $legend !important;
+    border-radius: 2px;
+}

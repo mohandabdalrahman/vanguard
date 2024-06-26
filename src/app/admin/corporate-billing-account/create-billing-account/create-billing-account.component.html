@@ -1,0 +1,46 @@
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('billingAccount.add' | translate) : ('billingAccount.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #billingAccountForm="ngForm" class="ui form">
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'billingAccount.accountType'"></app-label>
+        <ng-select dropdownPosition='bottom' placeholder="'{{'billingAccount.accountType' | translate}}'" name="accountType"
+                   [required]="!billingAccount.accountTypeId" [(ngModel)]="billingAccount.accountTypeId">
+          <ng-option *ngFor="let account of accountTypes"
+                     [value]="account.id">{{'billingAccount.accountTypes.'+account.enName | translate}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="subscriptionAmount" name="subscriptionAmount" [required]="true"
+                         #subscriptionAmount="ngModel" [type]="'number'"
+                         [placeholder]="'billingAccount.subscriptionAmount'"
+                         [label]="'billingAccount.subscriptionAmount'"
+                         [(ngModel)]="billingAccount.subscriptionAmount"></app-input-field>
+        <app-error [ref]="subscriptionAmount" [message]="'app.required'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="commissionRate" name="commissionRate" [required]="true" #commissionRate="ngModel"
+                         [placeholder]="'billingAccount.commissionRate'" [label]="'billingAccount.commissionRate'"
+                         [(ngModel)]="billingAccount.commissionRate" [type]="'number'"></app-input-field>
+        <app-error [ref]="commissionRate" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="thresholdAmount" name="thresholdAmount" [required]="true" #thresholdAmount="ngModel"
+                         [placeholder]="'billingAccount.thresholdAmount'" [label]="'billingAccount.thresholdAmount'"
+                         [(ngModel)]="billingAccount.thresholdAmount" [type]="'number'"></app-input-field>
+        <app-error [ref]="thresholdAmount" [message]="'app.required'"></app-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <button *ngIf="!isUpdateView" class="ui button btn-primary" [disabled]="!billingAccountForm.form.valid"
+              (click)="createBillingAccount()">{{'billingAccount.addBillingAccount'| translate}}</button>
+      <button *ngIf="isUpdateView" class="ui button btn-primary" [disabled]="!billingAccountForm.form.valid"
+              (click)="updateBillingAccount()">{{'app.update'| translate}}</button>
+    </div>
+  </form>
+</div>

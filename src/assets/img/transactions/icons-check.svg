@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>61C7293A-A59A-4379-BEAE-A5843C65DA3C</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="transactions-review" transform="translate(-141, -118)" fill="#28BE89" fill-rule="nonzero">
+            <g id="cart" transform="translate(36, 103)">
+                <g id="buttons/text/positive-with-right-icon" transform="translate(16, 10)">
+                    <g id="icons/check" transform="translate(89, 5)">
+                        <path d="M6,12 C2.6862,12 0,9.3138 0,6 C0,2.6862 2.6862,0 6,0 C9.3138,0 12,2.6862 12,6 C12,9.3138 9.3138,12 6,12 Z M6,10.8 C8.6509668,10.8 10.8,8.6509668 10.8,6 C10.8,3.3490332 8.6509668,1.2 6,1.2 C3.3490332,1.2 1.2,3.3490332 1.2,6 C1.2,8.6509668 3.3490332,10.8 6,10.8 Z M5.21766671,8.37226657 L2.8125,5.96709986 L3.61403329,5.16556657 L5.21766671,6.7692 L8.42379986,3.5625 L9.2259,4.36403329 L5.21766671,8.37226657 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

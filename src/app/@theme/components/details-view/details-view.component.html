@@ -1,0 +1,91 @@
+<div class="Details-view position-relative">
+    <div class="user-info ">
+        <div class="d-flex">
+            <div class="image">
+                <img src="./assets/img/icons-policies.svg" class="w-100" alt="policies">
+            </div>
+            <div class="policy">
+                <p>{{ currentLang === 'en' ? details?.enName : details?.localeName}}</p>
+                <p><img src="./assets/img/icons-one-time.svg" alt="">
+                    {{"corporatePolicy."+details?.policyType|translate}}
+                </p>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="Category">
+            <p class="m-0"  [ngStyle]="{'color':details?.suspended==false?'#28be89':'#e65151'}"><span [ngClass]="{'active':details?.suspended==false,'Notactive':details?.suspended}" class=""></span>{{(details?.suspended==false?'app.active':'app.inactive')|translate}}</p>
+
+            <p *ngIf="details?.policyCycleType!=null"><img src="./assets/img/icons-calendar.svg" alt="">{{"corporatePolicy."+details?.policyCycleType|translate}}</p>
+            <p *ngIf="details?.policyCycleType==null"><img src="./assets/img/icons-calendar.svg" alt="">{{"corporatePolicy.Notfound"|translate}}</p>
+
+            <!-- ./assets/img/icons-truck-merchants.svg -->
+
+            <p class=" m-0"><img [src]="details?.assetType=='USER'?'./assets/img/icons-user-card.svg':'./assets/img/icons-truck-merchants.svg'"
+                    alt="">{{'corporatePolicy.assetType'|translate}}<span
+                    class="mx-1">:</span>{{"app.assetType."+details?.assetType|translate}}</p>
+            <p class="mr-3 m-4"><img src="./assets/img/icons-gas-pump.svg"
+                    alt="">{{'corporatePolicy.productCategory'|translate}}<span
+                    class="mx-1">:</span>{{ currentLang === 'en' ? categoryName?.enName : categoryName?.localeName }}</p>
+        </div>
+    </div>
+    <div class="horizontalLine mx-auto"></div>
+    <div class="moreInfo">
+        <div  class="workingDays">
+            <p>{{'corporatePolicy.workingDays' | translate}} :</p>
+            <div class="d-flex justify-content-center" *ngIf="details?.workingDays.length>0">
+                <p class="Days" style="color: #9e9e9e;" *ngFor="let workingDay of details?.workingDays">
+                    {{'corporatePolicy.' + workingDay | translate}} </p>
+            </div>
+            <div *ngIf="details?.workingDays?.length== 0">
+                <p class="Days">{{'corporatePolicy.Alldays' |translate}}</p>
+            </div>
+        </div>
+        <!-- <div   class="policyUser">
+            <p class="my-1">{{"corporatePolicy.policyUser"|translate}}</p>
+            <a class="d-block underline cursor">{{details?.policyUsers}}<span
+                    class="mx-2">{{'user.name'|translate}}</span></a>
+        </div> -->
+        <div   class="Date">
+            <p>{{'app.startDate'|translate}}</p>
+            <p *ngIf="details?.startDate!=undefined">{{details?.startDate?.split(' ')[0]?.split('-')?.join('/')}}</p>
+            <p *ngIf="details?.startDate==undefined">{{"corporatePolicy.Notfound"|translate}}</p>
+        </div>
+        <div  class="Date">
+            <p>{{'app.endDate'|translate}}</p>
+            <p *ngIf="details?.endDate!=undefined">{{details?.endDate.split(' ')[0].split('-').join('/')}}</p>
+            <p *ngIf="details?.endDate==undefined">{{"corporatePolicy.Notfound"|translate}}</p>
+        </div>
+        <div  class="maxTransaction">
+            <p>{{'corporatePolicy.maxNumberOfTransactionPerCycle'|translate}}</p>
+            <p *ngIf="details?.maxNumberOfTransactionPerCycle!=undefined">{{details?.maxNumberOfTransactionPerCycle}}</p>
+            <p *ngIf="details?.maxNumberOfTransactionPerCycle==undefined">{{"corporatePolicy.Notfound"|translate}}</p>
+
+        </div>
+        <div  class="maxTransaction">
+            <p>{{'corporatePolicy.maxNumberOfTransactionPerDay'|translate}}</p>
+            <p *ngIf="details?.maxNumberOfTransactionPerDay!=undefined">{{details?.maxNumberOfTransactionPerDay}}</p>
+            <p *ngIf="details?.maxNumberOfTransactionPerDay==undefined">{{"corporatePolicy.Notfound"|translate}}</p>
+
+        </div>
+        <div  class="maxTransaction">
+            <p>{{'corporatePolicy.Validuntil'|translate}}</p>
+            <p *ngIf="details?.numberOfCycle!=undefined">{{details?.numberOfCycle}} {{'corporatePolicy.Cycle'|translate}}</p>
+            <p *ngIf="details?.numberOfCycle==undefined">{{"corporatePolicy.Notfound"|translate}}</p>
+
+        </div>
+    </div>
+
+
+
+    <div (click)="openDropMenu=!openDropMenu"  [ngStyle]="{'right':currentLang=='en'?'24px':'','left':currentLang=='ar'?'24px':''}" class="icon-drop">
+        <img   src="./assets/img/icons-more-menu.svg" alt="">
+      </div>
+      <div class="dropdownMenu "  [ngStyle]="{'right':currentLang=='en'?'0px':'','left':currentLang=='ar'?'175px':''}" *ngIf="openDropMenu">
+        <ul [routerLink]="['/corporate/policies/',id,'update']">
+          <li><img src="./assets/img/icons-edit.svg" alt="">{{'app.update' | translate}}</li>
+        </ul>
+        <p style="cursor: pointer;"  (click)="SuspendedPolicy()" [ngStyle]="{color:details.suspended?'#28be89':'#e65151'}">
+          <img [src]="details.suspended? './assets/img/enable-policy.svg':'./assets/img/icons-suspend.svg'" alt="">{{(details.suspended? "app.Activethispolicy":"app.stopthispolicy")|translate}}
+        </p>
+      </div>
+</div>

@@ -1,0 +1,61 @@
+@import "../../../scss/variables";
+
+:host {
+  position: relative;
+}
+
+.card-container {
+  background-color: unset;
+  border: unset;
+  height: 100vh;
+}
+
+h3, h4, h6, h5 {
+  text-transform: capitalize;
+  color: $alpha;
+}
+
+
+.step-action {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  position: absolute;
+  margin-top: 5em;
+}
+
+.child-card {
+  height: 165px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+
+  &-dropdown {
+    overflow: visible;
+  }
+}
+
+.select-opt {
+  flex: 0.8;
+}
+
+.add-user {
+  position: relative;
+  top: 2.5em;
+  left: 2em;
+  right: 2em;
+
+  a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: $primary;
+    cursor: pointer;
+  }
+}
+
+:host ::ng-deep app-input-field input {
+  width: 85% !important;
+}
+
+.second-form {
+  min-height: 15em;
+}

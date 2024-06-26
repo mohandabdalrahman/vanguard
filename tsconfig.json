@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "importHelpers": true,
+    "module": "es2020",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "plugins": [{ "name": "tslint-language-service" }],
+    "paths": {
+      "@shared/*": ["app/shared/*"],
+      "@helpers/*": ["app/helpers/*"],
+      "@models/*": ["app/models/*"],
+      "@theme/*": ["app/@theme/*"],
+      "@services/*": ["app/services/*"],
+      "@environments/*": ["environments/*"],
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false
+  }
+}

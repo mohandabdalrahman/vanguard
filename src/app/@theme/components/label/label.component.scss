@@ -1,0 +1,11 @@
+@import "src/app/scss/variables";
+
+span {
+  color: red;
+}
+
+label {
+  color: $misty;
+  text-transform: capitalize;
+  font-size: 12px;
+}

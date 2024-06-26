@@ -1,0 +1,96 @@
+<button class="d-flex ui button btn-primary" (click)="goBack()">
+  {{'app.back' | translate}}
+</button>
+
+
+<h4>{{"unit.userAssignment" | translate }}</h4>
+
+<nb-stepper #stepper orientation="horizontal" disableStepNavigation [selectedIndex]="selectedStep">
+  <nb-step [label]="'unit.Selecttheunityouwanttodisplayitsusers'|translate">
+
+    <ng-container *ngIf="listCorporateOus">
+
+      <app-tree-view  (onNodeSelected)="getSelectedOu($event)" [nodes]="listCorporateOus"></app-tree-view>
+
+      <!-- <app-tree-nodes (onNodeSelected)="getSelectedOu($event)" [nodes]="listCorporateOus"></app-tree-nodes> -->
+      <div class="step-action">
+        <button class="ui button btn-primary" (click)="checkSelectedOu()"
+          [disabled]="!corporateOu.parentId">{{'app.continue' | translate}}</button>
+      </div>
+    </ng-container>
+  </nb-step>
+  <nb-step [label]="'unit.UserSelection' | translate">
+
+    <div class="Userdisplay">
+      <p>{{'unit.Display_users_from_unit'|translate}} <span><img class="mx-3"
+            src="./assets/img/icons-arrow-left-type-2 .svg" alt=""></span> <span
+          class="unit">{{currentLang=='en'?parentOu.enName :parentOu.localeName }}</span></p>
+    </div>
+
+    <div class="BoxContainer ">
+      <app-left-table-header [title]="'user.Total_users_count'" [name]="'user.name'"
+        [length]="this.corporateUsers.length" [icon]="'./assets/img/icons-policies.svg'"></app-left-table-header>
+
+      <app-right-table-header [showCreateBtn]="false" [role]="'POLICY_CREATE'" [addText]="'corporatePolicy.add'">
+
+
+
+        <!-- <div class="separator"></div> -->
+      </app-right-table-header>
+
+    </div>
+
+
+
+    <div>
+
+      <app-data-table #table [gridData]="gridData" [colData]="colData" [entityName]="'CORPORATE_USER'" [enableSorting]="false"
+        [enableCheckBox]="true" [enableSelectAll]="true" [showTopContainer]="false"
+        (onItemSelect)="userSelected($event)" [tableControls]="false"></app-data-table>
+    </div>
+
+    <div class="step-action mt-3">
+      <button class="ui button btn-primary" (click)="selectedStep=selectedStep+1"
+        [disabled]="!selected.length">{{'app.continue' | translate}}</button>
+    </div>
+
+  </nb-step>
+  <nb-step [label]="'unit.Selectheunityouwantoassignusersto' | translate">
+
+    <div class="Userdisplay">
+      <p>{{'unit.Display_users_from_unit'|translate}} <span><img class="mx-3"
+            src="./assets/img/icons-arrow-left-type-2 .svg" alt=""></span> <span
+          class="unit">{{currentLang=='en'?parentOu.enName :parentOu.localeName }}</span></p>
+    </div>
+
+    <div class="mt-4">
+      <ng-container *ngIf="listCorporateOus">
+
+        <app-tree-view  (onNodeSelected)="saveUserInunit($event)" [nodes]="listCorporateOus"></app-tree-view>
+
+        <div class="step-action">
+          <button class="ui button btn-success m-auto" (click)="saveModel.open()"
+            [disabled]="!unitForAssignUser">{{'app.done' | translate}}</button>
+        </div>
+
+        <app-modal #saveModel [showCloseBtn]="false">
+          <div head  class="ModelImage">
+            <img  src="./assets/img/icons-save.svg" alt="">
+          </div>
+
+          <p body class="Modeltext">{{'user.saveOrAssignnew'|translate}}</p>
+
+          <div footer class="modelButton">
+            <button class="btn btn-primary rounded-pill" (click)="assignUsers()">{{'app.save'|translate}}</button>
+            <button class="btn btn-outline-primary mx-3 rounded-pill" (click)="assignUsers(true)">{{'user.Save_and_assign_other_users'|translate}}</button>
+          </div>
+
+        </app-modal>
+
+
+      </ng-container>
+
+    </div>
+
+  </nb-step>
+</nb-stepper>

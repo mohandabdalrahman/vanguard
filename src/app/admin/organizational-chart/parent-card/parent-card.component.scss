@@ -1,0 +1,61 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+h6, p {
+  text-transform: capitalize;
+}
+
+p, span {
+  color: $legend;
+}
+
+nb-card {
+  border-radius: 18px;
+  background-color: #fff;
+  padding: 1.5em;
+  position: relative;
+  cursor: pointer;
+}
+
+.p-card-header {
+  display: flex;
+  padding-bottom: 2em;
+  border-bottom: 1px solid $ray;
+
+  .parent {
+    width: 30%;
+  }
+
+
+  .parent-details {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .item {
+      img {
+        margin: 0 0.3em;
+      }
+    }
+  }
+}
+
+.p-card-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.5em;
+
+  .item {
+    h6 {
+      color: $misty;
+      font-size: .8em;
+      margin-bottom: 0;
+    }
+  }
+}
+
+app-context-menu {
+  position: absolute;
+  top: 34px;
+}

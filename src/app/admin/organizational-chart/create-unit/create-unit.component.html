@@ -1,0 +1,191 @@
+<button class="d-flex ui button btn-primary" (click)="goBack()">
+  {{'app.back' | translate}}
+</button>
+
+
+<h4>{{"unit.create" | translate }}</h4>
+<nb-card class="card-container">
+  <nb-card-body>
+    <nb-stepper #stepper orientation="vertical" disableStepNavigation [selectedIndex]="selectedStep">
+      <nb-step [label]="'unit.choose'|translate">
+        <ng-container *ngIf="listCorporateOus">
+          <app-tree-nodes (onNodeSelected)="getSelectedOu($event)" [nodes]="listCorporateOus"></app-tree-nodes>
+          <div class="step-action">
+            <button class="ui button btn-primary" (click)="checkSelectedOu()"
+                    [disabled]="!corporateOu.parentId">{{'app.continue' | translate}}</button>
+          </div>
+        </ng-container>
+      </nb-step>
+      <nb-step [label]="'unit.enterInfo' | translate" [stepControl]="unitForm">
+        <form class="ui form" #unitForm="ngForm">
+          <div class="row">
+            <div class="col-md-5 col-xxl-4">
+              <nb-card class="child-card">
+                <nb-card-body>
+                  <h6>{{'unit.type' | translate}}
+                    <span class="required">*</span>
+                    <app-tooltip [infoText]="'nb.ouTypeInfo'"></app-tooltip>
+                  </h6>
+                  <nb-radio-group required="true" class="d-flex mt-3" name="ouType" [(ngModel)]="corporateOu.type">
+                    <nb-radio
+                      [disabled]="parentOu?.type === 'BRANCH'"
+                      *ngFor="let type of ouTypes"
+                      [value]="type.value">
+                      {{'unit.' + type.value | translate }}
+                    </nb-radio>
+                  </nb-radio-group>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-7 col-xxl-4">
+              <nb-card class="child-card">
+                <nb-card-body>
+                  <h6>{{'app.name' | translate}}</h6>
+                  <div class="d-flex">
+                    <div>
+                      <app-input-field #enName="ngModel" [ref]="enName" [required]="true" name="enName"
+                                       [(ngModel)]="corporateOu.enName"
+                                       [label]="'app.enName'" [placeholder]="'app.enName'"></app-input-field>
+                      <app-error [ref]="enName"></app-error>
+                    </div>
+                    <div>
+                      <app-input-field #localeName="ngModel" [ref]="localeName" [required]="true" name="localeName"
+                                       [(ngModel)]="corporateOu.localeName"
+                                       [placeholder]="'app.arName'"
+                                       [label]="'app.arName'"></app-input-field>
+                      <app-error [ref]="localeName"></app-error>
+
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-5 col-xxl-4">
+              <nb-card class="child-card">
+                <nb-card-body class="child-card-dropdown">
+                  <h6>{{'app.city' | translate}}</h6>
+                  <app-label [required]="true" [label]="'city.name'"></app-label>
+                  <ng-select required="true" #city="ngModel" dropdownPosition='bottom' [(ngModel)]="corporateOu.cityId"
+                             name="cityId" placeholder="{{'city.name' | translate}}">
+                    <ng-option *ngFor="let city of cities" [value]="city.id">
+                      {{currentLang === 'en' ? city.enName : city.localeName}}
+                    </ng-option>
+                  </ng-select>
+                  <app-error [ref]="city" [message]="'app.selectRequired'"></app-error>
+
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-7 col-xxl-4">
+              <nb-card class="child-card">
+                <nb-card-body class="child-card-dropdown">
+                  <h6>{{'unit.allowedProductCategory' | translate}}</h6>
+                  <div class="select-control">
+                    <app-label [required]="true" [label]="'product.category.title'"></app-label>
+                    <ng-select dropdownPosition='bottom' (change)="selectAll($event,'productCategories','submitForm')"
+                               required=true
+                               [multiple]="true"
+                               [(ngModel)]="productCategoryIds"
+                               name="productCategories" placeholder="{{'product.category.title' | translate}}">
+                      <ng-option *ngIf="productCategories.length"
+                                 value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                      <ng-option *ngFor="let product of productCategories" [value]="product.id">
+                        {{currentLang === 'en' ? product.enName : product.localeName}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <div class="col-md-5 col-xxl-4">
+              <nb-card class="child-card">
+                <nb-card-body>
+                  <h6>
+                    {{'unit.balanceTypeDist' | translate}}
+                    <span class="required">*</span>
+                    <app-tooltip [infoText]="'unit.balanceTypeDistInfo'"></app-tooltip>
+                  </h6>
+                  <nb-radio-group required="true" class="d-flex mt-3"
+                                  [(ngModel)]="corporateOu?.billingAccount.outputBalanceDistributionMode"
+                                  name="outputBalanceDistributionMode">
+                    <nb-radio
+                      *ngFor="let mode of balanceDistributionModes"
+                      [disabled]="(parentOu?.outputBalanceDistributionMode || parentOu['billingAccount']?.outputBalanceDistributionMode) === 'BY_LIMIT'"
+                      [value]="mode.value">
+                      {{ 'unit.' + mode.value | translate }}
+                    </nb-radio>
+                  </nb-radio-group>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </form>
+        <div class="step-action">
+          <button class="ui button btn-primary" [disabled]="!unitForm.form.valid"
+                  (click)="openConfirmationModal()">{{'app.save' | translate}}</button>
+          <button class="ui button btn-transparent" [disabled]="!unitForm.form.valid"
+                  (click)="createCorporateOu(false , true)">{{'unit.saveAndAssignAdmins' | translate}}</button>
+        </div>
+      </nb-step>
+      <nb-step [label]="'unit.responsible' | translate">
+        <form class="ui form second-form" #userForm="ngForm">
+          <div class="row">
+            <div class="col-sm-12 col-xxl-8">
+              <!--Users-->
+              <h6>
+                {{'app.officials' | translate}}
+                <app-tooltip [infoText]="'unit.officialsInfo'"></app-tooltip>
+              </h6>
+              <div class="d-flex">
+                <div class="select-opt">
+                  <app-label [label]="'unit.responsible'"></app-label>
+                  <ng-select dropdownPosition='bottom' (change)="selectAll($event,'corporateUsers','submitForm2')"
+                             [multiple]="true"
+                             [(ngModel)]="userIds"
+                             name="corporateUsers" placeholder="{{'app.officials' | translate}}">
+                    <ng-option *ngIf="corporateUsers.length"
+                               value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                    <ng-option *ngFor="let user of corporateUsers" [value]="user.id">
+                      {{currentLang === 'en' ? user.enName : user.localeName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <div class="add-user">
+                  <a (click)="openCreateUserModal()">
+                    <nb-icon icon="plus-circle-outline"></nb-icon>
+                    {{'app.newUser' | translate}}</a>
+                </div>
+              </div>
+              <!--   tag list-->
+              <nb-tag-list (tagRemove)="onTagRemove($event)">
+                <nb-tag removable class="removable" *ngFor="let tree of trees" [text]="tree"></nb-tag>
+              </nb-tag-list>
+            </div>
+          </div>
+        </form>
+        <div class="step-action">
+          <button (click)="openConfirmationModal(true)"
+                  class="ui button btn-primary">{{'app.done' | translate}}</button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+
+<!--ou confirm modal-->
+<app-modal #unitModal [showCloseBtn]="false">
+  <h6 body>{{'unit.save' | translate}}</h6>
+  <div class="modal-actions" footer>
+    <button class="ui button btn-primary"
+            (click)=" !assignAdminFlow ?  createCorporateOu() : assignOuAdmin()">{{'app.save' | translate}}</button>
+    <button class="ui button btn-transparent"
+            (click)=" !assignAdminFlow ?  createCorporateOu(true) : assignOuAdmin(true)">{{'unit.saveAndCreate' | translate}}</button>
+  </div>
+</app-modal>
+
+
+<app-modal #createUserModal [showCloseBtn]="false" [size]="'xl'">
+  <app-create-corporate-user *ngIf="openUserModal" #createUserComp body [hideBackBtn]="true"
+                             [isCreateUnitView]="true"></app-create-corporate-user>
+</app-modal>
+

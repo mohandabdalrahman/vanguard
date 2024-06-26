@@ -1,0 +1,37 @@
+@import "../../../scss/variables";
+.home {
+  &-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5em;
+    padding-bottom: 0;
+    max-height: 200px;
+    margin-bottom: 2em;
+    @media (max-width: 575.98px) {
+      flex-direction: column;
+      max-height: none;
+    }
+
+    &-info {
+      h3 {
+        color: $main-color;
+      }
+      p {
+        margin-bottom: 0.5em;
+      }
+    }
+
+    &-img {
+      position: relative;
+      top: -3.5em;
+      @media (max-width: 768px) {
+        width: 100%;
+        top: 0;
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

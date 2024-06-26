@@ -1,0 +1,12 @@
+<div class="tag">
+    <div class="icon">
+        <img [src]="image" alt="">
+    </div>
+    <div class="text">
+        <p class="m-0">{{text | translate}}</p>
+        <div class="space" *ngIf="length"></div>
+        <div *ngIf="length" class="period">
+            <p class="m-0">{{length}}{{'corporateVehicle.months'|translate}}</p>
+        </div>
+    </div>
+</div>

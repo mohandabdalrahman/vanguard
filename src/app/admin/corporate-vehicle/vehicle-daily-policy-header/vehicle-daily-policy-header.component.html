@@ -1,0 +1,37 @@
+<div class="d-flex validity" >
+  <div class="d-flex">
+    <p> {{currentLang === 'en' ? headerData?.selectedPolicy?.enName : headerData?.selectedPolicy?.localeName}} |</p>
+    <p class="product-validity">
+      <img src="./assets/img/icons-gas-pump.svg" alt="gas pump">
+      {{"product.category.title" | translate}}
+      : {{currentLang === 'en' ? headerData?.productCategory?.enName : headerData?.productCategory?.localeName}} </p>
+  </div>
+  <div class="header-numbers">
+    <div class="header-numbers-left" *ngIf="headerData?.corporateOu?.billingAccount?.outputBalanceDistributionMode === 'BY_BALANCE'">
+      <div class="count">
+        <p>{{'report.availableBalance' | translate}}</p>
+        <h6 style="margin-inline: 5px">
+          <span style="color: #0a143a">
+          {{"dashboard.currency" | translate}} </span>  <br>
+          {{headerData?.corporateOu?.billingAccount?.currentBalance?.toFixed(2)}}</h6>
+      </div>
+    </div>
+    <div class="header-numbers-right">
+      <p>{{"app.totalInputs" | translate}}</p>
+      <div class="counts-group">
+        <div class="count">
+          <p>{{'app.liters' | translate}}</p>
+          <h6>{{headerData?.litersSum | number}}</h6>
+        </div>
+        <div class="count">
+          <p>{{'app.kilometers' | translate}}</p>
+          <h6>{{headerData?.kilometersSum?.toFixed(2) | number}}</h6>
+        </div>
+        <div class="count">
+          <p>{{'corporateVehicle.exchangeLimit' | translate}} {{"dashboard.currency" | translate}} </p>
+          <h6>{{headerData?.exchangeLimitSum | number}}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

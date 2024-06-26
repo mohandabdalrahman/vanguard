@@ -1,0 +1,31 @@
+@import "../../../scss/_variables.scss";
+nb-accordion-item-header {
+  text-transform: capitalize;
+
+  .header-container {
+    flex: 1;
+
+    .header-right {
+      margin: 0 2em;
+      color: $primary;
+      text-transform: capitalize;
+      transition: all 0.2s ease-in-out;
+      opacity: 0;
+
+      img {
+        filter: invert(17%) sepia(36%) saturate(4823%) hue-rotate(223deg) brightness(94%) contrast(84%);
+      }
+    }
+    &:hover {
+      .header-right {
+        opacity: 1;
+      }
+    }
+  }
+
+}
+
+h6 {
+  margin-top: -3px;
+  color: #413a90;
+}

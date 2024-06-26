@@ -1,0 +1,35 @@
+
+<app-back-button></app-back-button>
+
+<div class="details">
+  <h5>{{ currentLang === 'en' ? userRole?.enName : userRole?.localeName}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column">
+        <!-- *ngFor="let prop of userRole | keyvalue" -->
+        <app-item-details [head]="'userRole.enName'" [body]="userRole.enName"></app-item-details>
+      </div>
+      <!-- TODO: USE LOOP -->
+      <div class="column">
+        <app-item-details [head]="'userRole.localeName'" [body]="userRole?.localeName"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'userRole.status'"
+                          [body]="userRole?.suspended ? 'inactive' : 'active'"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'userRole.tag'" [body]="userRole?.tag"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'userRole.description'" [body]="userRole?.description"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'userRole.allowedAccess'" [body]="allowedAccess"></app-item-details>
+      </div>
+    </div>
+  </div>
+  <app-update-button [path]="['/admin/user-roles/',userRole.id,'update']" [role]="'ROLE_UPDATE'"></app-update-button>
+</div>

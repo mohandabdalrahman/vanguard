@@ -1,0 +1,10 @@
+.button {
+  width: 32%;
+  @media (max-width: 767.98px) {
+    width: 70%;
+  }
+}
+
+.update-title {
+  text-transform: capitalize;
+}

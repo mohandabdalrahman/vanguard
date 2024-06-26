@@ -1,0 +1,25 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="details">
+  <h5>{{currentLang === 'en' ? merchantProduct["enName"] : merchantProduct["localeName"]}} </h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of merchantProduct | keyvalue">
+        <app-item-details [head]="'product.'+prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column ng-star-inserted">
+        <app-item-details [head]="'app.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>    
+  </div>
+
+  <app-update-button *ngIf="userType==='admin' && !isGlobal"
+                     [path]="['/admin/merchants/',merchantId,'details','products',merchantProductId,'update']" [role]="'PRODUCT_UPDATE'"></app-update-button>
+
+  <app-update-button *ngIf="userType==='merchant' && !isGlobal"
+                     [path]="['/merchant','products',merchantProductId,'update']" [role]="'PRODUCT_UPDATE'"></app-update-button>
+</div>

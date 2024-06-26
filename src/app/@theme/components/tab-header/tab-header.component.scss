@@ -1,0 +1,11 @@
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h6 {
+    text-transform: capitalize;
+  }
+}
+.head-dividing {
+  margin-top: 0.5em;
+}

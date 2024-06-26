@@ -1,0 +1,15 @@
+<div class="right-header">
+  <ng-content></ng-content>
+  <ng-container *ngIf="showCreateBtn">
+    <div *appHasRole="[role]" class="separator"></div>
+    <a *appHasRole="[role]" class="ui button " [routerLink]="['create']" [ngClass]="!addText ? 'noTextStyle' : ''">
+      <ng-container *ngIf="addText">
+        <nb-icon icon="plus-circle-outline"></nb-icon>
+        {{addText | translate}}
+      </ng-container>
+      <ng-container *ngIf="!addText">
+        <img src="./assets/img/icons-add.svg" alt="add">
+      </ng-container>
+    </a>
+  </ng-container>
+</div>

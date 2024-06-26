@@ -1,0 +1,18 @@
+
+
+<app-data-table [tableControls]="false" [gridData]="gridData" [colData]="colData"  [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+  <ng-container header>
+    <app-left-table-header [title]="'merchant.deposits'" [name]="'merchant.deposits'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'MERCHANT_BILLING_ACCOUNT_UPDATE'" [addText]="'merchant.addDeposit'">
+    </app-right-table-header>
+
+  </ng-container>
+
+</app-data-table>
+
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>

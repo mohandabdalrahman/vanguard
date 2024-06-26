@@ -1,0 +1,13 @@
+{
+  "pendingRequest": {
+    "from": "طلب من",
+    "details": "تفاصيل الطلب",
+    "acceptChange": "قبول طلب التغيير",
+    "rejectChange": "برجاء اختيار سبب رفض",
+    "finish": "لا توجد طلبات معلقة",
+    "rejectReasons": {
+      "MISSING_ATTRIBUTE": "السمة المفقودة",
+      "FIELD_NOT_ENTERED_PROPERLY": "لم يتم إدخال الحقل بشكل صحيح"
+    }
+  }
+}

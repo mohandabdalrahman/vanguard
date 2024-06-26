@@ -1,0 +1,25 @@
+
+  <div class="container">
+    <div class="vrCard">
+      <div class="vrCard__header">
+        <div class="vrCard__Logo">
+          <img src="/assets/logo-en.png" alt="enLogo">
+          <img src="/assets/logo-ar.png" alt="arLogo">
+        </div>
+      </div>
+      <div class="vrCard_content">
+        <div class="vrCard__body">
+          <div class="qrCode">
+            <qrcode [qrdata]="vcardInfo.serialNumber" [errorCorrectionLevel]="'M'"></qrcode>
+          </div>
+          <div class="info">
+            <h6>{{currentLang=="en"?vcardInfo.cardHolderEnName:vcardInfo.cardHolderLocalName}}</h6>
+            <p>{{currentLang=="en"?vcardInfo.companyEnName:vcardInfo.companyLocalName}}</p>
+          </div>
+        </div>
+        <div class="vrCard__number">
+          <p>{{vcardInfo.serialNumber}}</p>
+        </div>
+      </div>
+    </div>
+  </div>

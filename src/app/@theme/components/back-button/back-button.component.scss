@@ -1,0 +1,13 @@
+button {
+  &.ui.button {
+    margin-bottom: 1em;
+    text-transform: uppercase;
+    @media (max-width: 767.98px) {
+      margin-bottom: 1em;
+    }
+
+    nb-icon {
+      margin-right: 0.4em;
+    }
+  }
+}

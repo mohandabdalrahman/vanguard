@@ -1,0 +1,51 @@
+<nb-card [class]="viewPage" *ngFor="let item of cardData" size="small" body (click)="navigateToPendingDetails(item.id)">
+  <div class="row">
+    <div class="card-item col-md-3">
+      <div class="card-item__icon user">
+        <img src='./assets/img/pending-requests/icons-user.svg' alt="">
+      </div>
+      <div class="card-item__info">
+        <p>{{'pendingRequest.from' | translate}}</p>
+        <h6>{{item?.requester}}</h6>
+      </div>
+    </div>
+    <div class="card-item col-md-3">
+      <div class="card-item__icon company">
+        <img src='./assets/img/pending-requests/icons-master-corporate.svg' alt="">
+      </div>
+      <div class="card-item__info">
+        <p>Merchant</p>
+        <h6>{{item?.systemTypeName}}</h6>
+      </div>
+    </div>
+    <div class="card-item col-md-3">
+      <div class="card-item__icon company">
+        <img src='./assets/img/icons-calendar.svg' alt="">
+      </div>
+      <div class="card-item__info">
+        <p>{{'app.creationDate' | translate}}</p>
+        <h6>{{item?.date |date}}</h6>
+      </div>
+    </div>
+    <div class="card-item col-md-3">
+      <div class="card-item__icon id">
+        <img src='./assets/img/pending-requests/icons-hashtag.svg' alt="">
+      </div>
+      <div class="card-item__info">
+        <p>{{'app.id' | translate}}</p>
+        <h6>{{item?.userId}}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="more-info row" *ngIf="viewPage !== 'details'">
+    <div class="more-info__item col-md-2">
+      <span class="type" [ngClass]="item?.actionType"></span>
+      <span>{{ 'app.' + item?.actionType|lowercase|translate}}</span>
+    </div>
+    <div class="more-info__item col-md-2">
+      <span>{{'app.status' | translate}}:   </span>
+      <strong [ngClass]="item?.status ? 'active':'inactive'">{{ 'app.' + item?.status | translate}}</strong>
+    </div>
+
+  </div>
+</nb-card>

@@ -1,0 +1,61 @@
+@import '../../../scss/variables';
+.icon-drop {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: solid 1px $light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 24px;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    width: 219px;
+    padding: 10px 24px;
+    border-radius: 22px;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+    border: solid 1px $ray;
+    background-color: #ffff;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1035;
+  
+    ul {
+      list-style: none;
+  
+      li {
+        padding: 14px 0;
+        font-size: 16px;
+        color: $primary;
+        cursor: pointer;
+      }
+  
+      li:nth-of-type(3) {
+        padding: 14px 0 8px 0;
+      }
+  
+      li img {
+        width: 12px;
+        height: 12px;
+        margin-inline-end: 8px;
+      }
+    }
+  
+    p {
+  
+      font-size: 16px;
+    }
+  
+    p img {
+      width: 12px;
+      height: 12px;
+      margin-inline-end: 8px;
+    }
+  }
+  
+  

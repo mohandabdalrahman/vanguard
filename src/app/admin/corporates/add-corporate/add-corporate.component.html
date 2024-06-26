@@ -1,0 +1,157 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('corporates.add' | translate) : ('corporates.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #corporateForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="corporate.localeName"
+                         name="corporateArName" [placeholder]="'corporates.localeName'"
+                         [label]="'corporates.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="corporate.enName	"
+                         name="corporateEnName" [placeholder]="'corporates.enName'"
+                         [label]="'corporates.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="crNum" #crNum="ngModel" [required]="true" [type]="'number'"
+                         [(ngModel)]="corporate.commercialRegistrationNumber" name="crNum"
+                         [placeholder]="'corporates.cr'" [label]="'corporates.cr'"></app-input-field>
+        <app-error [ref]="crNum" [message]="'app.required'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [(ngModel)]="corporate.capitalValue" name="capitalValue"
+                         [placeholder]="'corporates.capitalValue'"
+                         [label]="'corporates.capitalValue'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'corporates.corporateLevelName'"></app-label>
+        <ng-select dropdownPosition='bottom' required="true" name="level" [(ngModel)]="corporate.corporateLevelId"
+                   placeholder="{{'corporates.corporateLevelName' | translate}}">
+          <ng-option *ngFor="let level of corporateLevels"
+                     [value]="level.id">{{currentLang === 'en' ? level?.enName : level?.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [label]="'corporates.account'"></app-label>
+        <ng-select dropdownPosition='bottom' name="master" [(ngModel)]="corporate.masterCorporateId"
+                   placeholder="{{'corporates.account' | translate}}">
+          <ng-option *ngFor="let master of masterCorporates"
+                     [value]="master.id">{{currentLang === 'en' ? master?.enName : master?.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="taxId " #taxId="ngModel" [required]="true"
+                         [(ngModel)]="corporate.taxId " name="taxId " [placeholder]="'corporates.taxId'"
+                         [label]="'corporates.taxId'"></app-input-field>
+        <app-error [ref]="taxId "></app-error>
+      </div>
+    </div>
+    <h6>{{'merchant.billingAddress' | translate | titlecase}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'merchant.country'"></app-label>
+        <ng-select dropdownPosition='bottom' #countryId="ngModel" [required]="true" name="countryId"
+                   [(ngModel)]="corporate.countryId"
+                   (change)="getCities($event);" placeholder="'{{'app.country' | translate}}'">
+          <ng-option *ngFor="let country of countries"
+                     [value]="country.id"> {{currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="countryId" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'app.city'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="cityId" [(ngModel)]="corporate.cityId"
+                   [disabled]="!cities.length"
+                   #cityId="ngModel" (change)="getZones(corporate.countryId, $event);"
+                   placeholder="'{{'app.city' | translate}}'">
+          <ng-option *ngFor="let city of cities"
+                     [value]="city.id"> {{currentLang === 'en' ? city.enName : city.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="cityId" [message]="'app.selectRequired'"></app-error>
+
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'app.zone'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="zoneId" [(ngModel)]="corporate.zoneId"
+                   placeholder="'{{'app.zone' | translate}}'" [disabled]="!zones.length">
+          <ng-option *ngFor="let zone of zones"
+                     [value]="zone.id"> {{currentLang === 'en' ? zone.enName : zone.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'app.address'"></app-label>
+        <textarea placeholder="{{'app.address' | translate}}" nbInput fullWidth name="billingAdress"
+                  [(ngModel)]="corporate.billingAddress" rows="3"></textarea>
+      </div>
+      <div class="field" style="align-self: center;">
+        <nb-checkbox [(ngModel)]="corporate.ouEnabled" [disabled]="hasChildOus"
+                     name="ouEnable"> {{'unit.enable' | translate}} </nb-checkbox>
+      </div>
+    </div>
+
+    <h6>{{'corporates.legalrepresentative' | translate | titlecase}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="legalrepresentativeName " #legalrepresentativeName="ngModel" [required]="true"
+                         [(ngModel)]="corporate.legalrepresentativeName " name="legalrepresentativeName "
+                         [placeholder]="'corporates.legalrepresentativeName'"
+                         [label]="'corporates.legalrepresentativeName'"></app-input-field>
+        <app-error [ref]="legalrepresentativeName "></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="legalrepresentativeId " #legalrepresentativeId="ngModel"
+                         [required]="true"
+                         [(ngModel)]="corporate.legalrepresentativeId " name="legalrepresentativeId "
+                         [placeholder]="'corporates.legalrepresentativeId'"
+                         [label]="'corporates.legalrepresentativeId'"></app-input-field>
+        <app-error [ref]="legalrepresentativeId "></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="designation " #designation="ngModel" [required]="true"
+                         [(ngModel)]="corporate.designation " name="designation "
+                         [placeholder]="'corporates.designation'" [label]="'corporates.designation'"></app-input-field>
+        <app-error [ref]="designation "></app-error>
+      </div>
+    </div>
+
+    <!-- Attachment -->
+    <ng-container *ngIf="!isUpdateView">
+      <h6>corporate Attachments</h6>
+      <div class="ui dividing header"></div>
+      <app-attachment [controller]="corporate"></app-attachment>
+    </ng-container>
+
+    <div style="margin-top: 30px;" class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+
+    <div class="checkbox">
+      <div class="ui dividing header"></div>
+      <nb-checkbox required="true" (checkedChange)="toggle($event,'checked')"
+                   name="checkbox">{{'app.disclaimer' | translate}}</nb-checkbox>
+    </div>
+
+
+    <div class="row">
+      <button [disabled]="!corporateForm.form.valid || !checked" (click)="createCorporate()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'corporates.add' | translate}}</button>
+      <button [disabled]="!corporateForm.form.valid || !checked" (click)="updateCorporate()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,135 @@
+
+
+<div class="home">
+  <app-home-card [img]="'/assets/img/home/home.svg'">
+    <h3>{{'dashboard.greeting' | translate }}  {{currentLang === 'en' ? merchant?.enName : merchant?.localeName}}</h3>
+    <p>{{'dashboard.merchant.welcome' | translate}}</p>
+  </app-home-card>
+</div>
+
+<div class="ui grid " *appHasRole="['DASHBOARD_VIEW']">
+  <div class="four wide column" *ngFor="let card  of cards">
+    <app-card [name]="card.name" [count]="card.count" [icon]="card.icon"></app-card>
+  </div>
+</div>
+
+
+<div class="dashboard" *appHasRole="['DASHBOARD_VIEW']">
+  <div class="row">
+    <div class="col-12" *ngIf="invoicesAmount.length>0">
+      <ngx-charts-number-card
+        [results]="invoicesAmount">
+      </ngx-charts-number-card>
+    </div>
+
+    <div class="col-md-6">
+      <h5>{{'dashboard.merchant.currentMonthTotalSalesPerCategory' | translate}}</h5>
+      <ngx-charts-gauge
+        [results]="currentMonthTotalSalesPerCategory"
+        [view]="view"
+        [legend]="legend"
+        [legendTitle]="''"
+      >
+      </ngx-charts-gauge>
+    </div>
+    <div class="col-md-6">
+      <h5>{{'dashboard.merchant.currentMonthTotalSalesPerSite' | translate}}</h5>
+      <ngx-charts-gauge
+        [results]="currentMonthTotalSalesPerSite"
+        [view]="view"
+        [legend]="legend"
+        [legendTitle]="''"
+      >
+      </ngx-charts-gauge>
+    </div>
+    <div class="col-12" *ngIf="totalSalesAcrossMonthsPerCategory.length>0">
+      <h5>{{'dashboard.merchant.totalSalesAcrossMonthsPerCategory' | translate}}</h5>
+      <ngx-charts-bar-horizontal-stacked
+        [results]="totalSalesAcrossMonthsPerCategory"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [legendTitle]="ProductXAxisLabel"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="yAxisLabel"
+        [yAxisLabel]="MonthsXAxisLabel"
+        [animations]="animations"
+        [barPadding]="15"
+        [scheme]="'picnic'"
+      >
+      </ngx-charts-bar-horizontal-stacked>
+    </div>
+
+    <div class="col-12" *ngIf="totalSalesAcrossMonthsPerSite.length>0">
+      <h5>{{'dashboard.merchant.totalSalesAcrossMonthsPerSite' | translate}}</h5>
+      <ngx-charts-bar-horizontal-stacked
+        [results]="totalSalesAcrossMonthsPerSite"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [legendTitle]="siteXAxisLabel"
+        [xAxisLabel]="yAxisLabel"
+        [yAxisLabel]="MonthsXAxisLabel"
+        [animations]="animations"
+        [barPadding]="15"
+        [scheme]="'forest'">
+      </ngx-charts-bar-horizontal-stacked>
+    </div>
+
+    <div class="col-12" *ngIf="totalSalesAcrossMonthDaysPerCategory.length>0">
+      <h5>{{'dashboard.merchant.totalSalesAcrossMonthDaysPerCategory' | translate}}</h5>
+      <ngx-charts-bar-vertical-stacked
+        [results]="totalSalesAcrossMonthDaysPerCategory"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [legendTitle]="ProductXAxisLabel"
+        [xAxisLabel]="DaysXAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [animations]="animations"
+        [barPadding]="15"
+        [scheme]="'vivid'">
+      </ngx-charts-bar-vertical-stacked>
+    </div>
+
+    <div class="col-12" *ngIf="totalSalesAcrossMonthDaysPerSite.length>0">
+      <h5>{{'dashboard.merchant.totalSalesAcrossMonthDaysPerSite' | translate}}</h5>
+      <ngx-charts-bar-vertical-stacked
+        [results]="totalSalesAcrossMonthDaysPerSite"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [legendTitle]="siteXAxisLabel"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="DaysXAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [animations]="animations">
+      </ngx-charts-bar-vertical-stacked>
+    </div>
+
+    <div class="col-12">
+      <h5>{{'dashboard.merchant.averageTransactionSizePerCategory' | translate}}</h5>
+      <ngx-charts-bar-horizontal
+        [results]="averageTransactionSizePerCategory"
+        [legend]="legend"
+        [legendTitle]="ProductXAxisLabel"
+        [showXAxisLabel]="showXAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [showDataLabel]="true"
+        [barPadding]="15"
+        [scheme]="'flame'"
+      >
+      </ngx-charts-bar-horizontal>
+    </div>
+  </div>
+</div>

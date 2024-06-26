@@ -1,0 +1,133 @@
+
+
+<app-ou-hierarchy-tree
+  *ngIf="authService.getUserType() === 'corporate' && authService.isOuEnabled()"></app-ou-hierarchy-tree>
+
+<app-ou-tabs #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"
+  [title]="'transaction.title'" (onNodeSelect)="selectOu($event)"></app-ou-tabs>
+
+<div class="">
+
+  <div class="BoxContainer">
+    <app-left-table-header [title]="'transaction.title'" [name]="'transaction.name'" [length]="totalElements"
+      [icon]="'./assets/img/transactions/icons-transactions.svg'"></app-left-table-header>
+
+    <app-right-table-header>
+
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+      <div class="separator"></div>
+      <button *appHasRole="['TRANSACTION_REVIEW']" class="review" [routerLink]="'corporate-transactions-review'"><img
+          src="./assets/img/transactions/icons-edit .svg" alt="">{{"transaction.review"|translate}}</button>
+      <button *appHasRole="['TRANSACTION_REVIEW']" class="transcationReports" [routerLink]="'transactions-reports'"><img
+          src="./assets/img/transactions/icons-reports.svg"
+          alt="">{{"transaction.Transactionreport"|translate}}</button>
+
+    </app-right-table-header>
+
+  </div>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="uuid" [placeholder]="'transaction.id'"
+            [label]="'transaction.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'transaction.corporateName'"></app-label>
+          <ng-select [ngModel] name="corporateId" placeholder="{{'transaction.corporateName' | translate}}"
+            (change)="getCardHolders($event)">
+            <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+              {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'cardHolder.name'"></app-label>
+          <ng-select [ngModel] [disabled]="!corporateUsers.length" name="cardHolderId"
+            placeholder="{{'cardHolder.name' | translate}}">
+            <ng-option *ngFor="let user of corporateUsers" [value]="user.id">
+              {{currentLang === 'en' ? user.enName : user.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'transaction.merchantName'"></app-label>
+          <ng-select [ngModel] name="merchantId" placeholder="{{'transaction.merchantName' | translate}}"
+            (change)="getSites($event)">
+            <ng-option *ngFor="let merchant of merchants" [value]="merchant.id">
+              {{currentLang === 'en' ? merchant.enName : merchant.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'invoice.site.name'"></app-label>
+          <ng-select [ngModel] [disabled]="!sites.length" name="siteId"
+            placeholder="{{'invoice.site.name' | translate}}">
+            <ng-option *ngFor="let site of sites" [value]="site.id">
+              {{currentLang === 'en' ? site.enName : site.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporatePolicy.assetType'"></app-label>
+          <ng-select [ngModel] name="assetType" placeholder="{{'corporatePolicy.assetType' | translate}}">
+            <ng-option *ngFor="let assetType of assetTypes" [value]="assetType">
+              {{'app.assetType.' + assetType|translate|lowercase}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'transaction.amount'"></app-label>
+          <ng-select [ngModel] name="amount" placeholder="{{'transaction.amount' | translate}}">
+            <ng-option *ngFor="let amount of amounts" [value]="amount">
+              {{amount}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'app.fromDate'"></app-label>
+          <input type="date" [(ngModel)]="fromDate" name="fromDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'app.toDate'"></app-label>
+          <input type="date" [(ngModel)]="toDate" name="toDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'transaction.status'"></app-label>
+          <ng-select [ngModel] name="status" placeholder="{{'transaction.status' | translate}}">
+            <ng-option value="FAILED">{{'FAILED' | translate}}</ng-option>
+            <ng-option value="SUCCESS">{{'SUCCESS' | translate}}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+
+</div>
+
+
+
+
+<div class=" tableDiv">
+
+  <app-data-table [showTopContainer]="false" [showDelete]="false" [showUpdate]="false" [gridData]="gridData"
+    [colData]="colData" [entityName]="'TRANSACTION'" [enableSorting]="true"
+    (onSortChange)="handleSortViewChange($event)">
+  </app-data-table>
+
+  <!--PAGINATION-->
+  <app-pagination [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+    (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+</div>

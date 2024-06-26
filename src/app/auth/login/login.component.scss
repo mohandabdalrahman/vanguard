@@ -1,0 +1,196 @@
+@import '../../scss/variables';
+
+*{
+  font-family: "Almarai", sans-serif !important;
+}
+nb-icon {
+  margin-inline: .5em;
+}
+
+.login {
+  width: 100%;
+  height: 100vh;
+  background-color: $haze;
+  padding: 36px;
+
+  .loginImage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 64px;
+    background-image: url('../../../assets/manex-login-bg.png');
+     background-repeat: no-repeat;
+     background-size: cover;
+  }
+}
+.loginContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.solarusLogo {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  p {
+    margin: 0;
+    margin-inline-start: 4px;
+  }
+}
+
+.login-form {
+  width: 365px;
+  padding: 36px;
+  border-radius: 38px;
+  box-shadow: 0 4px 34px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  margin: 0 auto;
+
+  .Manexlogo img{
+    width: 35%;
+  }
+
+}
+.passwordInput{
+  position: relative;
+  .showIcon{
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    width: fit-content;
+    img{
+      width: 16px;
+      height: 16px;
+    }
+    
+  }
+}
+.forgetPassword{
+  text-decoration: none;
+  color: $primary;
+}
+
+
+.languageSelect{
+  width: 80%;
+  height: 32px;
+  background-color: #d8d8d8;
+  margin: 36px auto;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+  p{
+    margin: 0;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+    img{
+      border-radius: 4px;
+    }
+  }
+}
+
+  .loginInput{
+    color: $misty ;
+    font-weight: normal;
+  }
+
+
+.activeLanguage{
+  background-color: white;
+  padding: 4px 16px;
+  border-radius: 6px;
+}
+
+.submitButton{
+  margin-top: 36px;
+}
+
+@media (max-width:530px){
+  .login-form{
+    width: 308px;
+  }
+  .languageSelect{
+    width: 100%;
+  }
+}
+
+.cssload-container {
+  width:20px;
+  height: 20px;
+  display: inline-block;
+  background-color: transparent;
+}
+
+.cssload-speeding-wheel {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border: 3px solid white;
+  border-radius: 50%;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  animation: cssload-spin 500ms infinite linear;
+  -o-animation: cssload-spin 500ms infinite linear;
+  -ms-animation: cssload-spin 500ms infinite linear;
+  -webkit-animation: cssload-spin 500ms infinite linear;
+  -moz-animation: cssload-spin 500ms infinite linear;
+}
+
+@keyframes cssload-spin {
+  100% {
+    transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes cssload-spin {
+  100% {
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes cssload-spin {
+  100% {
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes cssload-spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes cssload-spin {
+  100% {
+    -moz-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width:768px){
+  .loginContainer{
+    align-items: flex-end;
+    } 
+
+    .login-form{
+      width: 100%;
+      box-shadow: none;
+    }
+    .emptySpace{
+      width: 100%;
+      height: 4em;
+    }
+}

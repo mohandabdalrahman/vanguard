@@ -1,0 +1,41 @@
+
+<ng-container>
+  <app-data-table [itemsColData]="itemsColData" [saleView]="true" [tableControls]="false" [gridData]="gridData" [colData]="colData">
+    <ng-container header>
+      <app-left-table-header [length]="merchantSale?.length" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"></app-left-table-header>
+      <div class="header-actions" *ngIf="merchantSale?.length">
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+
+    </ng-container>
+    <app-search search>
+      <div class="row">
+        <div class="col-8">
+          <form #reportForm="ngForm" novalidate>
+            <div class="select-control">
+              <app-label [label]="'site.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event)" [multiple]="true" [(ngModel)]="siteIds"
+                         name="sites" placeholder="{{'site.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let site of sites" [value]="site.id">
+                  {{currentLang === 'en' ? site.enName : site.localeName}}
+                </ng-option>
+              </ng-select>
+
+            </div>
+            <button  class="ui button btn-primary" (click)="searchSite()">{{'report.applyBtn' | translate}}</button>
+          </form>
+        </div>
+      </div>
+
+    </app-search>
+  </app-data-table>
+
+  <!--PAGINATION-->
+  <app-pagination [totalElements]="totalElements" [currentPage]="currentPage"
+                  (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+  <app-total-sales *ngIf="merchantTotal" [merchantSale]="merchantTotal"></app-total-sales>
+</ng-container>

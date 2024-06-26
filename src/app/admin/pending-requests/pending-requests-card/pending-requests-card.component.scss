@@ -1,0 +1,114 @@
+@import "../../../scss/variables";
+
+nb-card {
+  border-radius: 22px;
+  height: 140px !important;
+  padding: 2em;
+  cursor: pointer;
+  transition: all ease-in-out .2s;
+
+  //&:hover {
+  //  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.09);
+  //  background-color: #e6e7e7;
+  //}
+
+  &.details {
+    background-color: $alpha;
+    height: 100px !important;
+  }
+}
+
+.card-item {
+  display: flex;
+
+  &__icon {
+    width: 30px;
+    height: 41px;
+    margin: 0 0 0 16px;
+    padding: 14px 8px 13px;
+    //opacity: 0.1;
+    border-radius: 15px;
+
+    img {
+      position: relative;
+      top: -4px;
+    }
+
+    &.user {
+      background-color: #e35c9c1c;
+    }
+
+    &.company {
+      background-color: #f6f7f9
+    }
+
+    &.id {
+      background-color: #c9cbd573
+
+    }
+  }
+
+  &__info {
+    margin: 0 1em;
+
+    p {
+      color: #9ca0b0;
+      margin-bottom: 0.5em;
+    }
+
+    h6 {
+      color: $alpha;
+      text-transform: capitalize;
+    }
+
+    .details & {
+      p {
+        color: #c9cbd5;
+      }
+
+      h6 {
+        color: #fff;
+      }
+    }
+
+  }
+}
+
+.more-info {
+  margin: 1em 0.4em;
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    span {
+      text-transform: capitalize;
+    }
+
+    .type {
+      width: 16px;
+      height: 2px;
+      margin: 0 5px;
+
+      &.CREATE {
+        background-color: $positive;
+      }
+
+      &.UPDATE {
+        background-color: $primary;
+      }
+
+      &.DELETE {
+        background-color: $negative;
+      }
+    }
+  }
+}
+
+.active {
+  color: $positive;
+}
+
+.inactive {
+  color: $negative;
+}

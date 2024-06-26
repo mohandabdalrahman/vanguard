@@ -1,0 +1,26 @@
+.img-header {
+  font-size: 1.5em;
+  color: #413a90;
+}
+
+.modal-title {
+  text-transform: capitalize;
+  font-size: 1.5em;
+}
+
+.mileage-info {
+  margin-bottom: 2em;
+
+  p {
+    text-transform: capitalize;
+  }
+
+  img {
+    width: 16em;
+    height: 16em;
+  }
+}
+
+.error {
+  margin-bottom: 0 !important;
+}

@@ -1,0 +1,46 @@
+<app-back-button></app-back-button>
+
+<div class="pageTitle mt-4">
+    <h2>{{"transaction.Transactionreport"|translate}}</h2>
+</div>
+
+
+<div class="mt-3 tableDiv">
+    <app-data-table [showInvoice]="false" [showView]="true" [showTopContainer]="true" [showDelete]="false"
+        [showUpdate]="false" [gridData]="gridData" [colData]="colData" [entityName]="'INVOICE'">
+        <ng-container header>
+            <app-left-table-header [title]="'transaction.reviewed.title'" [name]="'transaction.name'"
+                [length]="totalElements">
+            </app-left-table-header>
+            <app-right-table-header>
+                <app-filter-btn #filterBtn></app-filter-btn>
+
+                <div class="separator"></div>
+                <button *appHasRole="['TRANSACTION_REVIEW']" class="transcationReports"
+                    [routerLink]="'transactions-review-status'">
+                    <img src="./assets/img/transactions/icons-reports.svg"
+                        alt="">{{"transaction.inreview.status"|translate}}
+                </button>
+            </app-right-table-header>
+        </ng-container>
+
+        <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+            <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+                <div class="ui dividing header"></div>
+                <div class="fields">
+                    <div class="field">
+                        <app-input-field ngModel name="transactionUuid" [placeholder]="'transaction.id'"
+                            [label]="'transaction.id'"></app-input-field>
+                    </div>
+                </div>
+            </form>
+        </app-search>
+
+    </app-data-table>
+
+    <div class="Paginate">
+        <app-pagination [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+            (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+    </div>
+
+</div>

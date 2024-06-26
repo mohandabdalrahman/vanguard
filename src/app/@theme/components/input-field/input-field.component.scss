@@ -1,0 +1,44 @@
+input {
+  &.sm {
+    width: 52px;
+    text-align: center;
+    @extend .common-style;
+  }
+
+  &.md {
+    width: 98px;
+    @extend .common-style;
+  }
+}
+
+.common-style {
+  height: 38px;
+  padding: 0 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #636888;
+}
+
+.input-holder {
+  position: relative;
+}
+
+.input-holder:has(input.sm) {
+  width: 76px;
+  border: 1px solid #636888;
+  border-radius: 8px;
+  background-color: #fff;
+
+  input {
+    border: none;
+  }
+}
+
+#percent-sign {
+  color: #636888;
+  z-index: 1;
+}
+
+input::placeholder {
+  font-size: 12px !important;
+}

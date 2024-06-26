@@ -1,0 +1,83 @@
+{
+  "invoice": {
+    "id": "المسلسل",
+    "merchantTaxId": "رقم التسجيل الضريبي للبائع",
+    "corporateTaxId": "رقم التسجيل الضريبي للعميل",
+    "settled": "التسوية",
+    "status": "الحالة",
+    "title": "كل الفواتير",
+    "name": "الفواتير",
+    "totalValue": "الإجمالي",
+    "seller": {
+      "taxId": "رقم التسجيل الضريبي للبائع",
+      "cr": "رقم السجل التجاري للبائع"
+    },
+    "buyer": {
+      "taxId": "رقم التسجيل الضريبي للعميل",
+      "cr": "رقم السجل التجاري للعميل",
+      "name": "اسم العميل"
+    },
+    "product": {
+      "id": "المسلسل",
+      "quantity": "الكمية",
+      "name": "المنتج",
+      "price": "سعر الوحدة",
+      "amount": "القيمة",
+      "vat": "ض.ق.م",
+      "holdingTax": "ضريبة الخصم ولإضافة",
+      "total": "إجمالي",
+      "unitPrice":"سعر الوحدة",
+      "productName":"المنتج",
+      "totalAmountIncludingVat":"إجمالي"
+    },
+    "site": {
+      "id": "مسلسل منفذ البيع",
+      "name": "اسم منفذ البيع",
+      "localeName": "اسم منفذ البيع"
+    },
+    "merchant": {
+      "id": "مسلسل التاجر",
+      "name": "اسم التاجـر",
+      "localeName": " اسم التاجر (عربي)",
+      "address": "عنوان البائع",
+      "phonenumber": "رقم الهاتف للبائع",
+      "cr": "رقم السجل التجاري للبائع"
+    },
+    "corporate": {
+      "id": "مسلسل العميل",
+      "name": "اسم العميل",
+      "cr": "رقم السجل التجاري للعميل"
+    },
+    "detail": "فاتورة تفصيلية",
+    "addSerial": "إضافة رقم مسلسل",
+    "serialNumber": "رقم المسلسل للفاتورة",
+    "totalAmount": "الإجمالي",
+    "totalNetAmount": "قيمة",
+    "totalHoldingTaxAmount": "إجمالي ضريبة الخصم والإضافة",
+    "totalVatAmount": "إجمالي ض.ق.م",
+    "setSettle": "تأكيد عملية التسوية",
+    "settleBtn": "تسوية",
+    "serialNumberError": "لم يتم ادخال الرقم المسلسل بنجاح, برجاء الادخال مرة اخرى",
+    "startSerial": "بداية الرقم المسلسل",
+    "fromDate": "من تاربخ",
+    "toDate": "إلي تاريخ",
+    "settledAction": {
+      "true": "تمت",
+      "false": "-"
+    },
+    "serialNumberOverwriteBody": "هل تريد تغيير رقم المسلسل للفاتورة ",
+    "serialNumberOverwriteTitle": "تغيير رقم المسلسل",
+    "settle": "تسوية",
+    "search": {
+      "corporateLocaleName": "إسم العميل",
+      "corporateEnName": "إسم العميل (إنجليزي)",
+      "siteLocaleName": "اسم منفذ البيع",
+      "siteEnName": "اسم منفذ البيع (إنجليزي)",
+      "merchantLocaleName": "اسم التاجـر",
+      "merchantEnName": "اسم التاجـر (إنجليزي)"
+    },
+    "updateMileage": "تحديث قراءة العداد",
+    "oldMileage": "قراءة العداد السابقة:",
+    "errMileage": "لا يمكن أن تكون القيمة المحدّثة أقل من المسافة المقطوعة بالقراءة الأخيرة"
+  }
+}

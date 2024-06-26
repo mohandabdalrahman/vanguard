@@ -1,0 +1,10 @@
+<button [ngStyle]="{'backgroundColor':showAdvanceSearch?'#2d4190':'#fff',color:showAdvanceSearch?'#fff':''}"
+        (click)="showAdvanceSearch=!showAdvanceSearch" class="advance-search" type="button">
+  <span class="text">
+    <nb-icon icon="options-2-outline"  [ngStyle]="{color:showAdvanceSearch?'#fff':''}"></nb-icon>
+    {{'app.filter' | translate}}
+    </span>
+  <div class="icon">
+    <nb-icon style="font-size: 1em" icon="arrow-down" ></nb-icon>
+  </div>
+</button>

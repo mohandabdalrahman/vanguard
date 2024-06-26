@@ -1,0 +1,9 @@
+<p *ngIf="PolicyList!=true" (click)="ouHierarchyModal.open(null, true)">
+  <img src="./assets/img/icons-tree-primary.svg" alt="tree">
+  {{'unit.showHierarchy' | translate}}</p>
+
+<app-modal #ouHierarchyModal [showCloseBtn]="false" [size]="'xl'">
+  <h5 head class="title">{{'unit.hierarchy' | translate}}</h5>
+  <app-tree-nodes body [nodes]="listCorporateOus" [colorOptions]="{parentBgColor:'#2d4190', childBgColor:'#eeeef2' , parentColor:'#fff', childColor:'#636888' }"  (onNodeSelected)="setSelectedNode($event)"></app-tree-nodes>
+  <button class="ui button btn-primary" footer (click)="ouHierarchyModal.closeModal()">{{'app.close' | translate}}</button>
+</app-modal>

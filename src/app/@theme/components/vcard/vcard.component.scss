@@ -1,0 +1,93 @@
+@import '../../../scss/variables';
+.container {
+  padding: 1% 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .vrCard {
+    // margin: 2% 25% 2% 25%;
+    width: 536px;
+    height: 336px;
+    overflow: hidden;
+    border: 1px solid $light;
+    @media (max-width: 767.98px) {
+      margin: 2% 10% 0 10%;
+      width: 75%;
+    }
+
+    border-radius: 29px;
+    box-shadow: 12px 9px 30px 5px rgba(0, 0, 0, 0.2);
+
+    &__header {
+      display: flex;
+      padding: 2% 2% 1% 2%;
+      width: 100%;
+      background-color: white !important;
+      border-top-left-radius: 13px;
+      border-top-right-radius: 13px;
+    }
+
+    &__Logo {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+
+      img {
+        margin: 1% 3%;
+        width: 30%;
+        height: 55%;
+      }
+    }
+
+    &__body {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      padding: 5% 6% 0 6%;
+      .qrCode {
+        text-align: right;
+        background-color: white;
+        padding: 5px;
+        border-radius: 29px;
+        overflow: hidden;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: center;
+        width: 50%;
+        margin-top: 3%;
+
+        h6,
+        p {
+          font-size: 1.5em;
+          margin-bottom: 7%;
+          color: white;
+          text-align: left;
+        }
+      }
+    }
+
+    &__number {
+      margin-right: 3%;
+      text-align: right;
+      padding: 3%;
+      p {
+        color: white;
+        margin-top: 2%;
+        font-size: 1.5em;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}
+
+.vrCard_content {
+  background-color: #123180;
+  border-radius: 29px;
+  height: 100%;
+
+}

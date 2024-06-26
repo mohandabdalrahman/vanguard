@@ -1,0 +1,53 @@
+
+<div class="tree">
+  <tree-root [nodes]="nodes" #tree [focused]="true" [options]="options" (activate)="selectNode($event)"
+    (deactivate)="selectNode($event)">
+    <ng-template #treeNodeTemplate let-node let-index="index">
+      <div class="node-container"
+        [ngClass]="( (nodeToBeDimmed == node?.data) || node?.data && node?.data?.inputBalanceDistributionMode  && node?.data?.inputBalanceDistributionMode === 'BY_LIMIT' && showOuBalanceDetails) ? 'disable-node' :''">
+        <div class="tree-node" [ngStyle]="{
+        'backgroundColor': node?.data?.type=== 'ROOT' ? colorOptions['parentBgColor'] : colorOptions['childBgColor'] ,
+        'color': node?.data?.type=== 'ROOT' ? colorOptions['parentColor'] : colorOptions['childColor']
+        }">
+          <div class="tree-node-left">
+            <img class="icon" *ngIf="node?.data?.type=== 'ROOT'" src='./assets/img/root-bg.png' alt="root-icon">
+            <img *ngIf="node?.data?.type!=='ROOT'"
+              [src]="node?.data?.type==='MAIN' ? './assets/img/pending-requests/icons-master-corporate.svg':'./assets/img/icons-corporates.svg'"
+              alt="node-icon">
+            <span> {{ currentLang === 'en' ? node?.data?.enName : node?.data?.localeName}} </span>
+          </div>
+
+          <div class="tree-node-right">
+            <img
+              [src]="node?.data?.outputBalanceDistributionMode === 'BY_BALANCE' ? './assets/img/BY_BALANCE.svg':'./assets/img/BY_LIMIT.svg'"
+              alt="balance type">
+
+          </div>
+
+        </div>
+        <div *ngIf="!showOuBalanceDetails">
+          <div class="tree-node-right" *ngIf="node?.data?.selfAmount != null && node?.data?.selfAmount>=0">
+            {{+node?.data?.selfAmount?.toFixed(2) | number }} {{'dashboard.currency' | translate}}
+          </div>
+        </div>
+        <div
+          *ngIf="showOuBalanceDetails && node?.data?.inputBalanceDistributionMode !== 'BY_LIMIT'"  (click)="onSelect(node)">
+          <div class="available-Balance">
+            <div class="available-Balance-Items">
+              <div class="label-field">
+                {{"unit.availableTransfer" | translate}}:
+              </div>
+              <div class="label-value">
+                {{(node?.data?.bufferBalance + node?.data?.currentBalance)?.toLocaleString("en-US")}}
+              </div>
+            </div>
+            <div class ="empty-space">
+              <div class="show-details" >{{"app.details" | translate}}</div>
+          </div>
+          </div>
+        </div>  
+        <balance-details-drawer [id]="node.id"  [showDrawer] = "node.showDrawer" [node]="node" (onCloseDrawer)="showDrawerDetails(node)"></balance-details-drawer>
+      </div>
+    </ng-template>
+  </tree-root>
+</div>

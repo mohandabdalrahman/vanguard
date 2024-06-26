@@ -1,0 +1,84 @@
+
+
+<ng-container>
+  <app-data-table [saleView]="true" [tableControls]="false" [gridData]="gridData" [colData]="colData">
+
+    <ng-container header>
+      <app-left-table-header [length]="totalGroup?.length" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"
+      ></app-left-table-header>
+      <div class="header-actions" *ngIf="totalGroup?.length">
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+    </ng-container>
+    <app-search search>
+      <form novalidate #reportForm="ngForm">
+        <div class="row">
+          <div class="col-6" *ngIf="salesGroup !== 'ZONE_ID'">
+            <div class="select-control" *ngIf="salesGroup === 'CITY_ID'">
+              <app-label [label]="'city.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'cities')" [multiple]="true" [(ngModel)]="cityIds"
+                         name="cities" placeholder="{{'city.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let city of cities" [value]="city.id">
+                  {{currentLang === 'en' ? city?.enName : city?.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="select-control" *ngIf="salesGroup === 'SITE_ID'">
+              <app-label [label]="'site.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'sites')" [multiple]="true" [(ngModel)]="siteIds"
+                         name="sites" placeholder="{{'site.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let site of sites" [value]="site.id">
+                  {{currentLang === 'en' ? site?.enName : site?.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="select-control" *ngIf="salesGroup === 'MERCHANT_ID'">
+              <app-label [label]="'merchant.title'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'merchants')" [multiple]="true" [(ngModel)]="merchantIds"
+                         name="merchants" placeholder="{{'merchant.title' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let merchant of merchants" [value]="merchant.id">
+                  {{currentLang === 'en' ? merchant?.enName : merchant?.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-5" *ngIf="salesGroup === 'ZONE_ID'">
+            <div class="select-control">
+              <app-label [label]="'city.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="getZones(countryId, $event);" [multiple]="true" [(ngModel)]="cityIds"
+                         name="cities" placeholder="{{'city.name' | translate}}">
+                <ng-option *ngFor="let city of cities" [value]="city.id">
+                  {{currentLang === 'en' ? city.enName : city.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-5" *ngIf="salesGroup === 'ZONE_ID'">
+            <div class="select-control">
+              <app-label [label]="'zone.name'"></app-label>
+              <ng-select dropdownPosition='bottom' [multiple]="true" [(ngModel)]="zoneIds" name="zones"
+                         placeholder="{{'zone.name' | translate}}">
+                <ng-option *ngFor="let zone of zones" [value]="zone.id">
+                  {{currentLang === 'en' ? zone.enName : zone.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-2">
+            <button  class="ui button btn-primary"
+                    (click)="searchCity()">{{'report.applyBtn' | translate}}</button>
+          </div>
+        </div>
+      </form>
+
+    </app-search>
+  </app-data-table>
+
+
+  <app-total-sales *ngIf="merchantTotal" [totalSales]="merchantTotal"></app-total-sales>
+</ng-container>

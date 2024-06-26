@@ -1,0 +1,97 @@
+
+<app-master-corporate-details *ngIf="userType==='master_corporate'"></app-master-corporate-details>
+<app-data-table [viewLink]="activeTab" [gridData]="gridData" [colData]="colData" [entityName]="'CORPORATE'"
+                [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'corporates.title'" [name]="'corporates.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'CORPORATE_CREATE'" [addText]="'corporates.add'">
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields" *ngIf="userType==='admin'">
+        <div class="field">
+          <app-label [label]="'corporates.country'"></app-label>
+          <ng-select dropdownPosition='bottom' name="countryId" [ngModel]
+                     placeholder="{{'corporates.country' | translate}}">
+            <ng-option *ngFor="let country of countries"
+                       [value]="country.id">{{currentLang === 'en' ? country?.enName : country?.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'corporates.localeName'"
+                           [label]="'corporates.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'corporates.enName'"
+                           [label]="'corporates.enName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'corporates.corporateLevelName'"></app-label>
+          <ng-select dropdownPosition='bottom' name="accountTypeId" [ngModel]
+                     placeholder="{{'corporates.corporateLevelName' | translate}}">
+            <ng-option *ngFor="let level of corporateLevels"
+                       [value]="level.id">{{currentLang === 'en' ? level?.enName : level?.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'corporates.account'"></app-label>
+          <ng-select dropdownPosition='bottom' name="masterCorporateId" [ngModel]
+                     placeholder="{{'corporates.account' | translate}}">
+            <ng-option *ngFor="let master of masterCorporates"
+                       [value]="master.id">{{currentLang === 'en' ? master?.enName : master?.localeName}}</ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="commercialRegistrationNumber"
+                           [placeholder]="'corporates.commercialRegistrationNumber'"
+                           [label]="'corporates.commercialRegistrationNumber'"></app-input-field>
+        </div>
+      </div>
+      <div class="fields" *ngIf="userType==='master_corporate'">
+        <div class="field">
+          <app-label [label]="'corporates.localeName'"></app-label>
+          <ng-select [multiple]="true" dropdownPosition='bottom' name="corporates" [(ngModel)]="corporateIds"
+                     (change)="selectAll($event,'corporates')"
+                     placeholder="{{'corporates.localeName' | translate}}">
+            <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+            <ng-option *ngFor="let corporate of corporates"
+                       [value]="corporate.id">{{corporate?.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'corporates.enName'"></app-label>
+          <ng-select [multiple]="true" dropdownPosition='bottom' name="corporates" [(ngModel)]="corporateIds"
+                     (change)="selectAll($event,'corporates')"
+                     placeholder="{{'corporates.enName' | translate}}">
+            <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+            <ng-option *ngFor="let corporate of corporates"
+                       [value]="corporate.id">{{corporate?.enName}}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'corporates.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteCorporate()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>

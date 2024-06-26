@@ -1,0 +1,31 @@
+.row {
+  margin-top: 1em;
+  margin-bottom: 2em;
+
+  form {
+    display: flex;
+    align-items: center;
+
+    .select-control {
+      width: 77%;
+    }
+
+    .button {
+      margin-top: 2em;
+      width: 9em;
+      margin-left: 1em;
+    }
+  }
+}
+
+.row {
+  .col-2 {
+    display: flex;
+    align-items: end;
+  }
+}
+
+.header-actions {
+  display: flex
+}
+

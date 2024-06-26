@@ -1,0 +1,53 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a class="logo" href="#" (click)="navigateHome()">
+      <img [src]="'./assets/logo-'+ currentLang +'.svg'" alt="logo">
+    </a>
+  </div>
+  <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <nb-icon icon="menu-outline"></nb-icon>
+  </a>
+</div>
+
+<div class="header-container">
+  <nb-actions size="small">
+    <!--GLOBAL SEARCH-->
+    <!--    <nb-action class="control-item">-->
+    <!--      <nb-search type="rotate-layout"></nb-search>-->
+    <!--    </nb-action>-->
+
+    <nb-action>
+      <ng-select class="lang-dropdown" [searchable]="false" [clearable]="false" [(ngModel)]="selectedLang" (change)="changeLang($event)">
+        <ng-option *ngFor="let lang of langs" [value]="lang.value">
+<!--          <i class="globe icon"></i>-->
+          <nb-icon style="font-size: 1.2em;" icon="globe-outline"></nb-icon>
+          {{lang.name}}
+        </ng-option>
+      </ng-select>
+    </nb-action>
+
+
+    <!--    <nb-action class="control-item">-->
+    <!--      <ng-select [searchable]="false" [clearable]="false" [(ngModel)]="profileOption"-->
+    <!--                 (change)="changeProfileOption($event)">-->
+    <!--        <ng-option *ngFor="let option of profileOptions" [value]="option.value">-->
+    <!--          {{option.name}}-->
+    <!--        </ng-option>-->
+    <!--      </ng-select>-->
+    <!--    </nb-action>-->
+
+    <nb-action>
+      <nb-user [name]="userType" [title]="authService.getUserName()" [nbContextMenu]="items" nbContextMenuTag="my-context-menu">
+      </nb-user>
+    </nb-action>
+    <!--    LOGOUT-->
+    <!--    <nb-action class="control-item" (click)="logout()">-->
+    <!--      <button class="ui button logout-btn">-->
+    <!--        <nb-icon icon="power-outline"></nb-icon>-->
+    <!--      </button>-->
+    <!--    </nb-action>-->
+
+  </nb-actions>
+
+
+</div>

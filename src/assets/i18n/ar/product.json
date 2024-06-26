@@ -1,0 +1,45 @@
+{
+  "product": {
+    "title": "كل المنتجات العامة",
+    "id": "المسلسل",
+    "localeName": "اسم المنتج (عربي)",
+    "enName": "اسم المنتج (إنجليزي)",
+    "unit": "وحدة القياس",
+    "monetaryValue": "سعر الوحدة",
+    "country": "الدولة",
+    "assetAssociated": "مرتبط بـ",
+    "status": "مفعل",
+    "createGlobalProduct": "إضافة منتج عام",
+    "createBtn": "إضافة منتج عام",
+    "updateBtn": "تعديل منتج عام",
+    "description": "وصف المنتج",
+    "vat": "ض.ق.م %",
+    "holdingTax": "ضريبة المنبع",
+    "price": "سعر الوحدة",
+    "taxCode":"كود المنتج (الضريبي)",
+    "enabled": "مفعل",
+    "type": "نوع",
+    "categoryTag": "مجموعة تصنيف المنتجات",
+    "category": {
+      "add": "إضافة تصنيف منتجات",
+      "update": "تعديل تصنيف منتجات",
+      "title": "تصنيف المنتج",
+      "name":"تصنيفات المنتج"
+    },
+    "global": {
+      "add": "إضافة منتج عام",
+      "update": "تعديل منتج عام",
+      "title": "منتج عام",
+      "name":"منتجات عامه"
+    },
+    "merchant": {
+      "add": "إضافة منتج",
+      "update": "تعديل منتج",
+      "title": "منتج"
+    },
+    "valueAddedTaxPercent": "ض.ق.م %",
+    "suspended": "مفعل",
+    "measurementUnit": "وحدة القياس",
+    "deletedTitle": "منتج"
+  }
+}

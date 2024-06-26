@@ -1,0 +1,70 @@
+
+<app-data-table [viewLink]="activeTab" [gridData]="gridData" [colData]="colData" [entityName]="'MERCHANT'">
+
+  <ng-container header>
+    <app-left-table-header [title]="'merchant.title'" [name]="'merchant.name'" [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'MERCHANT_CREATE'" [addText]="'merchant.add'">
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'merchant.localeName'" [label]="'merchant.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'merchant.enName'" [label]="'merchant.enName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="crNumber" [placeholder]="'merchant.crNumber'" [label]="'merchant.crNumber'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'merchant.country'"></app-label>
+          <ng-select name="countryId" [ngModel] placeholder="{{'corporates.country' | translate}}">
+            <ng-option *ngFor="let country of countries" [value]="country.id">{{currentLang==='en'? country?.enName : country?.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'merchant.mGroupId'"></app-label>
+          <ng-select name="masterMerchantId" [ngModel] placeholder="{{'merchant.mGroupId' | translate}}">
+            <ng-option *ngFor="let masterMerchant of masterMerchants" [value]="masterMerchant.id">{{currentLang==='en'? masterMerchant.enName:masterMerchant.localeName}}</ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'date'" [(ngModel)]="fromDate" name="fromDate" [placeholder]="'merchant.creationDateFrom'" [label]="'merchant.creationDateFrom'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'date'" [(ngModel)]="toDate" name="toDate" [placeholder]="'merchant.creationDate'" [label]="'merchant.creationDate'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="field search ">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'merchant.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteMerchant()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>

@@ -1,0 +1,180 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('site.create' | translate) : ('site.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <h6 *ngIf="banks.length === 0" style="color: red">{{'app.noBankAccountsDisclaimer' | translate}}</h6>
+  <form #addSiteForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'site.products'"></app-label>
+        <ng-select dropdownPosition='bottom' #product="ngModel" [multiple]="true"
+                   placeholder="{{'site.products' | translate}}"
+                   name="securityProfiles"
+                   [required]="!merchantSite.productIds?.length" ngModel [(ngModel)]="merchantSite.productIds">
+          <ng-option *ngFor="let product of products" [value]="product.id">
+            {{ currentLang === 'en' ? product.enName : product.localeName }}
+          </ng-option>
+        </ng-select>
+        <app-error [ref]="product" [message]="'app.selectRequired'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [required]="true" [ref]="enName" #enName="ngModel" [(ngModel)]="merchantSite.enName"
+                         name="enName"
+                         [placeholder]="'site.enName'" [label]="'site.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [required]="true" [ref]="localName" [(ngModel)]="merchantSite.localeName" #localName="ngModel"
+                         name="localName"
+                         [placeholder]="'site.localeName'" [label]="'site.localeName'"></app-input-field>
+        <app-error [ref]="localName"></app-error>
+      </div>
+
+      <div class="field"></div>
+    </div>
+    <h6>{{'app.address' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'site.city'"></app-label>
+        <ng-select dropdownPosition='bottom' #city="ngModel" required="true" name="cityId"
+                   [(ngModel)]="merchantSite.cityId"
+                   [disabled]="!cities.length||isUpdateView"
+                   (change)="getZones(countryId, $event);" placeholder="{{'site.city' | translate}}">
+          <ng-option *ngFor="let city of cities"
+                     [value]="city.id">
+            {{ currentLang === 'en' ? city.enName : city.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="city" [message]="'app.selectRequired'"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'site.zone'"></app-label>
+        <ng-select dropdownPosition='bottom' #zone="ngModel" [required]="true" name="zoneId"
+                   [(ngModel)]="merchantSite.zoneId"
+                   placeholder="{{'site.zone' | translate}}" [disabled]="!zones.length||isUpdateView">
+          <ng-option *ngFor="let zone of zones"
+                     [value]="zone.id"> {{currentLang === 'en' ? zone.enName : zone.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="zone" [message]="'app.selectRequired'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [disabled]="true" [ngModel]="countryName"
+                         name="countryName"
+                         [placeholder]="'site.country'" [label]="'site.country'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="address" #address="ngModel" [(ngModel)]="merchantSite.address" name="address"
+                         [placeholder]="'site.address'" [label]="'site.address'"></app-input-field>
+        <app-error [ref]="address"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" nbInput fullWidth name="description" rows="2"
+                  [(ngModel)]="merchantSite.description"></textarea>
+      </div>
+      <div>
+
+      </div>
+    </div>
+
+
+    <h6>{{'site.bankAccount' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'site.bankAccount'"></app-label>
+        <ng-select dropdownPosition='bottom' #bank="ngModel" [required]="true" name="bankAccountId"
+                   [(ngModel)]="merchantSite.bankAccountId"
+                   placeholder="{{'site.bankAccount' | translate}}">
+          <ng-option *ngFor="let bank of banks"
+                     [value]="bank.id"> {{currentLang === 'en' ? bank.enName : bank.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="bank" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field" *ngIf="billingAccount?.depositType == 'SITE_DEPOSIT'">
+        <app-label [label]="'merchant.currentBalance'"></app-label>
+        <input type="number" [value]="siteBalance" disabled="true">
+      </div>
+
+    </div>
+
+    <h6>{{'siteContact.details' | translate}}</h6>
+    <div class="ui dividing header"></div>
+
+    <div class="fields">
+      <div class="field">
+
+        <app-input-field [ref]="siteContactEmail" [required]="true" #siteContactEmail="ngModel"
+                         [(ngModel)]="siteContact.email" name="email"
+                         placeholder="{{'siteContact.email' | translate }}"
+                         [pattern]="'^[\\w-.]+@([\\w-]+.)+[\\w-]{2,4}$'"
+                         [label]="'siteContact.email'" [type]="'email'"></app-input-field>
+        <app-error [ref]="siteContactEmail"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="siteContactEnName" [required]="true" #siteContactEnName="ngModel"
+                         [(ngModel)]="siteContact.enName" name="siteContactenName"
+                         placeholder="{{'siteContact.enName' | translate}}"
+                         [label]="'siteContact.enName'"></app-input-field>
+        <app-error [ref]="siteContactEnName"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [required]="true" [ref]="siteContactLocalName" #siteContactLocalName="ngModel"
+                         [(ngModel)]="siteContact.localeName" name="siteContactLocalName"
+                         placeholder="{{'siteContact.localeName' | translate}}"
+                         [label]="'siteContact.localeName'"></app-input-field>
+        <app-error [ref]="siteContactLocalName"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="phoneNumber" #phoneNumber="ngModel"
+                         [(ngModel)]="siteContact.phoneNumber"
+                         name="phoneNumber" placeholder="{{ 'siteContact.phoneNumber' | translate}}"
+                         [label]="'siteContact.phoneNumber'" maxLength="16" minLength="9"></app-input-field>
+        <app-error [ref]="phoneNumber"></app-error>
+      </div>
+
+
+      <!-- <div class="field">
+        <app-label [required]="true" [label]="'siteContact.contactType'"></app-label>
+        <ng-select #contact="ngModel" [required]="true" name="contactTypeId" [(ngModel)]="siteContact.contactTypeId"
+                   placeholder="{{'siteContact.contactType' | translate}}">
+          <ng-option *ngFor="let contact of contacts" [ng-selected] = "true"
+                     [value]="contact.id"> {{currentLang === 'en' ? contact?.enName : contact?.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="contact" [message]="'app.selectRequired'"></app-error>
+      </div>  -->
+
+
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="faxNumber" [(ngModel)]="siteContact.faxNumber"
+                         #faxNumber="ngModel"
+                         name="faxNumber"
+                         placeholder="{{'siteContact.faxNumber' | translate}}"
+                         [label]="'siteContact.faxNumber'"></app-input-field>
+        <app-error [ref]="faxNumber"></app-error>
+      </div>
+    </div>
+
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button *ngIf="!isUpdateView" class="ui button btn-primary" [disabled]="!addSiteForm.form.valid"
+              (click)="addSite()">{{'site.create' |
+        translate}}</button>
+      <button *ngIf="isUpdateView" class="ui button btn-primary" [disabled]="!addSiteForm.form.valid"
+              (click)="updateMerchantSite()">{{'app.save' |
+        translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,10 @@
+<div class="left-header">
+  <div class="left-header-icon">
+    <img [src]="icon" [alt]="name" >
+  </div>
+  <div class="left-header-content">
+    <p *ngIf="title">{{title | translate}}</p>
+    <h6 *ngIf="length && name">{{length}} {{name | translate}}</h6>
+    <span *ngIf="unitName">{{unitName}}</span>
+  </div>
+</div>

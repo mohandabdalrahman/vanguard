@@ -1,0 +1,21 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/common";
+
+::ng-deep .nb-theme-default nb-context-menu nb-menu {
+  border-radius: 22px;
+  min-width: 230px;
+
+  .menu-title {
+    color: $primary;
+    font-size: 14px;
+    text-transform: capitalize;
+  }
+
+  nb-icon {
+    color: $primary !important;
+  }
+}
+
+img {
+  transform: rotateX(180deg);
+}

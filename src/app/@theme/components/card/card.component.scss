@@ -1,0 +1,52 @@
+.card {
+  padding: 1em;
+  border: none;
+  margin-bottom: 2em;
+  @media (max-width: 575.98px) {
+    margin-bottom: 1em;
+  }
+
+  &-title {
+    h6 {
+      color: #434343;
+      font-size: 1em;
+      text-transform: capitalize;
+      @media (max-width: 575.98px) {
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  &-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-info {
+      b {
+        font-size: 1.5em;
+        @media (max-width: 575.98px) {
+          font-size: 1em;
+        }
+      }
+
+      span {
+        color: #97999c;
+        text-transform: capitalize;
+        margin-left: 0.5em;
+        display: inline-block;
+        @media (max-width: 575.98px) {
+          margin-left: 0;
+        }
+      }
+    }
+
+    &-img {
+      img {
+        @media (max-width: 575.98px) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.modal-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.modal-title {
+  font-size: 1.4em;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.btn {
+  width: fit-content;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+.modal-inputs {
+  input {
+    height: 50px;
+    width: 90px;
+    text-align: center;
+    font-size: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}

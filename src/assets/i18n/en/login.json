@@ -1,0 +1,31 @@
+{
+  "login": {
+    "title": "Login",
+    "body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "username": "Username/Email",
+    "username-1": "Username",
+    "password": "Password",
+    "loginBtn": "Login",
+    "forgetPassword": "Forgot Password",
+    "email": "E-mail",
+    "sendBtn": "Send",
+    "resetTitle": "Reset Your Password",
+    "resetText": "The verification email will be sent to the mailbox. Please Check it.",
+    "newPassText": "Please enter your new password.",
+    "confirmPassword": "Confirm Password",
+    "required": "Required",
+    "resetBtn": "Reset Password",
+    "successChanged": "Password is successfully changed",
+    "validEmail": "Please enter a valid email",
+    "validUsername": "Please enter a valid username, should not exceed 20 characters",
+    "currentPassword": "Current Password",
+    "changePassword": "Change Password",
+    "changePasswordTxt": "Please enter your current password and the new one !",
+    "newPassword": "New Password",
+    "invalidLogin": "Please enter a valid username and / or password",
+    "currentPasswordRequired": "Current Password is required",
+    "newPasswordRequired": "New Password is required",
+    "passwordValidation": "Your password is not valid, please add password at least 8 characters with numbers, uppercase, lowercase\n letters .",
+    "errorMsg": "Login fail please try again later"
+  }
+}

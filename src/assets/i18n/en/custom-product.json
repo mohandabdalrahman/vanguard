@@ -1,0 +1,16 @@
+{
+  "customProduct": {
+        "arName": "Product Name (Arabic)",
+        "enName": "Product Name (English)",
+        "description": "\nDescription",
+        "unit": "Measuring Unit",
+        "monetary": "Unit Price",
+        "country": "Country",
+        "asset": "Associated Asset",
+        "id": "ID",
+        "title": "All Custom Products",
+        "createBtn": "Add Custom Product",
+        "update": "Modify Custom Product",
+        "name": "Custom Product"
+    }
+}

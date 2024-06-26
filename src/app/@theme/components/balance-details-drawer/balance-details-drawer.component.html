@@ -1,0 +1,52 @@
+<div class="drawer roundBorder" *ngIf="showDrawer">
+  <!-- <div class="drawer__header">
+    <a (click)="closeDrawer()" class="close-btn">
+      <div class="icon">
+        <img src="./assets/img/icons-close.svg" alt="close">
+      </div>
+    </a>
+  </div> -->
+  <div class="drawer__info">
+    <div class="drawer__info__container">
+      <div class="data-row">
+        <div class="balance-type" *ngIf="selfAmount != null && selfAmount>=0">
+
+          <div class="balance-details" *ngIf="node?.data?.inputBalanceDistributionMode !== 'BY_LIMIT'">
+            <div class="available-Balance">
+              <div class="available-Balance-Items">
+                <div class="label-field">
+                    {{"unit.bufferBalance" | translate}}
+                    <app-tooltip [infoText]="'unit.bufferBalanceDescription'" [color]="'#4d4848'" ></app-tooltip>
+                </div>
+                <div class="label-value">
+                  {{getBufferBalance().toLocaleString("en-US")}} {{'dashboard.currency' | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="data-row">
+        <div class="balance-type" *ngIf="selfAmount != null && selfAmount>=0">
+
+          <div class="balance-details"
+            *ngIf="node?.data?.inputBalanceDistributionMode !== 'BY_LIMIT'">
+            <div class="available-Balance">
+              <div class="available-Balance-Items">
+                <div class="label-field">
+                  {{"app.currentBalance" | translate}}
+                  <app-tooltip [infoText]="'app.currentBalance'" [color]="'#4d4848'"></app-tooltip>
+                </div>
+                <div class="label-value">
+                  {{getCurrentBalance().toLocaleString("en-US")}} {{'dashboard.currency' | translate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

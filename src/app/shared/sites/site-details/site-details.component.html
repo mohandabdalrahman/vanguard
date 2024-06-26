@@ -1,0 +1,36 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="details">
+  <h5>{{'site.details' | translate}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of merchantSite | keyvalue">
+        <app-item-details [head]="'site.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'site.suspended'" [body]="'app.'+suspendedStatus  | translate"></app-item-details>
+      </div>
+            
+      <div  class="column" *ngIf="billingAccount?.depositType == 'SITE_DEPOSIT'">
+        <app-item-details [head]="'merchant.currentBalance'" [body]="siteCurrentBalance | translate"></app-item-details>
+      </div>
+     
+      <div class="column" *ngFor="let prop of siteContact | keyvalue">
+        <app-item-details [head]="'contact.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="update">
+    <app-update-button *ngIf="userType === 'admin'"
+                       [path]="['/'+ userType +'/merchants/', merchantId ,'details','sites' , siteId , 'update']" [role]="'SITE_UPDATE'"></app-update-button>
+    <app-update-button *ngIf="userType === 'merchant'"
+                       [path]="['/'+ userType ,'sites' , siteId , 'update']" [role]="'SITE_UPDATE'"></app-update-button>
+
+  </div>
+</div>

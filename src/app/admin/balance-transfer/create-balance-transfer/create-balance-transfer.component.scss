@@ -1,0 +1,260 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+.selected-node {
+  margin-bottom: 2em;
+
+  > p {
+    margin-bottom: 0;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: $legend;
+
+    &:nth-of-type(2) {
+      margin: 0 16px;
+    }
+  }
+
+  > img {
+    margin: 0 16px;
+  }
+
+  .unit-name-container {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+    width: fit-content;
+
+    .icon-container {
+      width: 34px;
+      height: 34px;
+      background-color: $ray;
+      border-radius: 30px;
+      @extend .d-flex-center;
+
+      img {
+        width: 1em;
+        filter: invert(25%) sepia(76%) saturate(814%) hue-rotate(195deg)
+          brightness(87%) contrast(95%);
+      }
+    }
+
+    span {
+      margin: 0 1em;
+      color: $primary;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+}
+
+nb-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+
+  &-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: $alpha;
+    border: 0;
+  }
+
+  &-body {
+    .balance-container {
+      border-radius: 18px;
+      border: solid 1px $light;
+      padding: 1em;
+      margin-bottom: 1em;
+
+      .head {
+        &-top {
+          border-bottom: 1px solid $light;
+        }
+
+        > .balance {
+          margin-bottom: 0;
+          margin-top: 20px;
+        }
+      }
+
+      .icon {
+        width: 40px;
+        height: 106px;
+        background-color: rgb(40, 190, 137, 0.2);
+        border-radius: 7px;
+        @extend .d-flex-center;
+      }
+
+      .available-transfer {
+        display: flex;
+
+        .amount {
+          p {
+            font-size: 12px;
+            color: $misty;
+            margin-bottom: 0;
+          }
+
+          margin-bottom: 16px;
+        }
+
+        .transfer-amount-container {
+          margin: 0 1em;
+        }
+      }
+    }
+  }
+
+  &.balance-value {
+    max-width: 265px;
+    nb-card-body {
+      padding: 0;
+
+      input {
+        margin: 24px 0 16px 0;
+        height: 72px;
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #c9cbd5;
+        background-color: $haze;
+        font-size: 34px;
+        color: $legend;
+        padding: 0 5px;
+        outline: none;
+      }
+
+      p {
+        font-size: 12px;
+        color: $legend;
+
+        img {
+          filter: invert(76%) sepia(59%) saturate(1097%) hue-rotate(329deg)
+            brightness(102%) contrast(101%);
+        }
+      }
+    }
+  }
+
+  &.remaining-balance {
+    max-width: 250px;
+    .available-balance {
+      border: 1px solid $light;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+
+      &.after {
+        display: flex;
+
+        .icon {
+          width: 40px;
+          height: 45px;
+          border-radius: 7px;
+          background-color: rgb(40, 190, 137, 0.2);
+          @extend .d-flex-center;
+        }
+
+        .balance {
+          flex-direction: column;
+          align-items: start;
+          margin: 0 1em;
+        }
+      }
+    }
+  }
+}
+
+.balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  span {
+    font-size: 12px;
+    color: $misty;
+    text-transform: capitalize;
+  }
+
+  strong {
+    font-size: 18px;
+    font-weight: bold;
+    color: $alpha;
+  }
+}
+
+.arrow_icon {
+  width: 24px;
+  height: 24px;
+}
+.arrow-container {
+  width: 38px;
+  height: 54px;
+  border-radius: 7px;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+  background-color: #fff;
+  margin: 0 1em;
+  @extend .d-flex-center;
+}
+
+.submit {
+  text-align: center;
+
+  button {
+    background-color: $positive;
+    color: #fff;
+  }
+}
+
+::ng-deep {
+  .info-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 24px;
+    background-color: #2d41901f;
+    @extend .d-flex-center;
+    margin-top: 1em;
+
+    img {
+      filter: invert(28%) sepia(12%) saturate(3155%) hue-rotate(190deg)
+        brightness(95%) contrast(102%);
+    }
+  }
+  .modal-body {
+    h5 {
+      color: $alpha;
+      text-transform: capitalize;
+    }
+  }
+  .modal-footer {
+    justify-content: center !important;
+  }
+  .modal-body {
+    text-align: center;
+  }
+}
+
+.from-ou-balance {
+  max-width: 310px;
+}
+
+.btn {
+  color: #2d4190;
+  font-weight: bold;
+}
+
+.step-action {
+  bottom: 100px;
+}
+
+.fixedBtn {
+  width: fit-content;
+}
+
+.back-btn{
+  background-color: $strongGrey !important;
+  color: #fff !important;
+}

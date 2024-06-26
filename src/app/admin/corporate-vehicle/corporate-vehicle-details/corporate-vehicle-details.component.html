@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-between">
+    <app-back-button *ngIf="userType !== 'admin'"></app-back-button>
+    <div class="unit" *ngIf="ouEnabled || adminCorporateOuEnabled">
+        <span >{{'corporateVehicle.Affiliatedwiththeunit'|translate}}</span>
+        <div>
+            <app-info-details-tag [image]="'./assets/img/icons-branch-2.svg'" [text]="affiliatedUnit"></app-info-details-tag>
+        </div>
+        <!-- <div class="mx-3">
+            <app-info-details-tag [image]="'./assets/img/icons-calendar.svg'" [length]="10" [text]="'corporateVehicle.servicePeriod'"></app-info-details-tag>
+        </div> -->
+    </div>
+</div>
+<app-unit-tabs [tabs]="tabs"></app-unit-tabs>

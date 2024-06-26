@@ -1,0 +1,355 @@
+@import "../../../scss/common";
+@import "../../../scss/variables";
+
+.data-table {
+  //@include card;
+  background-color: unset;
+  overflow-x: auto;
+  box-shadow: none;
+  border-radius: unset;
+
+  &.saleView {
+    min-height: 30em;
+  }
+
+  &-top-container {
+    background-color: #fff;
+    border-radius: 18px;
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 115px;
+    padding: 24px;
+    width: 100%;
+    @media (max-width: 767.98px) {
+      flex-wrap: wrap;
+    }
+  }
+
+  .invoice-header {
+    color: #413a90;
+  }
+
+  table {
+    background-color: #fff;
+    border-top-left-radius: 34px;
+    border-top-right-radius: 34px;
+    padding: 16px;
+    border: unset;
+
+    &.noRadius {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    thead,
+    tbody {
+      tr {
+        @media (max-width: 767.98px) {
+          display: flex !important;
+          justify-content: space-between;
+        }
+      }
+    }
+
+    th {
+      border-left: 0;
+      border-top: 0;
+      text-transform: capitalize;
+      font: normal normal normal 14px/25px Geomanist-Bold;
+      letter-spacing: 0px;
+      opacity: 1;
+      padding: 0.7em 0.48em;
+      background-color: $haze;
+      border-bottom: 1px solid $ray;
+      color: $alpha;
+      white-space: nowrap;
+
+      div {
+        color: $alpha;
+      }
+    }
+
+    td {
+      font-size: 1rem;
+      padding: 0.48em;
+      border-top: unset;
+      vertical-align: middle;
+
+      span {
+        color: $legend;
+      }
+
+      .status {
+        width: 98px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        font-size: 1rem;
+
+        &.active {
+          background-color: #eefaf6;
+          color: $positive;
+        }
+
+        &.inactive {
+          background-color: #fdf1f1;
+          color: $negative;
+        }
+      }
+
+      .operatingValidity {
+        width: 14px;
+        height: 4px;
+        border-radius: 3px;
+        background-color: red;
+        display: inline-block;
+
+        &.active {
+          background-color: $positive;
+        }
+
+        &.inactive {
+          background-color: $negative;
+        }
+      }
+
+      &.clickable {
+        cursor: pointer;
+
+        span {
+          display: flex;
+          align-items: center;
+
+          nb-icon {
+            margin-left: 0.5em;
+            width: 0.9em;
+          }
+        }
+      }
+    }
+  }
+
+  .header-sorting {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 0.86em;
+    font-weight: bold;
+    color: $alpha;
+  }
+
+  .sorting-icons {
+    display: inline-flex;
+    flex-direction: column;
+
+    nb-icon {
+      cursor: pointer;
+      color: $alpha;
+    }
+  }
+}
+
+.table-tab {
+  margin-top: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.sub-table {
+  -webkit-box-shadow: inset 0px 0px 31px -3px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: inset 0px 0px 31px -3px rgba(0, 0, 0, 0.23);
+  box-shadow: inset 0px 0px 31px -3px rgba(0, 0, 0, 0.23);
+  background-color: #fff !important;
+  border-radius: 5px;
+}
+
+//.sub-table th {
+//  border-top: 3px solid #8d8080 !important;
+//}
+//
+//.sub-table th:first-child {
+//  border-left: 3px solid #8d8080 !important;
+//}
+//
+//.sub-table th:last-child {
+//  border-right: 3px solid #8d8080 !important;
+//}
+//
+//.sub-table td:first-child {
+//  border-left: 3px solid #8d8080 !important;
+//}
+//
+//.sub-table td:last-child {
+//  border-right: 3px solid #8d8080 !important;
+//}
+
+.expand-btn {
+  font-size: 0.7em;
+  border: 0;
+  background-color: transparent;
+}
+
+.ui.striped.table tbody tr:nth-child(2n),
+.ui.striped.table > tr:nth-child(2n) {
+  background-color: #f6f7f9;
+  border-radius: 4px;
+}
+
+.Expectation {
+  display: flex;
+
+  .Limit:nth-of-type(2) {
+    margin: auto 23px;
+  }
+
+  .Limit:nth-of-type(1) {
+    width: 130px;
+  }
+
+  .Limit {
+    display: flex;
+    align-items: center;
+
+    .icon span {
+      display: inline-block;
+      width: 30px;
+      height: 40px;
+      margin: 0 8px;
+      padding: 11px 6px 11px 6px;
+      border-radius: 7px;
+
+      img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+    }
+
+    .ExpectedLimitIcon span {
+      display: inline-block;
+      width: 30px;
+      height: 40px;
+      margin: 0 8px;
+      padding: 11px 6px;
+      border-radius: 7px;
+      background-color: rgba(45, 65, 144, 0.14);
+
+      img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+    }
+
+    .payed span {
+      font-size: 12px;
+      white-space: nowrap;
+
+    }
+
+    .payed p {
+      font-size: 14px;
+      color: $alpha;
+      white-space: nowrap;
+    }
+
+  }
+}
+
+.Percentage {
+  width: 100%;
+  height: 18px;
+  border-radius: 9px;
+  overflow: hidden;
+  background-color: $light;
+
+  .Gradiant {
+
+    height: 100%;
+    padding: 4px 0 3px 0;
+    border-radius: 5px;
+    background-image: linear-gradient(86deg, #308df2 14%, #95a5ea 59%, #67e5d8 139%);
+  }
+
+
+}
+
+
+.PercentNumber {
+  margin-inline-start: 4px;
+  height: 20px;
+  color: white;
+  padding: 0 6px;
+  border-radius: 10px;
+  background-color: $legend;
+}
+
+.field-inputs {
+  display: flex;
+
+  .exchange-icon {
+    margin: 25px 2px 0 2px;
+  }
+
+  & ::ng-deep app-label {
+    display: block;
+  }
+}
+
+.daily-operations-values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    color: $legend;
+    font-size: 12px;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: bold;
+    color: $primary !important;
+  }
+}
+
+.greenBackground {
+  background-color: rgba(40, 190, 137, 0.14);
+}
+
+.redBackground {
+  background-color: rgba(230, 81, 81, 0.14);
+}
+
+.yellowBackground {
+  background-color: rgba(255, 172, 58, 0.14);
+}
+
+.legendBackground {
+  background-color: #63688840;
+}
+
+.headerClass {
+  margin-bottom: 1em;
+  border-radius: 18px !important;
+  height: 88px;
+  display: flex;
+  align-items: center;
+}
+
+
+.trx-review{
+  width: 1.5em;
+  height: 1.5em;
+  margin: auto;
+  img{
+      width: 100%;
+  }
+}

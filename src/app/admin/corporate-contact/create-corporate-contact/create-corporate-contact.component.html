@@ -1,0 +1,98 @@
+
+<app-back-button *ngIf="userType==='corporate'"></app-back-button>
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('corporateContact.add' | translate) : ('corporateContact.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #corporateContactForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true"
+                         [(ngModel)]="corporateContact.localeName" name="arName"
+                         [placeholder]="'corporateContact.localeName'" [label]="'corporateContact.localeName'">
+        </app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true"
+                         [(ngModel)]="corporateContact.enName" name="enName" [placeholder]="'corporateContact.enName'"
+                         [label]="'corporateContact.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateContact.contactTypeName'"></app-label>
+        <ng-select dropdownPosition='bottom' #contactTypeId="ngModel" required="true" name="contactTypeId"
+                   [(ngModel)]="corporateContact.contactTypeId"
+                   placeholder="{{'corporateContact.contactTypeName' | translate}}">
+          <ng-option *ngFor="let contactType of contactTypes"
+                     [value]="contactType.id">{{currentLang === 'en' ? contactType.enName : contactType.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="contactTypeId" [message]="'app.selectRequired'"></app-error>
+
+      </div>
+      <div class="field">
+        <app-input-field [ref]="officeNum" #officeNum="ngModel" [required]="true" [type]="'number'"
+                         [(ngModel)]="corporateContact.officeNumber" name="officeNum"
+                         [placeholder]="'corporateContact.officeNumber'"
+                         [label]="'corporateContact.officeNumber'"></app-input-field>
+        <app-error [ref]="officeNum"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="faxNum" #faxNum="ngModel" [required]="true" [type]="'number'"
+                         [(ngModel)]="corporateContact.faxNumber" name="faxNum"
+                         [placeholder]="'corporateContact.faxNumber'"
+                         [label]="'corporateContact.faxNumber'"></app-input-field>
+        <app-error [ref]="faxNum"></app-error>
+      </div>
+      <div class="field">
+        <app-label [label]="'user.mobileNumber'" [required]="true"></app-label>
+        <input type="tel" id="mobNum" name="mobNum" autocomplete="off"
+               required minlength="11" maxlength="11"
+               placeholder="mobile Number"
+               [(ngModel)]="corporateContact.mobileNumber" #mobNum="ngModel">
+        <app-error [ref]="mobNum"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [pattern]="EMAIL_REGEX" [ref]="email" #email="ngModel"
+                         [required]="true" [type]="'email'"
+                         [(ngModel)]="corporateContact.email" name="email" [placeholder]="'corporateContact.email'"
+                         [label]="'corporateContact.email'"></app-input-field>
+        <app-error [ref]="email"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [pattern]="EMAIL_REGEX" [ref]="mailList" #mailList="ngModel"
+                         [required]="true" [type]="'email'"
+                         [(ngModel)]="corporateContact.mailingList" name="mail"
+                         [placeholder]="'corporateContact.mailingList'" [label]="'corporateContact.mailingList'">
+        </app-input-field>
+        <app-error [ref]="mailList"></app-error>
+      </div>
+      <div class="field" *ngIf="isUpdateView">
+        <app-input-field [disabled]="isUpdateView" [type]="'number'" [(ngModel)]="corporateContact.id"
+                         name="id" [placeholder]="'corporateContact.id'"
+                         [label]="'corporateContact.id'"></app-input-field>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" nbInput fullWidth name="description" rows="2"
+                  [(ngModel)]="corporateContact.description"></textarea>
+      </div>
+
+    </div>
+    <h6>{{'corporateContact.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!corporateContactForm.form.valid" (click)="createCorporateContact()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'corporateContact.add' | translate}}</button>
+      <button [disabled]="!corporateContactForm.form.valid" (click)="updateCorporateContact()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

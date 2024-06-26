@@ -1,0 +1,32 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView? ('city.add' | translate) :('city.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #cityForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="city.localeName" name="cityArName" [placeholder]="'city.localeName'" [label]="'city.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="city.enName" name="cityEnName" [placeholder]="'city.enName'" [label]="'city.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+    </div>
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}: </nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!cityForm.form.valid" (click)="createCity()" *ngIf="!isUpdateView" class="ui button btn-primary">{{'city.add' | translate}}</button>
+      <button [disabled]="!cityForm.form.valid" (click)="updateCity()" *ngIf="isUpdateView" class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

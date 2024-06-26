@@ -1,0 +1,40 @@
+@import "src/app/scss/variables";
+
+
+.pageTitle{
+    h2{
+        font-size: 24px;
+        color:$primary
+    }
+}
+.tableDiv{
+    background-color: #ffff;
+    border-radius: 34px;
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+.Paginate{
+    padding-inline-end: 35px;
+}
+.review,.transcationReports{
+    width: 181px;
+    height: auto;
+    padding: 8px 24px 12px;
+    border-radius: 20px;
+    
+    border: none;
+    img{
+        margin-inline-end: 4px;
+    }
+}
+.review{
+    background-color: $primary;
+    color:#fff;
+}
+
+.transcationReports{
+    margin-inline-start: 16px;
+    color: $primary;
+    border: 1px solid $primary;
+
+}

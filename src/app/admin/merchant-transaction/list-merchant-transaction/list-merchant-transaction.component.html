@@ -1,0 +1,52 @@
+
+<app-data-table [showDelete]="false" [showUpdate]="false" [gridData]="gridData" [colData]="colData"
+                [entityName]="'TRANSACTION'" [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'transaction.title'" [name]="'transaction.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <app-filter-btn #filterBtn></app-filter-btn>
+
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="uuid" [placeholder]="'transaction.id'"
+                           [label]="'transaction.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'transaction.corporateName'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="corporateId"
+                     placeholder="{{'transaction.corporateName' | translate}}">
+            <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+              {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <!-- <div class="field" *ngIf="!merchantId">
+          <app-label [label]="'transaction.merchantName'"></app-label>
+          <ng-select [ngModel] name="merchantId" placeholder="{{'transaction.merchantName' | translate}}">
+            <ng-option *ngFor="let merchant of merchants" [value]="merchant.id">
+              {{currentLang === 'en' ? merchant.enName : merchant.localeName}}
+            </ng-option>
+          </ng-select>
+        </div> -->
+
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>

@@ -1,0 +1,81 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('cardHolder.add' | translate) : ('cardHolder.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #userAssetFrom="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+
+      <div class="field">
+        <app-input-field [disabled]="true" [(ngModel)]="corporateName" name="name" [placeholder]="'user.corporateName'"
+                         [label]="'user.corporateName'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field [disabled]="true" [ref]="arName" #arName="ngModel" [required]="true"
+                         [ngModel]="cardHolderDetails.localeName"
+                         name="arName" [placeholder]="'user.localeName'" [label]="'user.localeName'"></app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field" *ngIf="corporateOu">
+        <app-input-field disabled [(ngModel)]="currentLang ==='en' ? corporateOu.enName : corporateOu.localeName"
+                         name="ouName" [placeholder]="'cardHolder.ouName'" [label]="'cardHolder.ouName'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-label [label]="'cardHolder.assetTag'"></app-label>
+        <input #autoInput
+               (keyup.enter)="createAssetTag()"
+               nbInput
+               type="text"
+               placeholder="{{'cardHolder.assetTag' | translate}}"
+               [nbAutocomplete]="auto"
+               name="assetTagId"
+               [ngModel]="assetTagName"
+        />
+        <nb-autocomplete #auto>
+          <nb-option *ngFor="let asset of assetTags" [value]="asset.enName">
+            {{asset.enName}}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+
+      <div class="field">
+        <app-input-field [disabled]="true" [ref]="enName" #enName="ngModel" [required]="true"
+                         [ngModel]="cardHolderDetails.enName"
+                         name="enName" [placeholder]="'user.enName'" [label]="'user.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+
+      </div>
+      <div class="field">
+        <app-input-field [disabled]="true" [(ngModel)]="serialNumber" name="serialNumber"
+                         [placeholder]="'cardHolder.serialNumber'"
+                         [label]="'cardHolder.serialNumber'"></app-input-field>
+      </div>
+
+
+      <div class="field">
+        <app-label [label]="'corporateVehicle.policy'"></app-label>
+        <ng-select dropdownPosition='bottom' [(ngModel)]="policyIds" [multiple]="true" name="assetPolicies"
+                   placeholder="{{'corporateVehicle.policy' | translate}}">
+          <ng-option *ngFor="let policy of policies" [value]="policy.id">
+            {{currentLang === 'en' ? policy.enName : policy.localeName}}
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+    <h6>{{'cardHolder.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button [disabled]="!userAssetFrom.form.valid" *ngIf="isUpdateView" (click)="updateCardHolder()"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,181 @@
+
+
+<!-- header-level-one -->
+<div class="header-level-one mt-3">
+    <button class="d-flex ui button btn-primary" (click)="openModal(true)">
+        {{'app.back' | translate}}
+    </button>
+    <div class="showtotals">
+        <div class="showrecords">
+            <div class="icon-view">
+                <img src="assets/img/transactions/icons-view.png" alt="icon-view">
+            </div>
+            <span>
+                {{ 'transaction.reviewedIn' | translate }}
+                <span>{{getLength()}}</span>
+                {{ 'transaction.name' | translate}}
+            </span>
+        </div>
+        <button class="action" (click)="openModal(false)">
+            <img src="assets/img/transactions/icons-check.png" alt="icon-check">
+            <span>{{ 'app.finishAndSave' | translate}}</span>
+        </button>
+    </div>
+</div>
+
+<!-- header-level-two -->
+<div class="header-level-two">
+    <span>{{ 'transaction.review' | translate}}</span>
+    <div class="info">
+        <div><img src="assets/img/transactions/icons-information.png" alt="icon-information"></div>
+        <!-- TODO: ADD Transaction Report Link -->
+        <span>{{'transaction.unReviewed' | translate}}. {{'transaction.showReviewed' | translate}}. <a [routerLink]="['../transactions-reports']">{{'app.clickHere'
+                | translate}}</a></span>
+    </div>
+</div>
+
+<!-- Transaction Review Section -->
+<div class="section">
+    <!-- Previous Button -->
+    <button class="arrow btn" [disabled]="currentIndex == 0? true: false" (click)="previousTransaction()">
+        <img [src]="currentLang == 'ar'?'assets/img/transactions/icons-arrow-right-type-2 (2).png':'assets/img/transactions/icons-arrow-left-type-2.png'"
+            alt="swipper-arrow-icon">
+    </button>
+
+    <!-- Transaction Review Card -->
+    <div class="container">
+        <div class="userActionSection">
+            <div class="actionBtns">
+                <button class="accept" [ngClass]="confirmAccept?'acceptActive':'accept'" (click)="acceptTransaction()">
+                    <img [src]="!confirmAccept?'assets/img/transactions/icons-check (2).png':'assets/img/transactions/icons-check@1x.png'"
+                        alt="icon-check">
+                    <span>{{ 'app.accept' | translate }}</span>
+                </button>
+                <button class="deny" [ngClass]="confirmRejectAndTips?'denyActive':'deny'" (click)="denyTransaction()">
+                    <img [src]="!confirmRejectAndTips?'assets/img/transactions/icons-close.png':'assets/img/transactions/icons-close@1x.png'"
+                        alt="icon-close">
+                    <span>{{ 'app.reject' | translate }}</span>
+                </button>
+            </div>
+
+            <div class="mt-3">
+                <div class="currentInput">
+                    <span>{{ 'report.amount' | translate }}</span>
+                    <p>{{currentlyReviewingTransaction?.amount}}</p>
+                </div>
+                <div class="currentInput mt-2">
+                    <span>{{ 'transaction.currentMileageKM' | translate }}</span>
+                    <p>{{currentlyReviewingTransaction?.milage}}</p>
+                </div>
+            </div>
+
+
+            <div class="entryInputs">
+                <div class="label-input">
+                    <textarea name="" [(ngModel)]="reviewNotes"
+                        placeholder="{{ 'transaction.transactionNotes' | translate}}"></textarea>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="displayDataSection">
+            <div class="mileageImg" (click)="displayFullImg()"
+                [ngStyle]="{padding:mileageFileFound?'0px 0px':'93px 93px'}">
+                <img class="found" *ngIf="mileageFileFound"
+                    [src]="'data:image/png;base64,' + mileageFile?.fileContentBase64" alt="Reading Mileage Image">
+                <div class="notFound" *ngIf="!mileageFileFound">
+                    <img src="assets/img/transactions/icons-placeholder.png" alt="icon-placeholder">
+                    <span>{{ 'transaction.mileageImgNotFound' | translate }}</span>
+                </div>
+            </div>
+            <div class="fullImg" *ngIf="mileageFileFound && showImg" (click)="closeFullImg()">
+                <img [src]="'data:image/png;base64,' + mileageFile?.fileContentBase64" alt="Reading Mileage Image">
+            </div>
+            <div class="dataLabels">
+                <div class="row">
+                    <div class="transactionData halfdisplay">
+                        <span class="label">
+                            {{ 'transaction.transactionDateAndTime' | translate}}
+                        </span>:
+                        <span class="value">
+                            {{ currentTransaction?.creationDate }}
+                        </span>
+                    </div>
+                    <div class="transactionData halfdisplay" id="showId">
+                        <span class="label ">
+                            {{ 'transaction.uuid' | translate}}
+                        </span>:
+                        <span class="value ">
+                            {{ currentTransaction?.uuid.slice(0,8) }}
+                        </span>
+                    </div>
+                    <div class="idDiv">{{ currentTransaction?.uuid}}</div>
+                </div>
+                <div class="row">
+                    <div class="transactionData">
+                        <span class="label">
+                            {{ 'transaction.merchantName' | translate}}
+                        </span>:
+                        <span class="value">
+                            {{transactionMerchantName}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="transactionData">
+                        <span class="label">
+                            {{ 'site.name' | translate}}
+                        </span>:
+                        <span class="value">
+                            {{transactionSiteName}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next Button -->
+    <div class="btn">
+        <button class="arrow" (click)="nextTransaction()">
+            <img [src]="currentLang == 'ar'?'assets/img/transactions/icons-arrow-left-type-2.png':'assets/img/transactions/icons-arrow-right-type-2 (2).png'"
+                alt="">
+        </button>
+        <div class="nextToolTip">
+            {{'app.next'| translate}}
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<app-modal #confirmReview [showCloseBtn]="false">
+    <!-- Confirm Transaction Review Modal -->
+    <ng-container *ngIf="!isGoBack" body>
+        <div class="info-icon" head>
+            <img src="assets/img/transactions/icons-check@3x.png" alt="icons-check">
+        </div>
+        <div class="modalBody" body>
+            <h5>{{"transaction.finishAndSaveReview" | translate }}</h5>
+            <!-- <p>{{"transaction.alertSendingEmail" | translate}}</p> -->
+        </div>
+        <div class="modalFooter" footer>
+            <button class="ui button btn-primary" (click)="reviewTransaction()">{{"app.confirm" | translate }}</button>
+            <button class="ui button btn-transparent" (click)="confirmReview.closeModal()">{{"app.cancel" | translate
+                }}</button>
+        </div>
+    </ng-container>
+
+    <!-- Go Back Modal -->
+    <ng-container *ngIf="isGoBack" body>
+        <div class="goBackModal" body>
+            <p>{{"transaction.confrimCancel" | translate }}</p>
+        </div>
+        <div class="modalFooter" footer>
+            <button class="ui button btn-primary" (click)="cancelReview()">{{"app.confirm" | translate }}</button>
+            <button class="ui button btn-transparent" (click)="confirmReview.closeModal()">{{"app.cancel" | translate
+                }}</button>
+        </div>
+    </ng-container>
+</app-modal>

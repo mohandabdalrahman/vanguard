@@ -1,0 +1,155 @@
+<div class="vehicle-breadcrumb">
+  <p>
+    {{'corporateVehicle.deletedTitle' | translate}}
+    <img class="rotate-180" src="./assets/img/icons-arrow-left-type-1.svg" alt="arrow icon">
+  </p>
+  <span>{{corporateVehicle?.plateNumber}}
+  </span>
+  <img class="rotate-180" src="./assets/img/icons-arrow-left-type-1.svg" alt="arrow icon">
+  <span>
+    {{'corporateVehicle.vehicleCode' | translate}}
+    : {{corporateVehicle?.vehicleCode ? corporateVehicle?.vehicleCode : 'app.notAvailable' | translate}}
+  </span>
+</div>
+
+<div class="vehicle-measures">
+  <div class="vehicle-measures__item">
+    <div class="vehicle-measures__item-left">
+      <div class="icon">
+        <img src="./assets/img/icons-gauge.svg" alt="icons gauge">
+      </div>
+      <p>{{'alert.lastReadingDistance' | translate}}</p>
+    </div>
+    <div class="vehicle-measures__item-right">
+      <strong> {{corporateVehicle?.lastDistanceReading}} {{"corporateVehicle.kiloMeter" | translate}} </strong>
+    </div>
+  </div>
+  <div class="vehicle-measures__item">
+    <div class="vehicle-measures__item-left">
+      <div class="icon">
+        <img src="./assets/img/icons-distance.svg" alt="icons gauge">
+      </div>
+      <p>{{'corporateVehicle.changingOilMilage' | translate}}</p>
+    </div>
+    <div class="vehicle-measures__item-right">
+      <strong> {{corporateVehicle?.changingOilMilage}} {{"corporateVehicle.kiloMeter" | translate}} </strong>
+    </div>
+  </div>
+</div>
+
+<!--START FUEL-->
+<!--<nb-accordion>-->
+<!--  <nb-accordion-item>-->
+<!--    <nb-accordion-item-header class="d-flex">-->
+<!--      <div class="header-name d-flex">-->
+<!--        <img src="./assets/img/icons-gas-pump.svg" alt="gas pump">-->
+<!--        <p>{{"corporateVehicle.fuel" | translate}}</p>-->
+<!--      </div>-->
+<!--      <div class="header-info d-flex align-items-center">-->
+<!--        <div class="header-info-alerts positive">-->
+<!--          <img src="./assets/img/icons-check.svg" alt="check">-->
+<!--          <span>{{"alert.notFound" | translate}}</span>-->
+<!--        </div>-->
+<!--        <div class="header-info-content d-flex flex-wrap">-->
+<!--          <div class="header-info-content__item">-->
+<!--            <p>{{'corporateVehicle.accrualDistance' | translate}}</p>-->
+<!--            <strong>-->
+<!--              <img src="./assets/img/icons-distance.svg" alt="distance">-->
+<!--              200 {{"corporateVehicle.kiloMeter" | translate}} </strong>-->
+<!--          </div>-->
+<!--          <div class="header-info-content__item">-->
+<!--            <p>{{'corporateVehicle.traveledDistance' | translate}}</p>-->
+<!--            <strong>-->
+<!--              <img src="./assets/img/icons-distance.svg" alt="distance">-->
+<!--              90 {{"corporateVehicle.kiloMeter" | translate}} </strong>-->
+<!--          </div>-->
+
+<!--          <div class="header-info-content__item">-->
+<!--            <p>{{'corporateVehicle.remainDistance' | translate}}</p>-->
+<!--            <strong>-->
+<!--              <img src="./assets/img/icons-distance-reading.svg" alt="distance">-->
+<!--              90 {{"corporateVehicle.kiloMeter" | translate}} </strong>-->
+<!--          </div>-->
+<!--          <div class="header-info-content__item">-->
+<!--            <p>{{'corporateVehicle.wastedFuel' | translate}}</p>-->
+<!--            <strong>-->
+<!--              <img src="./assets/img/icons-distance-reading.svg" alt="distance">-->
+<!--              90 {{"corporateVehicle.kiloMeter" | translate}} </strong>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </nb-accordion-item-header>-->
+<!--    <nb-accordion-item-body>-->
+<!--      Item Content-->
+<!--    </nb-accordion-item-body>-->
+<!--  </nb-accordion-item>-->
+<!--</nb-accordion>-->
+<!--END FUEL-->
+
+<nb-accordion>
+  <!--  (collapsedChange)="getGenericAlerts($event, field?.alertableDataId)"-->
+  <nb-accordion-item #item *ngFor="let field of corporateVehicle?.alertableData"
+  >
+    <nb-accordion-item-header class="d-flex">
+      <div class="header-container d-flex">
+        <div class="header-left d-flex">
+          <div class="header-name d-flex">
+            <img [src]="'./assets/img/icons-alert-' + field.alertableDataId +'.svg'"
+                 [alt]="currentLang === 'en' ? field.alerteableFieldEnName : field.alerteableFieldLocaleName">
+            <p>{{currentLang === 'en' ? field.alerteableFieldEnName : field.alerteableFieldLocaleName}}</p>
+          </div>
+          <div class="header-info d-flex align-items-center">
+            <div class="header-info-alerts negative" *ngIf="field?.data?.length">
+              <img src="./assets/img/icons-alert.svg" alt="alert">
+              <span> {{field?.data?.length}} {{"alert.name" | translate}}</span>
+            </div>
+            <div class="header-info-alerts positive" *ngIf="!field?.data?.length">
+              <img src="./assets/img/icons-check.svg" alt="check">
+              <span>{{"alert.notFound" | translate}}</span>
+            </div>
+            <div class="header-info-content d-flex flex-wrap">
+              <div class="header-info-content__item">
+                <p>{{'corporateVehicle.maturityPeriod' | translate}}</p>
+                <strong>
+                  <img src="./assets/img/icons-calendar.svg" alt="calendar">
+                  {{field?.claimingNumberOfDays}} {{"app.day" | translate}} </strong>
+              </div>
+              <div class="header-info-content__item" *ngIf="field.lastChangedDate !== null">
+                <p>{{'corporateVehicle.elapsedPeriod' | translate}}</p>
+                <strong>
+                  <img src="./assets/img/icons-calendar.svg" alt="calendar">
+                  {{ calculateElapsedPeriod(field.lastChangedDate)}} {{"app.day" | translate}} </strong>
+              </div>
+              <div class="header-info-content__item" *ngIf="field.claimingNumberOfDays !== null">
+                <p>{{'corporateVehicle.remainingDays' | translate}}</p>
+                <strong>
+                  <img src="./assets/img/icons-calendar.svg" alt="calendar">
+                  {{calculateRemainingDays(field.claimingNumberOfDays)}} {{"app.day" | translate}} </strong>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="header-right" (click)="openManualReviewModal(field)">
+          <img src="./assets/img/icons-edit.svg" alt="edit">
+          {{"corporateVehicle.manualReview" | translate}}
+        </div>
+      </div>
+
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <app-data-table *ngIf="field?.data?.length" [showTopContainer]="false" [tableControls]="false"
+                      [gridData]="field.data"
+                      [colData]="colData"></app-data-table>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+
+<app-create-manual-review #createManualReview [corporateId]="corporateId" [ouId]="ouId"
+                          [currentReviewName]="currentReviewName"  [productCategoryId]="productCategoryId"
+                          [corporateVehicle]="corporateVehicle"></app-create-manual-review>

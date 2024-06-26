@@ -1,0 +1,63 @@
+
+<app-data-table [gridData]="gridData" [colData]="colData" [entityName]="'PRODUCT_CATEGORY'">
+  <ng-container header>
+    <app-left-table-header [title]="'product.category.title'" [name]="'product.category.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'PRODUCT_CATEGORY_CREATE'" [addText]="'product.category.add'">
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'product.localeName'"
+                           [label]="'product.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'product.enName'"
+                           [label]="'product.enName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="price" [placeholder]="'product.price'"
+                           [label]="'product.price'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'bankAccount.country'"></app-label>
+          <ng-select dropdownPosition='bottom' name="countryId" [ngModel] placeholder="{{'bankAccount.country' | translate}}">
+            <ng-option *ngFor="let country of countries"
+                       [value]="country.id">{{currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'product.unit'"></app-label>
+          <ng-select dropdownPosition='bottom' name="measurementUnitId" [ngModel] placeholder="{{'product.unit' | translate}}">
+            <ng-option *ngFor="let unit of units"
+                       [value]="unit.id">{{currentLang === 'en' ? unit.enName : unit.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'product.category.title'">
+  <button footer class="btn btn-danger" (click)="deleteProduct()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>

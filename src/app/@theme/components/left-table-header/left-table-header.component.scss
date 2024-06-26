@@ -1,0 +1,55 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/common";
+
+.left-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  @media (max-width: 991.98px) {
+    margin-bottom: 1em;
+  }
+
+  h6 {
+    text-transform: capitalize;
+    color: $alpha;
+    font-size: 1.4em;
+  }
+
+
+  p {
+    color: $misty;
+    margin-bottom: 4px;
+    text-transform: capitalize;
+  }
+
+  &-icon {
+    width: 36px;
+    height: 36px;
+    background-color: $ray;
+    border-radius: 9px;
+    @extend .d-flex-center;
+
+    img {
+      filter: brightness(0) saturate(100%) invert(23%) sepia(48%) saturate(1356%) hue-rotate(200deg) brightness(95%) contrast(98%);
+      height: 18px;
+    }
+  }
+}
+
+.Policy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    margin: 14px 14px 13px 14px;
+    padding: 11px;
+    border-radius: 7px;
+  }
+  .name span{
+    color: $misty;
+  }
+}

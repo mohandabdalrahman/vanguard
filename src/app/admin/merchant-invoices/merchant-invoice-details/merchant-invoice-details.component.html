@@ -1,0 +1,15 @@
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+<app-invoice (onAddSerialNumber)="addSerialNumber()" [invoice]="merchantInvoice"
+             [invoiceProducts]="invoiceProducts"></app-invoice>
+
+<!--SERIAL NUMBER-->
+<app-modal #modal>
+  <h4 head class="modal-title">{{'invoice.addSerial' | translate}}</h4>
+  <form body class="ui form" #serialNumberForm="ngForm" (ngSubmit)="submitSerialNumber(serialNumberForm.value)">
+    <input autocomplete="off" type="text" nbInput ngModel name="serialNumber">
+    <br/><br/>
+    <button class="ui button btn-primary" type="submit">
+      {{'invoice.addSerial' | translate}}</button>
+  </form>
+
+</app-modal>

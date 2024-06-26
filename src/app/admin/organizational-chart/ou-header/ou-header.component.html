@@ -1,0 +1,34 @@
+<header>
+  <div class="left-header">
+    <h4>{{"unit.name" | translate}}</h4>
+    <div class="units">
+      <p>
+        <img src="./assets/img/pending-requests/icons-master-corporate.svg" alt="main-icon">
+        {{'unit.mainUnits' | translate}} {{mainUnitsNum}}
+      </p>
+    </div>
+    <div class="units">
+      <p>
+        <img src="./assets/img/icons-corporates.svg" alt="branch-icon">
+        {{'unit.branchUnits' | translate}} {{branchUnitsNum}}
+      </p>
+    </div>
+  </div>
+  <div class="right-header">
+    <a class="ui button btn-primary" [routerLink]="['create']" *appHasRole="['OU_CREATE']">
+      <nb-icon icon="plus-circle-outline"></nb-icon>
+      {{"unit.create" | translate}}
+    </a>
+    <a class="ui button btn-transparent" [routerLink]="['..' , 'balance-distribution']">
+      {{"unit.balanceDist" | translate}}
+    </a>
+    <div class="view-type">
+      <button class="ui button btn-primary">
+        <img src="./assets/img/icons-tree-ar.svg" alt="tree-view">
+      </button>
+      <button class="ui button bg-white">
+        <img src="./assets/img/icons-list-ar.svg" alt="list-view">
+      </button>
+    </div>
+  </div>
+</header>

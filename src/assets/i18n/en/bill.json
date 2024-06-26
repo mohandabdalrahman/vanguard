@@ -1,0 +1,15 @@
+{
+ "bill": {
+        "title": "All Bills",
+        "name": "Bills",
+        "totalSalesAmount": "Total Sales Amount",
+        "commissionRate": "Commission Rate",
+        "commissionAmount": "Commission Amount",
+        "vatAmount": "VAT",
+        "detail": "Detailed Bill",
+        "fromDate": "From date",
+        "toDate": "To date",
+        "grossAmount": "Gross",
+        "corporateBill":"Corporate Bill"
+    }
+}

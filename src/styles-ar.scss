@@ -1,0 +1,480 @@
+@import "./app/scss/variables";
+
+body {
+  text-align: right;
+}
+
+.layout {
+  &-container {
+    flex-direction: row-reverse !important;
+  }
+}
+
+.ui.table {
+  text-align: right !important;
+}
+
+.search {
+  &-controllers {
+    margin-left: unset;
+    margin-right: 2em;
+
+    .button {
+      margin-left: unset;
+      margin-right: 1em;
+    }
+  }
+}
+
+.card {
+  text-align: right;
+
+  &-content {
+    span {
+      margin-left: unset;
+      margin-right: 0.5em;
+    }
+  }
+}
+
+.merchant-card {
+  .merchant-info {
+    margin-left: unset;
+    margin-right: 1.5em;
+
+    h6 {
+      font-size: 14px;
+    }
+
+    span {
+      font-weight: 400;
+      margin-right: 2px;
+      color: #8d8585;
+    }
+  }
+}
+
+// sidebar
+.menu-sidebar {
+  .menu-icon {
+    margin: 0 0 0 0.5rem !important;
+  }
+
+  @media (max-width: 575.98px) {
+    &.fixed {
+      right: 0;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    &.fixed {
+      right: 0;
+    }
+    &.left {
+      order: 0 !important;
+
+      ~ .content {
+        margin-left: unset !important;
+        margin-right: 3.5rem;
+      }
+    }
+  }
+}
+
+// login form
+.login__form {
+  text-align: center;
+  margin-left: unset !important;
+  margin-right: 2em;
+
+  &-head {
+    h1 {
+      text-align: center;
+    }
+  }
+
+  .form {
+    text-align: right;
+  }
+}
+
+button {
+  font-size: 1.25em;
+}
+
+//DataTable
+.data-table {
+  th,
+  .left-header h6 {
+    font-weight: bold !important;
+  }
+}
+
+ngx-charts-number-card {
+  .cell {
+    .value-text {
+      text-anchor: end !important;
+    }
+  }
+}
+
+.ngx-charts {
+  .value-text {
+    font-weight: bold !important;
+  }
+
+  .bar-chart {
+    text {
+      text-anchor: start !important;
+    }
+
+    text.textDataLabel {
+      text-anchor: end !important;
+    }
+  }
+
+  .gauge-tick {
+    text {
+      text-anchor: middle !important;
+    }
+  }
+}
+
+//modal
+.modal-header {
+  .close {
+    padding: 0 0.5em;
+    margin: unset;
+  }
+}
+
+.modal-body {
+  text-align: right;
+}
+
+.btn-success {
+  nb-icon {
+    margin-left: 0.5rem;
+  }
+}
+
+small {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.advance-search {
+  @media (max-width: 991.98px) {
+    margin-right: 0 !important;
+    margin-left: 1em !important;
+  }
+}
+
+.sale-card-text {
+  margin-right: 1em;
+}
+
+ngx-charts-chart {
+  ngx-charts-legend {
+    .legend-label {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+
+      &-text {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+// Vr Card
+.VCardContainer {
+  &__header {
+    padding-left: 3% !important;
+
+    h5 {
+      margin-right: 3% !important;
+    }
+  }
+}
+
+.container {
+  .vrCard {
+    &__Logo {
+      flex-direction: row-reverse !important;
+    }
+
+    &__body {
+      flex-direction: row-reverse !important;
+
+      .qrCode {
+        text-align: left !important;
+      }
+
+      .info {
+        h6,
+        p {
+          text-align: right !important;
+        }
+      }
+    }
+
+    &__number {
+      margin-left: 3%;
+      text-align: left !important;
+    }
+  }
+}
+
+//pending request
+.no-changes {
+  .card-info {
+    border-right: 1px solid $primary;
+    padding-right: 1em;
+  }
+}
+
+* {
+  font-family: "Almarai", sans-serif !important;
+}
+
+.step-action {
+  left: 50%;
+  @media (min-width: 1400px) {
+    left: 40%;
+  }
+  @media (min-width: 1900px) {
+    left: 50%;
+  }
+}
+
+span.required {
+  margin-right: -4px;
+}
+
+.tree-node {
+  > img,
+  .tree-node-icon {
+    right: -9px;
+  }
+}
+
+// org chart style
+#units-container > angular-org-chart {
+  transform: rotate(-270deg) scale(0.8);
+}
+
+#units-container:has(.hasNoChildren) {
+  angular-org-chart {
+    transform: translateX(-4em) rotate(-270deg) scale(0.8) !important;
+  }
+}
+
+#units-container {
+  transform: translateX(-170px);
+}
+
+.ng13-org-chart-entity:has(.rootLevel) {
+  left: 0 !important;
+}
+
+nb-card.ou-card {
+  transform: translatex(131px) translatey(145px) rotate(-90deg);
+  @media (max-width: 1400px) {
+    transform: translatex(132px) translatey(16px) rotate(-90deg);
+  }
+}
+
+.more-icon {
+  margin-right: auto;
+}
+
+.tree-fold-btn {
+  left: -12px;
+}
+
+app-parent-card {
+  .parent-info {
+    border-left: 1px solid $light;
+  }
+
+  app-context-menu {
+    left: 17px;
+  }
+}
+
+.card-container {
+  app-context-menu {
+    left: 14px;
+
+    .more-icon {
+      margin-right: auto;
+    }
+  }
+}
+
+.context-menu-container {
+  nb-card {
+    left: 0px;
+    right: 200px;
+  }
+
+  app-details-drawer {
+    right: -100%;
+  }
+
+  &.firstLevel {
+    app-details-drawer {
+      right: 205%;
+    }
+  }
+}
+
+//sub child style
+.firstLevel,
+.rootLevel {
+  nb-card.ou-card {
+    transform: translatex(69px) translatey(0px) rotate(-90deg) !important;
+  }
+}
+
+//drawer style
+.rootLevel {
+  app-details-drawer {
+    right: 205%;
+  }
+}
+
+table {
+  thead {
+    tr:first-child > th:first-child {
+      border-radius: 0 20px 0 0 !important;
+    }
+
+    tr:first-child > th:last-child {
+      border-radius: 20px 0 0 0 !important;
+    }
+  }
+}
+
+//balance distribution card
+.balance-cards {
+  .firstLevel,
+  .rootLevel {
+    .tree-fold-btn {
+      top: 120px;
+      left: -15px;
+    }
+
+    nb-card.nb-card-balance {
+      transform: translatex(23px) translatey(-250px) rotate(-90deg) !important;
+    }
+
+    nb-card.nb-card-balance:has(.balance-card__body-limit) {
+      transform: translatex(23px) translatey(-220px) rotate(-90deg) !important;
+    }
+
+    &.hasNoChildren {
+      nb-card.nb-card-balance {
+        transform: translatex(-102px) translatey(-110px) rotate(-90deg) !important;
+      }
+    }
+  }
+
+  .tree-fold-btn {
+    top: 131px;
+  }
+}
+
+.balance-card {
+  &__body {
+    .distribution-balance {
+      p {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}
+
+#units-container.balance-cards:has(.hasNoChildren) {
+  angular-org-chart {
+    transform: translateX(-8em) rotate(-270deg) scale(0.8) !important;
+  }
+}
+
+.nb-card-balance {
+  transform: translatey(-129px) rotate(-90deg);
+}
+
+.nb-card-balance:has(.balance-card__body-limit) {
+  transform: translatey(-100px) rotate(-90deg);
+}
+
+app-ou-tabs .tabs-header p {
+  margin-right: auto;
+}
+
+.step-action {
+  margin-right: 700px;
+}
+
+nb-accordion-item-header {
+  .header-info {
+    border-right: 1px solid $light;
+  }
+}
+
+.rotate-180 {
+  transform: unset !important;
+}
+
+// Transaction Review
+.header-level-one .showtotals {
+  padding-left: 16px;
+}
+
+.action span {
+  margin-right: 5px;
+}
+
+.header-level-two .info {
+  padding: 0 0 0 16px;
+}
+
+.idDiv {
+  left: 0px;
+  width: fit-content !important;
+}
+
+.nextToolTip {
+  left: 7px;
+  width: fit-content !important;
+}
+
+
+//stepper style
+nb-stepper {
+  .step {
+    .label {
+      .ng-star-inserted {
+        right: 41%;
+      }
+    }
+  }
+}
+
+.float {
+  left: 40%;
+}
+
+.details-card-context-menu{
+  left: 8px;
+  .context-menu-container{
+    left: 0;
+  }
+}
+
+.header-numbers-right {
+  border-right: 1px solid $light;
+}

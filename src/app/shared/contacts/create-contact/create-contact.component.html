@@ -1,0 +1,83 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('contact.add' | translate) : ('contact.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #contactForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="contact.localeName"
+                         name="arName" [placeholder]="'contact.localeName'" [label]="'contact.localeName'">
+        </app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="contact.enName" name="enName"
+                         [placeholder]="'contact.enName'" [label]="'contact.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'contact.type'"></app-label>
+        <ng-select dropdownPosition='bottom' #contactType="ngModel" required="true" name="contactTypeId" [(ngModel)]="contact.contactTypeId"
+                   placeholder="{{'contact.type' | translate}}">
+          <ng-option *ngFor="let contactType of contactTypes"
+                     [value]="contactType.id">{{currentLang === 'en' ? contactType.enName : contactType.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="contactType" [message]="'app.selectRequired'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [(ngModel)]="contact.officeNumber" name="officeNumber"
+                         [placeholder]="'contact.officeNumber'" [label]="'contact.officeNumber'">
+        </app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [(ngModel)]="contact.phoneNumber" name="phoneNumber"
+                         [placeholder]="'contact.phoneNumber'" [label]="'contact.phoneNumber'">
+        </app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [(ngModel)]="contact.faxNumber" name="faxNumber"
+                         [placeholder]="'corporateContact.faxNumber'"
+                         [label]="'corporateContact.faxNumber'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="mobNum" #mobNum="ngModel" [required]="true" [type]="'number'"
+                         [(ngModel)]="contact.mobileNumber" name="mobNum"
+                         [placeholder]="'corporateContact.mobileNumber'" [label]="'corporateContact.mobileNumber'">
+        </app-input-field>
+        <app-error [ref]="mobNum"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="email" #email="ngModel" [required]="true" [type]="'email'" [(ngModel)]="contact.email" [pattern]="EMAIL_REGEX"
+                         name="email" [placeholder]="'corporateContact.email'"
+                         [label]="'corporateContact.email'"></app-input-field>
+        <app-error [ref]="email"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'email'" [(ngModel)]="contact.mailingList" name="mail" [ref]="mailList" #mailList="ngModel" [pattern]="EMAIL_REGEX"
+                         [placeholder]="'corporateContact.mailingList'" [label]="'corporateContact.mailingList'">
+        </app-input-field>
+        <app-error [ref]="mailList"></app-error>
+      </div>
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" nbInput fullWidth name="description" rows="2"
+                  [(ngModel)]="contact.description"></textarea>
+      </div>
+    </div>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!contactForm.form.valid" (click)="createContact()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'contact.add' | translate}}</button>
+      <button [disabled]="!contactForm.form.valid" (click)="updateContact()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

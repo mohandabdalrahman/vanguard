@@ -1,0 +1,122 @@
+@import "../../../../../src/app/scss/variables";
+
+.tree-view{
+    position: relative;
+    z-index: 0;
+    height: 300px;
+    overflow-y: scroll;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+
+  
+ 
+
+.tree-node{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-inline-start:1px;    
+    color: white;
+    width: 378px;
+    height: 34px;
+    background-color: $main-color;
+    border-radius: 17px;
+    z-index: 99;
+    cursor: pointer;
+    img.main{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+  
+ 
+    span{
+        margin-inline-start: 5px;
+    }
+
+}
+
+.node{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-inline-start:1px;    
+    height: 34px;
+    background-color: white;
+    border-radius: 17px;
+    z-index: 99;
+    cursor: pointer;
+    .node{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: $ray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            width: 12px;
+            height: 12px;
+        }
+    }
+    span{
+        margin-inline-start: 5px;
+    }
+}
+
+.node:hover{
+    border: 1px solid $main-color;
+    .node{
+        border: 3px solid $primary;
+    }
+}
+
+.branchClick{
+    border: 1px solid $primary !important;
+    .node{
+        border: 3px solid $primary !important;
+    }
+}
+
+.childnode{
+    border-inline-start: 1px solid $light;
+    margin-inline-start: 14px;
+}
+.childnode:last-of-type{
+    border-inline-start: none;
+    position: relative;
+}
+
+.childnode:last-of-type::before{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 46px;
+    right: 0;
+    background-color: #c9cbd5;
+}
+
+.root{
+    position: relative;
+    height: 1px;
+    top: 3px;
+    // background-color: $light;
+    z-index: 99999;
+}
+.root::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #c9cbd5;
+    border-end-start-radius: 20px;    
+    bottom: 0;
+}
+
+._2ndnode{
+
+}

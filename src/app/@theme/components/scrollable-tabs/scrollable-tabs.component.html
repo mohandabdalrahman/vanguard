@@ -1,0 +1,22 @@
+<section class="tabs-container">
+	<span class="change-btn prev" (click)="scrollTab(-1)" [class.hide]="atStart">
+<img src='./assets/img/icons-arrow-left-type-1.svg' alt="left-arrow">
+  </span>
+
+  <ul class="tabs" [ngStyle]="{'transform': abc }">
+    <ng-container *ngFor="let tab of tabs;let i=index">
+      <li class="tab" [class.active]="selectedIndex===i" (click)="selectTab(i)">
+        <a routerLinkActive="active-tab" class="tab-item"
+           [routerLink]="[tab.path | lowercase ]">{{('tabs.' + tab.path) | translate|lowercase}}
+          <span>({{tab.count}})</span> </a>
+      </li>
+
+    </ng-container>
+  </ul>
+  <span class="change-btn next" [class.hide]="atEnd" (click)="scrollTab(1)">
+    <img
+      src='./assets/img/icons-arrow-right-type-1.svg' alt="right-arrow">
+</span>
+</section>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,18 @@
+.modal {
+  &-header {
+    justify-content: center;
+    border: unset;
+    padding: 0rem 1rem;
+  }
+
+  &-footer {
+    justify-content: start;
+    border: 0;
+  }
+}
+
+button.close {
+  text-align: right;
+  padding-top: 0.5em;
+  padding-right: 0.5em;
+}

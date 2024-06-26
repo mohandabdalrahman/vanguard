@@ -1,0 +1,137 @@
+<app-data-table [enableCheckBox]="true" [showInvoice]="false" [showView]="true" [showDelete]="false"
+                [showUpdate]="false" [gridData]="gridData"
+                [colData]="colData" (onItemSelect)="onItemSelect($event)" [entityName]="'INVOICE'" [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'invoice.title'" [name]="'invoice.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <div class="actions d-flex">
+      <div class="d-flex">
+        <ng-container *appHasRole="['INVOICE_UPDATE']">
+          <button *ngIf="selectedInvoices.length>=1"
+                  class="ui button btn-success" (click)="openSerialModal()">
+            {{'invoice.addSerial' | translate }}
+          </button>
+        </ng-container>
+
+        <ng-container>
+          <button (click)="fetchAllMerchantInvoices()"
+                  class="ui button btn-primary">{{'app.printUnSettledInvoice' | translate}}</button>
+        </ng-container>
+
+      </div>
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+    </div>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form"
+          (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="corporateLocaleName" [placeholder]="'invoice.search.corporateLocaleName'"
+                           [label]="'invoice.search.corporateLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="corporateEnName" [placeholder]="'invoice.search.corporateEnName'"
+                           [label]="'invoice.search.corporateEnName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field ngModel name="siteLocaleName" [placeholder]="'invoice.search.siteLocaleName'"
+                           [label]="'invoice.search.siteLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="siteEnName" [placeholder]="'invoice.search.siteEnName'"
+                           [label]="'invoice.search.siteEnName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="siteId" [placeholder]="'invoice.site.id'"
+                           [label]="'invoice.site.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="merchantId" [placeholder]="'invoice.merchant.id'"
+                           [label]="'invoice.merchant.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="corporateId" [placeholder]="'invoice.corporate.id'"
+                           [label]="'invoice.corporate.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="corporateTaxId" [placeholder]="'invoice.corporateTaxId'"
+                           [label]="'invoice.corporateTaxId'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'app.fromDate'"></app-label>
+          <input type="date" [(ngModel)]="fromDate" name="fromDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'app.toDate'"></app-label>
+          <input type="date" [(ngModel)]="toDate" name="toDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'invoice.settled'"></app-label>
+          <ng-select [ngModel] name="settled" placeholder="{{'invoice.settled' | translate}}">
+            <ng-option value="false">{{'app.false' | translate}}</ng-option>
+            <ng-option value="true">{{'app.true' | translate}}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<app-modal #settleModal>
+  <h4 head class="modal-title">{{'invoice.setSettle' | translate }}</h4>
+  <div footer class="modal-actions">
+    <button class="btn btn-success" (click)="settleInvoices()">
+      {{'invoice.settle' | translate}}
+    </button>
+  </div>
+
+</app-modal>
+<app-modal #serialModal>
+  <h4 head class="modal-title">{{'invoice.startSerial' | translate }}</h4>
+  <div body class="modal-inputs">
+    <input [placeholder]="prefix" type="text" name="serialPrefix" [(ngModel)]="serialPrefix">
+    <input [placeholder]="serialNumber" onkeydown="event.keyCode !== 69" type="number" name="startSerialNumber"
+           [(ngModel)]="startSerialNumber">
+    <input [placeholder]="suffix" type="text" name="serialSuffix" [(ngModel)]="serialSuffix">
+  </div>
+  <div footer class="modal-actions">
+    <button [disabled]="!startSerialNumber" class="btn btn-success" (click)="setSerialNumbers()">
+      {{'invoice.addSerial' | translate }}
+    </button>
+  </div>
+</app-modal>
+
+
+<app-overwrite-confirm-modal [title]="'invoice.serialNumberOverwriteTitle'"
+                             [body]="'invoice.serialNumberOverwriteBody'"
+                             #overwriteSerialNumber>
+  <button rightButton class="btn btn-primary" (click)="setSerialNumbers(true)"
+  >{{'app.confirm' | translate}}</button>
+  <div leftButton></div>
+
+</app-overwrite-confirm-modal>
+
+<!-- <div id="printable-invoices">
+  <ng-container *ngIf="unSettledInvoices.length">
+    <app-invoice *ngFor="let invoice of unSettledInvoices" [invoice]="invoice" [merchantAddressCity]="merchantAddress"
+                 [invoiceProducts]="invoice.invoiceProducts" [showInvoiceActions]="false"></app-invoice>
+  </ng-container>
+</div> -->

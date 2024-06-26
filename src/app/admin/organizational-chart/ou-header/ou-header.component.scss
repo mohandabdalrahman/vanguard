@@ -1,0 +1,61 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+header {
+  position: relative;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .left-header {
+    @extend .d-flex-center;
+
+    h4 {
+      color: $primary;
+      text-transform: capitalize;
+    }
+
+    .units {
+      margin-top: -8px;
+
+      p {
+        @extend .d-flex-center;
+        margin: 0 1em;
+        color: $legend;
+        text-transform: capitalize;
+
+        img {
+          margin: 0 0.5em;
+        }
+      }
+    }
+  }
+
+  .right-header {
+    width: 60%;
+    @extend .d-flex-center;
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+
+    .view-type {
+      @extend .d-flex-center;
+      margin: 0 auto;
+
+      button {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        @extend .d-flex-center;
+
+      }
+    }
+
+  }
+}
+
+.btn-transparent {
+  background-color: transparent !important;
+}

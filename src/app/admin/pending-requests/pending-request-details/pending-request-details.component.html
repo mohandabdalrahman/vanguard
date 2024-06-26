@@ -1,0 +1,130 @@
+
+
+<div class="actions">
+  <app-back-button></app-back-button>
+  <div class="actions-btns">
+    <button class="accept" (click)="openAcceptModal()">
+      <img src='./assets/img/icons-check.svg' alt="accept">
+      {{'app.accept' | translate}}
+    </button>
+    <button class="reject" (click)="openRejectModal()">
+      <img src='./assets/img/icons-close.svg' alt="reject">
+      {{'app.reject' | translate}}
+    </button>
+  </div>
+</div>
+
+<div class="header">
+  <h4 class="title">{{'pendingRequest.details' | translate}}</h4>
+  <div class="row" *ngIf="actionType === 'UPDATE'">
+    <div class="summary col-md-3">
+      <p class="summary-text">{{'app.numOfChanged' | translate}}</p>
+      <span class="summary-count changed">{{numberOfChangedProps}}</span>
+    </div>
+    <div class="summary col-md-3">
+      <p class="summary-text">{{'app.numOfNotChanged' | translate}}</p>
+      <span class="summary-count not-changed">{{numberOfUnChangedProps}}</span>
+    </div>
+  </div>
+</div>
+<div class="ui dividing header"></div>
+
+<app-pending-requests-card [cardData]="[cardData]" [viewPage]="'details'"></app-pending-requests-card>
+
+
+<div class="details" *ngIf="actionType === 'CREATE' || actionType === 'DELETE'">
+  <h5>{{currentLang === 'en' ? pendingRequestData?.enName : pendingRequestData?.localeName}} </h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of pendingRequestData | keyvalue">
+        <app-item-details [head]="translateKey+'.'+prop.key" [body]="prop.value"></app-item-details>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--in case of update pending request-->
+<ng-container *ngIf="actionType === 'UPDATE'">
+  <!--new changes-->
+  <div class="new-changes">
+    <div class="row">
+      <div class="col-md-6" *ngFor="let prop of differPropsMap |keyvalue">
+        <nb-card>
+          <div class="row">
+            <div class="col-md-4 change">
+              <div class="change-info">
+                <p>{{'app.changeIn' | translate}}</p>
+                <strong>{{ translateKey + '.' + prop.key | translate}}</strong>
+              </div>
+            </div>
+            <div class="col-md-3 change">
+              <div class="change-info">
+                <p>{{'app.from' | translate}}</p>
+                <p>{{prop?.value?.oldValue}}</p>
+              </div>
+            </div>
+
+            <div class="col-md-2 icon">
+              <img [ngClass]="'icon-' + currentLang" [src]="'./assets/img/pending-requests/icons-arrow.svg'" alt="logo">
+            </div>
+
+            <div class="col-md-3 change">
+              <div class="change-info">
+                <p>{{'app.to' | translate}}</p>
+                <strong>{{prop?.value?.newValue}}</strong>
+              </div>
+            </div>
+          </div>
+        </nb-card>
+      </div>
+    </div>
+    <div class="ui dividing header"></div>
+  </div>
+
+  <!--No changes-->
+  <div class="no-changes">
+    <h6>{{'app.noChangeInfo' | translate}}</h6>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let prop of pendingRequestData | keyvalue">
+        <nb-card>
+          <div class="card-info">
+            <p>{{translateKey + '.' + prop.key | translate}}</p>
+            <strong>{{prop.value}}</strong>
+          </div>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!--Accept Modal-->
+<app-modal #acceptModal class="modal">
+  <h6 head class="modal-title">{{'pendingRequest.acceptChange' | translate}}</h6>
+  <p body class="modal-text">{{'app.undo' | translate}}</p>
+  <div footer class="modal-actions">
+    <button class="ui button btn-primary" (click)="submitPendingRequest()">{{'app.send' | translate}}</button>
+    <button class="ui button">{{'app.cancel' | translate}}</button>
+  </div>
+</app-modal>
+
+<!--Rejection Modal-->
+<app-modal [size]="'large'" #rejectModal class="modal">
+  <h6 head class="modal-title">{{'pendingRequest.rejectChange' | translate}}</h6>
+  <p body>
+    <ng-select dropdownPosition='bottom' [(ngModel)]="rejectionReason"
+               name="rejectReason"
+               placeholder="{{'app.choose' | translate}}">
+      <ng-option *ngFor="let reason of rejectionReasons" [value]="reason">
+        {{'pendingRequest.rejectReasons.' + reason|translate}}
+      </ng-option>
+    </ng-select>
+  </p>
+  <div footer class="modal-actions">
+    <button class="ui button btn-primary" (click)="submitPendingRequest()">{{'app.send' | translate}}</button>
+    <button class="ui button">{{'app.cancel' | translate}}</button>
+  </div>
+</app-modal>
+

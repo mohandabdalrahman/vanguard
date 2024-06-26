@@ -1,0 +1,259 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="first-container">
+      <app-info-details-menu
+        [UpdateLink]="UpdateLink"
+      ></app-info-details-menu>
+      <!-- [UpdateLink]="['/admin',/corporates/:corporateid/details/vehicles/',corporateVehicle?.id,'update']" -->
+      <div class="first-row d-flex">
+        <div class="image">
+          <!-- <h5 class="text-white">M</h5> -->
+          <!-- <img src="./assets/img/icons-truck-merchants.svg" alt=""> -->
+          <nb-icon icon="truck" pack="menu-icons"></nb-icon>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [useStatus]="true"
+            [suspended]="suspended"
+            [head]="'app.status'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [addClass]="'gray'"
+            [head]="'corporateVehicle.vehicleType'"
+            [body]="corporateVehicle?.vehicleType"
+            [bodyTextColor]="'#2d4190'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [usePlateComponent]="true"
+            [addClass]="'gray'"
+            [head]="'corporateVehicle.plateNumber'"
+            [plateNumber]="corporateVehicle?.plateNumber"
+          ></app-info-details>
+        </div>
+      </div>
+      <div class="second-row d-flex mt-4">
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-calendar.svg'"
+            [addClass]="'gray'"
+            [head]="'corporateVehicle.License-Expiry-Date'"
+            [body]="corporateVehicle?.licenseExpiryDate?corporateVehicle?.licenseExpiryDate:'app.notFound'"
+          ></app-info-details>
+        </div>
+
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-hashtag.svg'"
+            [addClass]="'gray'"
+            [head]="'corporateVehicle.vehicleCode'"
+            [body]="corporateVehicle?.vehicleCode?corporateVehicle?.vehicleCode:'app.notFound'"
+          ></app-info-details>
+        </div>
+      </div>
+
+      <div></div>
+    </div>
+    <div class="second-container">
+      <div class="first-row d-flex">
+        <div class="mx-3">
+          <app-info-details
+            [backGroundClass]="'gray-background'"
+            [head]="'corporateVehicle.tagNumber'"
+            [body]="corporateVehicle?.tagNumber?corporateVehicle?.tagNumber:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [backGroundClass]="'gray-background'"
+            [head]="'corporateVehicle.brand'"
+            [body]="corporateVehicle?.brand?corporateVehicle?.brand:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-hashtag.svg'"
+            [head]="'corporateVehicle.id'"
+            [body]="corporateVehicle?.assetId?corporateVehicle?.assetId:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-calendar.svg'"
+            [head]="'corporateVehicle.modelYear'"
+            [body]="corporateVehicle?.modelYear?corporateVehicle?.modelYear:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-tank-capacity.svg'"
+            [head]="'corporateVehicle.tankSize'"
+            [body]="corporateVehicle?.tankSize?corporateVehicle?.tankSize:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+      </div>
+      <div class="second-row d-flex mt-3">
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-gas-pump.svg'"
+            [head]="'corporateVehicle.fuelType'"
+            [body]="corporateVehicleFuelType"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+        <div class="mx-3">
+          <app-info-details
+            [useIcon]="true"
+            [image]="'./assets/img/icons-information.svg'"
+            [head]="'corporateVehicle.description'"
+            [body]="corporateVehicle?.description?corporateVehicle?.description:'app.notFound'"
+            [addClass]="'gray'"
+          ></app-info-details>
+        </div>
+      </div>
+    </div>
+    <div class="row third-container">
+      <div class="col-md-6 p-0">
+        <div class="average average-start-start">
+          <app-info-details-withicon
+            [title]="'corporateVehicle.AverageFuelConsumption'"
+            [name]="'corporateVehicle.liter'"
+            [length]="corporateVehicle?.consumptionDefaultRate?corporateVehicle?.consumptionDefaultRate:'app.notFound'"
+            [icon]="'./assets/img/icons-fuel.svg'"
+            [iconbBackground]="'rgba(45, 65, 144, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+        <div class="average average-end-start">
+          <app-info-details-withicon
+            [title]="'corporateVehicle.lastDistanceReading'"
+            [name]="'corporateVehicle.kiloMeter'"
+            [length]="corporateVehicle?.lastDistanceReading?corporateVehicle?.lastDistanceReading:'app.notFound'"
+            [icon]="'./assets/img/icons-distance-reading-2.svg'"
+            [iconbBackground]="'rgba(255, 172, 58, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+      </div>
+      <div class="col-md-6 p-0">
+        <div class="average average-start-end">
+          <app-info-details-withicon
+            [title]="'corporateVehicle.mileagePerDay2'"
+            [name]="'corporateVehicle.kiloMeter'"
+            [length]="corporateVehicle?.averageMilagePerDay?corporateVehicle?.averageMilagePerDay:'app.notFound'"
+            [icon]="'./assets/img/icons-distance-danger.svg'"
+            [iconbBackground]="'rgba(227, 92, 156, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+        <div
+          class="average average-end-end"
+          [ngStyle]="{'background-color':'#f6f7f9'}"
+        >
+          <app-info-details-withicon
+            [title]="'corporateVehicle.startingDistanceReading'"
+            [name]="'corporateVehicle.kiloMeter'"
+            [length]="corporateVehicle?.startingDistanceReading?corporateVehicle?.startingDistanceReading:'app.notFound'"
+            [icon]="'./assets/img/icons-distance-reading-3.svg'"
+            [iconbBackground]="'rgba(40, 190, 137, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+      </div>
+    </div>
+    <div class="row fourth-container">
+      <div class="col-md-6 p-0">
+        <div class="average average-start-start average-end-start">
+          <app-info-details-withicon
+            [title]="'corporateVehicle.ExpectedFuelConsumptionRate'"
+            [name]="'corporateVehicle.LitersperKilometer'"
+            [length]="corporateVehicle?.averageCalculatedConsumption?corporateVehicle?.averageCalculatedConsumption:'app.notFound'"
+            [iconbBackground]="'rgba(45, 65, 144, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+      </div>
+      <div class="col-md-6 p-0">
+        <div class="average average-start-end average-end-end">
+          <app-info-details-withicon
+            [title]="'corporateVehicle.oilMileage1'"
+            [name]="'corporateVehicle.kiloMeter'"
+            [length]="corporateVehicle?.changingOilMilage?corporateVehicle?.changingOilMilage:'app.notFound'"
+            [iconbBackground]="'rgba(227, 92, 156, 0.14)'"
+          ></app-info-details-withicon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 my-md-0 my-3">
+    <div class="chart-container" [ngClass]="{'h-100':vehicleConsumnptionRates?.length>0}">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>
+          <img
+            class="mx-2"
+            src="./assets/img/icons-line-chart-ar.svg"
+            alt="line-chart"
+          />{{'corporateVehicle.VehicleFuelConsumptionRate' | translate}}<img
+            class="mx-2"
+            src="./assets/img/icons-information.svg"
+            alt="information"
+          />
+        </h5>
+
+        <input
+          type="month"
+          class="dataSelectBox"
+          [(ngModel)]="selectedMonth"
+          (change)="changeGraph()"
+        />
+      </div>
+      <div
+        #containerRef
+        class="chart"
+        *ngIf="vehicleConsumnptionRates?.length>0"
+      >
+        <ngx-charts-line-chart
+          [view]="[containerRef.offsetWidth, 500]"
+          [results]="vehicleConsumnptionRates"
+          [animations]="true"
+          [gradient]="gradient"
+          [showGridLines]="true"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="'corporateVehicle.Today'|translate"
+          [yAxisLabel]="'corporateVehicle.ConsumptionRate'|translate"
+          [scheme]="colorScheme"
+          [animation]="true"
+        >
+        </ngx-charts-line-chart>
+      </div>
+      <div class="graphEmptyState" *ngIf="vehicleConsumnptionRates?.length==0">
+        <div>
+          <img
+            class="mx-2"
+            src="./assets/img/icons-line-chart-ar.svg"
+            alt="line-chart"
+          />
+          <h5>{{'corporateVehicle.noConsumptionForthisMonth'|translate}}</h5>
+          <p>{{"corporateVehicle.choose-another-month"|translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{
+  "country": {
+        "localeName": "اسم الدولة (عربي)",
+        "enName": "اسم الدولة (إنجليزي)",
+        "currency": "العملة",
+        "title": "كل الدول",
+        "add": "إضافة دولة",
+        "name": "الدول",
+        "id": "المسلسل",
+        "update": "تعديل دولة",
+        "iso2Code": "رمز الدوله",
+        "defaultLocale": "اللغة الرئيسية",
+        "currencyArName": "اسم العملة (عربي)",
+        "currencyEnName": "اسم العملة (إنجليزي)",
+        "code": "رمز العمله",
+        "suspended": "حالة الدولة",
+        "deletedTitle": "الدوله"
+
+  }
+}

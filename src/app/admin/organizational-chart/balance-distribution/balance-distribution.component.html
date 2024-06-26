@@ -1,0 +1,326 @@
+
+<h4>{{ "unit.distributeBalance" | translate }}</h4>
+
+<!--start header-->
+<nb-card class="nb-card-container">
+  <nb-card-body class="header">
+    <div class="balance-header">
+      <div class="balance-header__info">
+        <div class="balance-header__info-balance">
+          <img src="./assets/img/BY_BALANCE.svg" alt="by balance" />
+          <span>{{ "unit.BY_BALANCE" | translate }} ({{tree?.numberOfByBalanceChild ?? 0}}) </span>
+        </div>
+        <div class="balance-header__info-limit">
+          <img src="./assets/img/BY_LIMIT.svg" alt="by limit"  />
+          <span>{{ "unit.BY_LIMIT" | translate }} ({{tree?.numberOfByLimitChild ?? 0}}) </span>
+        </div>
+      </div>
+      <div class="balance-header__actions">
+        <div class="balance-header__actions-left">
+          <button
+            class="ui button btn-primary"
+            (click)="openConfirmModal('reset')"
+          >
+            <img src="./assets/img/icons-reprint.svg" alt="reassign" />
+            {{ "unit.reassignBalance" | translate }}
+          </button>
+        </div>
+        <div class="separator"></div>
+        <div class="balance-header__actions-right">
+          <button
+            class="ui button btn-positive"
+            (click)="openConfirmModal('save')"
+          >
+            {{ "unit.confirmBalanceDist" | translate }}
+            <img src="./assets/img/icons-check.svg" alt="confirm" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<div id="units-container" class="balance-cards">
+  <angular-org-chart
+    #orgChart
+    [nodeTemplate]="nodeTemplate"
+    [data]="tree"
+    #exampleChart="orgChart"
+  >
+  </angular-org-chart>
+
+  <!--balance distribution card-->
+  <ng-template #nodeTemplate let-node>
+    <nb-card class="nb-card-balance" [class.root]="node.type === 'ROOT'">
+      <nb-card-body class="balance-card">
+        <div class="balance-card__header">
+          <div class="balance-card__header__title">
+            <div class="balance-card__header__title-left">
+              <div
+                [ngClass]="node?.outputBalanceDistributionMode"
+                class="balance-card__header__title-left-img"
+              >
+                <img *ngIf="node?.outputBalanceDistributionMode"
+                  [src]="
+                    './assets/img/' +
+                    node?.outputBalanceDistributionMode +
+                    '.svg'
+                  "
+                  alt="balance type image"
+                />
+              </div>
+              <span>{{
+                currentLang === "en" ? node?.enName : node?.localeName
+              }}</span>
+            </div>
+            <div class="balance-card__header__title-right" *ngIf="node?.outputBalanceDistributionMode !== 'BY_LIMIT'">
+              <nb-toggle
+                class="balance-toggle"
+                status="success"
+                name="toggle"
+                labelPosition="start"
+                [(ngModel)]="node.autoDistribution"
+                ><span>
+                  {{ "unit.automaticDistribution" | translate }}
+                </span></nb-toggle
+              >
+            </div>
+          </div>
+          <div class="balance-card__header__info">
+            <ng-container *ngIf="node.type !== 'ROOT'">
+              <ng-container *ngIf="node?.outputBalanceDistributionMode !== 'BY_LIMIT' || node?.inputBalanceDistributionMode !=='BY_LIMIT'">
+              <div class="income-balance">
+                <span>{{ "unit.inputBalance" | translate }}</span>
+                <div class="income-balance-inputs">
+                  <app-input-field
+                    name="inputBalancePercent"
+                    [size]="'sm'"
+                    [type]="'number'"
+                    [max]="100"
+                    [showPercentage]="true"
+                    [display]="'inline-block'"
+                    [(ngModel)]="node.inputBalancePercent"
+                    (change)="calculateBalanceDistribution(node, 'percent' , 'inputBalancePercent')"
+                  ></app-input-field>
+                  <img
+                    class="exchange-icon"
+                    src="./assets/img/icons-exchange.svg"
+                    alt="exchange icon"
+                  />
+                  <app-input-field
+                    name="inputBalance"
+                    [size]="'md'"
+                    [type]="'number'"
+                    [display]="'inline-block'"
+                    [(ngModel)]="node.inputBalance"
+                    (change)="calculateBalanceDistribution(node, 'amount' , 'inputBalance')"
+                  ></app-input-field>
+                </div>
+              </div>
+              <div class="available-balance">
+                <span
+                  >{{ (tree?.hybridOuShowBalanceInsteadOfBuffer && node.inputBalanceDistributionMode ==='BY_BALANCE' && node?.outputBalanceDistributionMode  === 'BY_LIMIT') ? ( "app.currentBalance" | translate) : ("unit.bufferBalance" | translate)}}
+                  <app-tooltip [infoText]="(tree?.hybridOuShowBalanceInsteadOfBuffer && node.inputBalanceDistributionMode ==='BY_BALANCE' && node?.outputBalanceDistributionMode  === 'BY_LIMIT') ? 'unit.limitCurrentBalanceInfo' :'unit.bufferBalanceInfo' "></app-tooltip>
+
+                </span>
+                <span>{{ (tree?.hybridOuShowBalanceInsteadOfBuffer && node.inputBalanceDistributionMode ==='BY_BALANCE' && node?.outputBalanceDistributionMode  === 'BY_LIMIT') ? (node?.currentBalance ?? 0) : (node?.initialBufferBalance ?? 0)  | number}}</span>
+              </div>
+
+              </ng-container>
+            </ng-container>
+            <div *ngIf="node?.outputBalanceDistributionMode !== 'BY_LIMIT' || node.type === 'ROOT'" class="current-balance">
+              <span
+                >{{ "app.currentBalance" | translate }}
+                <app-tooltip [infoText]="'unit.currentBalanceInfo'"></app-tooltip>
+              </span>
+              <span>{{ node?.currentBalance ?? 0  | number }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="balance-card__body">
+          <div
+            class="balance-card__body-limit"
+            *ngIf="node?.outputBalanceDistributionMode === 'BY_LIMIT'"
+          >
+            <div class="balance-card__body-limit-total">
+              <p class="txt">{{ "unit.totalExchangeLimit" | translate }}</p>
+              <ng-container  *ngIf="node?.outputBalanceDistributionMode === 'BY_LIMIT' && node?.inputBalanceDistributionMode ==='BY_LIMIT'">
+              <app-input-field
+                name="totalLimitPercent"
+                [size]="'sm'"
+                [type]="'number'"
+                [max]="100"
+                [showPercentage]="true"
+                [display]="'inline-block'"
+                [(ngModel)]="node.totalLimitPercent"
+                (change)="calculateBalanceDistribution(node, 'percent' , 'totalLimitPercent')"
+              ></app-input-field>
+              <img
+                class="exchange-icon"
+                src="./assets/img/icons-exchange.svg"
+                alt="exchange icon"
+              />
+              </ng-container>
+              <app-input-field
+                [size]="'md'"
+                [type]="'number'"
+                [display]="'inline-block'"
+                name="totalLimit"
+                [(ngModel)]="node.totalLimit"
+                (change)="calculateBalanceDistribution(node, 'amount' , 'totalLimit')"
+              ></app-input-field>
+            </div>
+            <div class="balance-card__body-limit-single">
+              <p class="txt">{{ "unit.monthlyExchangeLimit" | translate }}</p>
+              <app-input-field
+                name="selfPercent"
+                [size]="'sm'"
+                [type]="'number'"
+                [max]="100"
+                [showPercentage]="true"
+                [display]="'inline-block'"
+                [(ngModel)]="node.selfPercent"
+                (change)="calculateBalanceDistribution(node, 'percent', 'selfPercent')"
+              ></app-input-field>
+              <img
+                class="exchange-icon"
+                src="./assets/img/icons-exchange.svg"
+                alt="exchange icon"
+              />
+              <app-input-field
+                name="selfAmount"
+                [size]="'md'"
+                [type]="'number'"
+                [display]="'inline-block'"
+                [(ngModel)]="node.selfAmount"
+                (change)="calculateBalanceDistribution(node, 'amount' , 'selfAmount')"
+              ></app-input-field>
+            </div>
+          </div>
+          <div
+            class="balance-card__body-balance"
+            *ngIf="node?.outputBalanceDistributionMode === 'BY_BALANCE'"
+          >
+            <div class="distribution-balance">
+              <p>
+                {{ "unit.distBalance" | translate }}
+                <span
+                  ><img
+                    src="./assets/img/icons-billing-account.svg"
+                    alt="billing account"
+                /></span>
+              </p>
+              <strong>{{
+                ( node?.type === "ROOT"
+                  ? (+node?.initialBufferBalance + 0).toFixed(2)
+                  : (+(node?.initialBufferBalance  ?? 0) + +(node?.inputBalance ?? 0)).toFixed(2) ) | number
+              }}</strong>
+            </div>
+            <div class="same-unit">
+              <p>{{ "unit.same" | translate }}</p>
+              <div class="unit-amount">
+                <app-input-field
+                  name="selfPercent"
+                  [size]="'sm'"
+                  [type]="'number'"
+                  [max]="100"
+                  [showPercentage]="true"
+                  [display]="'inline-block'"
+                  [(ngModel)]="node.selfPercent"
+                  (change)="calculateBalanceDistribution(node, 'percent' , 'selfPercent')"
+                ></app-input-field>
+                <img
+                  class="exchange-icon"
+                  src="./assets/img/icons-exchange.svg"
+                  alt="exchange icon"
+                />
+                <app-input-field
+                  name="selfAmount"
+                  [size]="'md'"
+                  [type]="'number'"
+                  [display]="'inline-block'"
+                  [(ngModel)]="node.selfAmount"
+                  (change)="calculateBalanceDistribution(node, 'amount' , 'selfAmount')"
+                ></app-input-field>
+              </div>
+            </div>
+            <div class="available-balance">
+              <div class="available-balance-icon" *ngIf="node.type === 'ROOT'">
+                <img
+                  src="./assets/img/icons-billing-account.svg"
+                  alt="billing account"
+                />
+              </div>
+              <div
+                class="available-balance-info"
+                [ngStyle]="{
+                  border:
+                    node.availableBalancePercent < 0 ? '2px solid red' : ''
+                }"
+              >
+                <p>{{ "unit.availableBalanceDist" | translate }}</p>
+                <strong>
+                  {{ node?.availableBalancePercent ?? 0 }}%
+                  <img
+                    class="exchange-icon"
+                    src="./assets/img/icons-exchange.svg"
+                    alt="exchange icon"
+                  />
+                  {{ node?.availableBalanceAmount ?? 0  | number }}
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="balance-card__footer">
+          <div class="unit-spend">
+            <p>{{ "unit.spendMonthly" | translate }}</p>
+            <strong>{{ node?.monthlyConsumption ?? 0 }}</strong>
+          </div>
+          <div class="units-spend">
+            <p>{{ "unit.spendMonthlyForUnits" | translate }}</p>
+            <strong *ngIf="node?.children?.length">{{ node?.allUnitsMonthlyConsumption}}</strong>
+            <strong *ngIf="!node?.children?.length">{{ currentLang === "en"
+              ? "There is no linked OU"
+              : "لا يوجد وحدات تابعة"}}</strong>
+          </div>
+        </div>
+
+        <div
+          *ngIf="node?.children?.length && node.cssClass !== 'rootLevel'"
+          (click)="handleCollapse(node)"
+          class="tree-fold-btn"
+        >
+          <nb-icon
+            *ngIf="node?.hideChildren"
+            icon="plus-circle-outline"
+          ></nb-icon>
+          <nb-icon
+            *ngIf="!node?.hideChildren"
+            icon="minus-circle-outline"
+          ></nb-icon>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </ng-template>
+</div>
+
+<app-modal #confirmModal [showCloseBtn]="false">
+  <h6 body>
+    {{ (isSaveAction ? "unit.saveBalance" : "unit.resetBalance") | translate }}
+  </h6>
+  <div class="modal-actions" footer>
+    <button
+      class="ui button btn-primary"
+      (click)="
+        isSaveAction ? updateBalanceDistribution(true) : resetBalanceDistribution()
+      "
+    >
+      {{ (isSaveAction ? "app.yes" : "unit.reassignBalance") | translate }}
+    </button>
+    <button *ngIf="isSaveAction"  class="ui button" (click)="updateBalanceDistribution(false)"> {{"app.no" | translate}}</button>
+<!--    <button class="ui button" (click)="closeModal()">-->
+<!--      {{ "app.cancel" | translate }}-->
+<!--    </button>-->
+  </div>
+</app-modal>

@@ -1,0 +1,28 @@
+<div class="pagination-container" *ngIf="totalElements">
+  <ngb-pagination class="d-flex justify-content-end" [collectionSize]="totalElements" [(page)]="currentPage"
+                  [pageSize]="pageSize"
+                  (pageChange)="pageChange($event)" [maxSize]="maxSize" [rotate]="true" [ellipses]="false"
+                  aria-label="Default pagination">
+    <ng-template ngbPaginationPrevious>
+      <nb-icon *ngIf="currentLang==='en'" icon="arrow-ios-back-outline"></nb-icon>
+      <nb-icon *ngIf="currentLang==='ar'" icon="arrow-ios-forward-outline"></nb-icon>
+      {{'app.prev' | translate}}
+
+    </ng-template>
+    <ng-template ngbPaginationNext>
+      {{'app.next' | translate}}
+      <nb-icon *ngIf="currentLang==='en'" icon="arrow-ios-forward-outline"></nb-icon>
+      <nb-icon *ngIf="currentLang==='ar'" icon="arrow-ios-back-outline"></nb-icon>
+    </ng-template>
+  </ngb-pagination>
+
+  <div class="paginator">
+    {{'app.itemsPerPage' | translate}}
+    <select (change)="handlePageSizeChange($event)"  [ngModel]="pageSize">
+      <option *ngFor="let size of pageSizes">
+        {{ size }}
+      </option>
+    </select>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+
+
+<app-data-table [gridData]="gridData" [colData]="colData" [tableControls]="false" [merchantId]="merchantId">
+  <ng-container header>
+  <app-left-table-header  [title]="'attachment.title'" [name]="'attachment.title'" [length]="gridData.length"></app-left-table-header>
+
+<!--   <app-right-table-header  [addText]="'attachment.add'">
+    <button [ngStyle]="{'backgroundColor':showAdvanceSearch?'#2d4190':'#fff',color:showAdvanceSearch?'#fff':''}" (click)="showAdvanceSearch=!showAdvanceSearch" class="advance-search" type="button">
+      <nb-icon icon="options-2-outline"></nb-icon>
+      {{'app.filter' | translate}}
+    </button>
+  </app-right-table-header> -->
+  </ng-container>
+
+  <app-search *ngIf="showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="getAttachments(advanceSearchForm.value)">
+      <div class="ui dividing header"></div>
+
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="fileName" [placeholder]="'attachment.fileName'" [label]="'attachment.fileName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="documentType" [placeholder]="'attachment.fileName'" [label]="'attachment.documentType'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="downloadUrl" [placeholder]="'attachment.downloadUrl'" [label]="'attachment.downloadUrl'"></app-input-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+
+    </form>
+  </app-search>
+</app-data-table>

@@ -1,0 +1,49 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+<div class="details">
+  <h5>{{'app.details' | translate}} </h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of transaction | keyvalue">
+        <app-item-details [head]="'transaction.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-data-table *ngIf="gridData.length" [tableControls]="false" [gridData]="gridData" [colData]="colData"
+                [showEditBtn]="userType==='admin'" [showTopContainer]="false"
+                (onEditBtnClick)="openMileageModal($event)" [role]="'TRANSACTION_UPDATE'">
+  <app-left-table-header [title]="'transaction.items'" [name]="'transaction.items'"
+                         [length]="gridData.length"></app-left-table-header>
+
+</app-data-table>
+
+
+<nb-card class="mt-5" *ngIf="mileageFile?.fileContentBase64">
+  <nb-card-header class="img-header">{{'transaction.milagePhoto'| translate}}</nb-card-header>
+  <nb-card-body>
+    <img [src]="'data:image/png;base64,' + mileageFile?.fileContentBase64">
+  </nb-card-body>
+</nb-card>
+
+<app-modal #mileageModal [size]="'sm'" [centerView]="true">
+  <h4 head class="modal-title">{{'invoice.updateMileage' | translate}}</h4>
+  <div body class="mileage-info">
+    <p> {{'invoice.oldMileage' | translate}} <b>{{recordData?.currentMileage}}</b></p>
+    <img *ngIf="mileageFile?.fileContentBase64" [src]="'data:image/png;base64,' + mileageFile?.fileContentBase64">
+  </div>
+  <form body class="ui form" (ngSubmit)="submitMileageNumber()">
+    <app-input-field [type]="'number'" [(ngModel)]="mileageNumber"
+                     name="mileageNumber" [placeholder]="'invoice.updateMileage'"></app-input-field>
+    <p *ngIf="(mileageNumber && mileageNumber < recordData?.currentMileage)"
+       class="error">{{'invoice.errMileage' | translate}}</p>
+    <br> <br>
+    <button class="ui button btn-primary" type="submit"
+            [disabled]="!mileageNumber">
+      {{'invoice.updateMileage' | translate}}</button>
+  </form>
+</app-modal>

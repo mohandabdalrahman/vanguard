@@ -1,0 +1,129 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+:host:has(.loading) {
+  overflow: hidden !important;
+}
+
+//org chart style
+nb-card.ou-card {
+  width: 362px;
+  height: 70px;
+  border-radius: 35px;
+  box-shadow: 0 4px 14px 0 rgb(0 0 0 / 11%);
+  background-color: #fff;
+  position: relative;
+  z-index: 9999999;
+
+  &.root {
+    background-color: $primary;
+
+    h6, .admin {
+      color: #fff !important;
+    }
+
+    .card-nums {
+      color: $light !important;
+    }
+
+    ::ng-deep {
+      .more-icon {
+        border: 1px solid #fff;
+      }
+    }
+
+  }
+
+  nb-card-body {
+    overflow: initial;
+    padding: 1em;
+  }
+
+  .card-container {
+    display: flex;
+    align-items: center;
+
+    app-context-menu {
+      position: absolute;
+      top: 5px;
+      transition: all .2s ease-in-out;
+    }
+
+    .border {
+      display: block;
+      width: 2px;
+      height: 27px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+      background-color: $primary;
+
+      &.branch {
+        background-color: $secondary-one;
+      }
+    }
+
+    .tree-fold-btn {
+      position: absolute;
+      bottom: 25px;
+      cursor: pointer;
+
+      nb-icon {
+        font-size: 2em;
+        color: #223376;
+      }
+    }
+  }
+
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 17px;
+    background-color: $ray;
+    margin: 0 .6em;
+    @extend .d-flex-center;
+  }
+
+  .card-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    h6 {
+      text-transform: capitalize;
+      color: $alpha;
+    }
+
+    &-name {
+      min-width: 6em;
+    }
+
+    .admin {
+      color: $legend;
+      text-transform: capitalize;
+    }
+
+    .card-nums {
+      display: flex;
+      justify-content: space-between;
+      color: $misty;
+      text-transform: capitalize;
+      margin: 0 1.8em;
+      flex: 1;
+
+      span:nth-of-type(2) {
+        margin: 0 1em;
+      }
+    }
+  }
+}
+
+nb-card ::ng-deep .more-icon {
+  visibility: hidden;
+}
+
+nb-card:hover::ng-deep .more-icon {
+  visibility: visible;
+}

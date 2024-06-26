@@ -1,0 +1,14 @@
+.header {
+  &_left {
+
+    &-info {
+      text-transform: capitalize;
+
+    }
+  }
+}
+
+.search {
+  display: flex;
+  align-items: end;
+}

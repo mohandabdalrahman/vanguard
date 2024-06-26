@@ -1,0 +1,194 @@
+<div class="grid-view" *ngIf="gridData.length>0 ">
+  <div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-6   position-relative " *ngFor="let data of gridData">
+
+      <div [ngClass]="{'userConsumptionview':type=='userConsumption'}">
+        <div [ngStyle]="{'background-color':type=='userConsumption'?'#f6f7f9':''}" class="containerx">
+          <div [ngStyle]="{'padding-bottom':type=='userConsumption'?'24px':''}" class="in">
+            <div [ngClass]="{'LimitHeight':type=='corporatePolicyList'}" class="Limit d-flex ">
+              <div class="icon" *ngIf="type=='corporatePolicyList'">
+                <span [ngClass]="{'greenBackground':(((data.Expectation.PlannedUsage*0.7>data.Expectation.Consumption) || (data.Expectation.Consumption==0) || (data.Expectation.Consumption>0&& data.Expectation.PlannedUsage==0)) && (data.Expectation.openned !== true)),'redBackground':(data.Expectation.PlannedUsage==data.Expectation.Consumption && data.Expectation.Consumption!=0)
+                  , 'yellowBackground':data.Expectation.PlannedUsage>data.Expectation.Consumption&&data.Expectation.PlannedUsage*0.7<=data.Expectation.Consumption , 'legendBackground' : data.Expectation.openned}"
+                >
+                  <img
+                    *ngIf="((data.Expectation.PlannedUsage*0.7>data.Expectation.Consumption) || (data.Expectation.Consumption==0) || (data.Expectation.Consumption>0&& data.Expectation.PlannedUsage==0)) && (data.Expectation.openned !== true)"
+                    src="./assets/img/icons-donut-chart-down.svg" alt="">
+                  <img
+                    *ngIf="(data.Expectation.PlannedUsage==data.Expectation.Consumption && data.Expectation.Consumption!=0) "
+                    src="./assets/img/icons-donut-chart-up.svg" alt="">
+                  <img
+                    *ngIf="(data.Expectation.PlannedUsage>data.Expectation.Consumption&&data.Expectation.PlannedUsage*0.7<=data.Expectation.Consumption)"
+                    src="./assets/img/icons-donut-chart.svg" alt="">
+                 <img
+                  *ngIf="data?.Expectation?.openned"
+                  src="./assets/img/icons-infinity.svg" alt="">
+                </span>
+              </div>
+              <div class="payed" *ngIf="type=='corporatePolicyList'">
+                <span><span class="status"
+                            [ngStyle]="{'background-color':data.status=='active'?'#28be89':'#e65151'}"></span>{{data.policyType|translate}}</span>
+                <p *ngIf="currentLang=='ar'">{{data.localeName}}</p>
+                <p *ngIf="currentLang=='en'">{{data.enName}}</p>
+                <!-- enName -->
+              </div>
+
+              <div *ngIf="type=='userConsumption'">
+                <h5><span class="status"
+                          [ngStyle]="{'background-color':data.status=='active'?'#28be89':'#e65151'}"></span>{{data.VehiclePlateNumber == undefined ? data.name : data.VehiclePlateNumber}}
+                </h5>
+
+              </div>
+            </div>
+
+            <div class="menu">
+              <div class="icon-drop"
+                   [ngStyle]="{'right':currentLang=='en'?'40px':'','left':currentLang=='ar'?'40px':''}">
+                <img (click)="OpenDropMenu($event)" src="./assets/img/icons-more-menu.svg" alt="">
+              </div>
+              <div class="dropdownMenu d-none">
+                <ul>
+                  <li *ngIf=" !Goto" [routerLink]="[data.id,'details']"><img src="./assets/img/icons-view.svg"
+                                                                             alt="">{{"app.details"|translate}}</li>
+
+                  <li *ngIf="Goto" [routerLink]="[Goto,data.id,'details']"><img src="./assets/img/icons-view.svg"
+                                                                                alt="">{{"app.details"|translate}}</li>
+
+
+                  <li *ngIf=" !Goto && type=='corporatePolicyList'" [routerLink]="[data.id,'update']"><img
+                    src="./assets/img/icons-edit.svg" alt="">{{"corporatePolicy.Edit"|translate}}</li>
+
+                  <li *ngIf="Goto && type=='userConsumption'" [routerLink]="[Goto,data.id,'update']"><img
+                    src="./assets/img/icons-edit.svg" alt="">{{"corporatePolicy.EditUser"|translate}}</li>
+                  <li *ngIf="queryParamName==='policyIds'" [routerLink]="[viewTransactionsLink]"
+                      [queryParams]="{policyIds:data.id}"><img
+                    src="./assets/img/icons-add.svg" alt="">{{"transactions"|translate}}</li>
+                  <li *ngIf="queryParamName==='assetIds'" [routerLink]="[viewTransactionsLink]"
+                      [queryParams]="{assetIds:data.id}"><img
+                    src="./assets/img/icons-add.svg" alt="">{{"transactions"|translate}}</li>
+                </ul>
+                <div class="horizontalLine mx-auto"></div>
+                <p *ngIf="data?.assetType=='app.assetType.USER' || data?.assetType=='app.assetType.VEHICLE'"
+                   (click)="suspendedpolicy(data.corporateId,data.id)" style="cursor: pointer;"
+                   [ngStyle]="{color:data.status=='inactive'?'#28be89':'#e65151'}">
+                  <img [src]="data.status=='inactive'?'./assets/img/enable-policy.svg':'./assets/img/icons-suspend.svg'"
+                       alt="">{{ (data.status == 'inactive' ? "app.Activethispolicy" : "app.stopthispolicy") |translate}}
+                </p>
+                <p *ngIf="data?.name" (click)="suspendedAssets(data.id)"
+                   style="cursor: pointer;" [ngStyle]="{color:data.status=='inactive'?'#28be89':'#e65151'}">
+                  <img [src]="data.status=='inactive'?'./assets/img/enable-policy.svg':'./assets/img/icons-suspend.svg'"
+                       alt="">{{ (data.status == 'inactive' ? "app.CardholderActive"
+                  : "app.CardholderStop") |translate}}
+                </p>
+                <p *ngIf="data?.VehiclePlateNumber" (click)="suspendedAssets(data.id)"
+                   style="cursor: pointer;" [ngStyle]="{color:data.status=='inactive'?'#28be89':'#e65151'}">
+                  <img [src]="data.status=='inactive'?'./assets/img/enable-policy.svg':'./assets/img/icons-suspend.svg'"
+                       alt="">{{(data.status == 'inactive' ? "app.VehicleActive"
+                  : "app.Vehiclestop")|translate}}
+                </p>
+              </div>
+            </div>
+
+
+            <div *ngIf="type=='corporatePolicyList'" class="horizontalLine mx-auto"></div>
+
+            <div class="policy-Type d-flex" *ngIf="type=='corporatePolicyList'">
+              <div class="policyCycleType">
+                <p>{{'corporatePolicy.policyCycleType'|translate}}</p>
+                <p><img src="./assets/img/icons-calendar.svg"
+                        alt="">{{(data.policyCycleType == "" ? 'corporatePolicy.Notfound' : data.policyCycleType)|translate}}
+                </p>
+              </div>
+              <div class="assetType">
+                <p>{{'corporatePolicy.assetType'|translate}}</p>
+                <p><img
+                  [src]="data?.assetType=='app.assetType.USER'?'./assets/img/icons-user-card.svg':'./assets/img/icons-truck-merchants.svg'"
+                  alt="">{{data.assetType|translate}}</p>
+              </div>
+
+            </div>
+
+
+            <div *ngIf="type=='corporatePolicyList'" class="horizontalLine  mx-auto"></div>
+
+            <app-progress *ngIf="type=='corporatePolicyList'" [currentLang]="currentLang" [data]="data"></app-progress>
+
+          </div>
+
+
+          <div *ngIf="type=='corporatePolicyList'" class="d-flex ExpectedLimit justify-content-between">
+            <p>{{"app.thePlanForIt"|translate}}</p>
+            <p class="">{{data.Expectation.PlannedUsage}} {{"dashboard.currency"|translate}}</p>
+          </div>
+
+        </div>
+
+        <!-- [ngStyle]="{'--p':(data.consumptionRate.Expectation.Consumption/data.consumptionRate.Limit)*100}" -->
+        <div *ngIf="type=='userConsumption'" class="d-flex justify-content-center align-items-center">
+          <div class="pie" style="--c:#308df2;--b:10px"
+               [style]="{'--p':(data.consumptionRate.Expectation.cycleConsumption/data.consumptionRate.Limit)*100}">
+
+
+            <div class="Dashedborder">
+
+              <div class="circularContainer ">
+                <div class="text-center">
+                  <img src="./assets/img/egp-copy-3.svg" alt="">
+                  <p>{{"app.payed"|translate}}</p>
+                  <h5>{{data.consumptionRate.Expectation.cycleConsumption}} {{"dashboard.currency"|translate}}</h5>
+                </div>
+              </div>
+
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+        <div *ngIf="type=='userConsumption' && data.policyType!=='DYNAMIC'" class="text-center">
+          <h6
+            class="m-0 my-2">{{(data?.consumptionRate.Expectation?.cycleConsumption / data.consumptionRate.Limit) >= 0 ? ((data.consumptionRate.Expectation.cycleConsumption / data.consumptionRate.Limit) * 100 + '%') : '0%'}}  {{"app.fromTotalConsumption"|translate}}</h6>
+        </div>
+
+        <div *ngIf="type=='userConsumption' && data.policyType=='DYNAMIC'" class="text-center">
+          <h6
+            class="m-0 my-2">{{(data?.consumptionRate.Expectation?.cycleConsumption / (data?.consumptionRate.Expectation?.cycleConsumption + data.Availableforthenexttransaction)) >= 0 ? ((data.consumptionRate.Expectation.cycleConsumption / (data?.consumptionRate.Expectation?.cycleConsumption + data.Availableforthenexttransaction)) * 100 + '%') : '0%'}}  {{"app.fromTotalConsumption"|translate}}</h6>
+        </div>
+
+        <div *ngIf="type=='userConsumption'" class="">
+
+          <div class="transactionContainer">
+            <div style="background-color: rgba(227, 92, 156, 0.08);" class="Icon">
+              <img src="./assets/img/icons-transactions.svg" alt="">
+            </div>
+            <div class="nextTransaction">
+              <p>{{"app.Availableforthenexttransaction"|translate}}</p>
+              <h6>{{(data.Availableforthenexttransaction == "corporatePolicy.Notfound" ? data.Availableforthenexttransaction : '') |translate}}
+                {{data.Availableforthenexttransaction != "corporatePolicy.Notfound" ? data.Availableforthenexttransaction : '' }}
+                {{(data.Availableforthenexttransaction != "corporatePolicy.Notfound" ? "dashboard.currency" : '')|translate}}
+
+              </h6>
+            </div>
+          </div>
+
+          <div class="transactionContainer">
+            <div style="background-color: rgba(45, 65, 144, 0.08);" class="Icon">
+              <img src="./assets/img/icons-calendar.svg" alt="">
+            </div>
+
+            <div class="nextTransaction">
+              <p>{{"app.Availablefortoday"|translate}}</p>
+              <h6>
+                {{(data.Availablefortoday == "corporatePolicy.Notfound" ? data.Availablefortoday : '') |translate}}
+                {{data.Availablefortoday != "corporatePolicy.Notfound" ? data.Availablefortoday : '' }}
+                {{(data.Availablefortoday != "corporatePolicy.Notfound" ? "dashboard.currency" : '')|translate}}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

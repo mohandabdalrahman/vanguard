@@ -1,0 +1,20 @@
+{
+  "userRole": {
+    "title": "User Roles",
+    "id": "ID",
+    "roleName": "Role Name",
+    "status": "Status",
+    "addRoleBtn": "Add Role",
+    "allowedAccess": "Allowed Access",
+    "role": "User Role",
+    "create": "Add New Role",
+    "update": "Update User Role",
+    "enName": "Role Name (English)",
+    "localeName": "Role Name (Arabic)",
+    "systemType": "System Type",
+    "tag": "Role Group",
+    "description": "Description",
+    "add": "Add Role",
+    "deletedTitle": "user role"
+  }
+}

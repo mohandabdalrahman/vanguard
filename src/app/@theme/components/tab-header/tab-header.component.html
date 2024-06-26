@@ -1,0 +1,8 @@
+<div class="head">
+  <h6 *ngIf="title">{{title| translate}}</h6>
+  <a *ngIf="addText" class="ui button btn-success" [routerLink]="['create']">
+    <nb-icon icon="plus-outline"></nb-icon>
+    {{addText | translate}}
+  </a>
+</div>
+<div class="ui dividing header head-dividing"></div>

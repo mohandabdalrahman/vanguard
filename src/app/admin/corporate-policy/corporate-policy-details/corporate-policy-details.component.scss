@@ -1,0 +1,29 @@
+@import "../../../scss/variables";
+
+.SkipBox {
+    width: 292px;
+    height: 33px;
+    border: 1px solid ;
+    padding: 8px;
+    border-radius: 8px;
+
+    p {
+        margin: 0;
+    }
+    P:first-of-type{
+        color: $legend;
+    }
+    P:nth-of-type(2){
+        color: $positive;
+    }
+ 
+}
+
+.Consumption{
+    height: 172px;
+    border-radius: 14px;
+    padding: 24px;
+    background-color: white;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+
+}

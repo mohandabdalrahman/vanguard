@@ -1,0 +1,42 @@
+@import "../../../scss/variables";
+
+.tab-container {
+  display: flex;
+  // justify-content: space-around;
+  // border-top: 1px solid #dedede;
+  margin-bottom: 0;
+  margin-top: 2em;
+
+  .tab-item {
+    display: inline-block;
+    width: 10%;
+    text-align: center;
+    background-color: #f8f7f7;
+    border-right: 1px solid #dedede;
+    padding: 1em 0;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #000;
+    font-size: 1.1em;
+    letter-spacing: 1px;
+    @media (max-width: 575.98px) {
+      font-size: 0.3em;
+    }
+    @media (min-width: 576px) and (max-width: 1399.98px) {
+      font-size: 0.8em;
+    }
+
+    &:last-of-type {
+      border-right: none;
+    }
+
+    &.active-tab {
+      background-color: #fff;
+      transition: all 0.2s ease-in-out;
+      color: $main-color;
+      box-shadow: -11px -21px 244px -82px rgb(0 0 0 / 75%);
+      font-weight: bold;
+      font-family: 'Geomanist-Bold', sans-serif;
+    }
+  }
+}

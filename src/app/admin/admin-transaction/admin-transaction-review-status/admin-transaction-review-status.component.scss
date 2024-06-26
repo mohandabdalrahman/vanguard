@@ -1,0 +1,24 @@
+@import "src/app/scss/variables";
+
+
+.pageTitle{
+    h2{
+        font-size: 24px;
+        color:$primary
+    }
+}
+.tableDiv{
+    background-color: #ffff;
+    border-radius: 34px;
+    box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+.Paginate{
+    padding-inline-end: 35px;
+}
+.data-table {
+    table {
+        margin: 0px;
+        padding-top: 0px;
+}
+}

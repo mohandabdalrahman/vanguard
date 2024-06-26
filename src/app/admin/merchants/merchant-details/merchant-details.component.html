@@ -1,0 +1,39 @@
+
+<app-back-button *ngIf="userType==='admin'"></app-back-button>
+<div class="merchant-card">
+  <div class="merchant-card-head">
+    <h5>{{merchantName}}</h5>
+    <app-update-button *ngIf="userType==='admin'"
+                       [path]="['/'+userType+'/merchants',merchantId,'update']"
+                       [role]="'MERCHANT_UPDATE'"></app-update-button>
+  </div>
+  <div class="ui dividing header"></div>
+  <div class="merchant-card-body">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="merchant-logo">
+          <img
+            src="./assets/img/merchants/merchant-icon.svg"
+            alt="merchant logo">
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="merchant-info">
+          <div class="ui three column grid">
+            <div class="column" *ngFor="let prop of merchant | keyvalue">
+              <h6>{{'merchant.' + prop.key | translate}}: <span>{{prop.value}}</span></h6>
+            </div>
+            <div class="column">
+              <h6>{{'merchant.suspended' | translate}}: <span>{{'app.' + suspended | translate}}</span></h6>
+            </div>
+            <div class="column">
+              <h6>{{'merchant.skipHoldingTax' | translate}}: <span>{{'app.' + skipHoldingTax | translate}}</span></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-tabs *ngIf="userType==='admin'" [tabs]="tabs"></app-tabs>

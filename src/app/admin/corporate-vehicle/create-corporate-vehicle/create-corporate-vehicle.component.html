@@ -1,0 +1,275 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+
+<div class=" create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('corporateVehicle.add' | translate) : ('corporateVehicle.update' | translate)}}
+    <span
+      *ngIf="(selectedOuNode?.enName || selectedOuNode?.localeName) && selectedOuNode?.id !==0"> {{'unit.for' | translate}} {{currentLang === "en" ? selectedOuNode?.enName : selectedOuNode?.localeName}} </span>
+  </h6>
+  <div class="ui dividing header"></div>
+  <form #corporateVehicleForm="ngForm" class="ui form bg-form">
+    <h6>{{'corporateVehicle.alarm' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field" *ngFor="let field of corporateVehicle.alertableData">
+        <!--        <nb-checkbox (checkedChange)="toggle($event,field.alerteableFieldEnName)"-->
+        <!--        >{{currentLang === 'en' ? field.alerteableFieldEnName : field.alerteableFieldLocaleName}}</nb-checkbox>-->
+        <app-label
+          [label]="currentLang === 'en' ? field.alerteableFieldEnName : field.alerteableFieldLocaleName"></app-label>
+
+        <div class="d-flex">
+          <app-input-field [(ngModel)]="field.claimingDistance" [type]="'number'"
+                           [name]="String(field.claimingDistance)"
+                           [placeholder]="'corporateVehicle.accrualDistance'"></app-input-field>
+          <app-input-field [(ngModel)]="field.claimingNumberOfDays" [type]="'number'"
+                           [name]="String(field.claimingNumberOfDays)"
+                           [placeholder]="'corporateVehicle.maturityPeriod'"></app-input-field>
+        </div>
+      </div>
+    </div>
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field" *ngIf="corporateOu && isUpdateView">
+        <app-input-field
+          disabled
+          [(ngModel)]="currentLang === 'en' ? corporateOu.enName :  corporateOu.localeName" name="ouName"
+          [placeholder]="'corporateVehicle.ouName'"
+          [label]="'corporateVehicle.ouName'">
+        </app-input-field>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateVehicle.type'"></app-label>
+        <ng-select dropdownPosition='bottom' #vehicleTypeId="ngModel" required="true"
+                   [disabled]="userType !== 'admin' && isUpdateView"
+                   [(ngModel)]="corporateVehicle.vehicleTypeId" name="vehicleTypeId"
+                   placeholder="{{'corporateVehicle.type' | translate}}">
+          <ng-option *ngFor="let type of vehicleTypes" [value]="type.id">
+            {{currentLang === 'en' ? type.enName : type.localeName}}
+          </ng-option>
+        </ng-select>
+        <app-error [ref]="vehicleTypeId" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [required]="true" [ref]="platNumber" #platNumber="ngModel"
+                         [disabled]="userType !== 'admin' && isUpdateView"
+                         [(ngModel)]="corporateVehicle.plateNumber" name="platNumber"
+                         [placeholder]="'corporateVehicle.plateNumber'"
+                         [label]="'corporateVehicle.plateNumber'"></app-input-field>
+        <app-error [ref]="platNumber"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporateVehicle.assetTag'"></app-label>
+        <input #autoInput
+               (keyup.enter)="createAssetTag()"
+               nbInput
+               type="text"
+               placeholder="{{'corporateVehicle.assetTag' | translate}}"
+               [nbAutocomplete]="auto"
+               name="assetTagId"
+               [ngModel]="assetTagName"
+               [focusInputOnValueChange]="false"
+        />
+        <nb-autocomplete #auto>
+          <nb-option *ngFor="let asset of assetTags" [value]="asset.enName">
+            {{asset.enName}}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateCard.serialNumber'"></app-label>
+        <ng-select dropdownPosition='bottom' #nfcId="ngModel" required="true" [(ngModel)]="corporateVehicle.nfcId"
+                   name="nfcId"
+                   placeholder="{{'corporateCard.serialNumber' | translate}}">
+          <ng-option *ngFor="let nfc of corporateNfcs" [value]="nfc.id">
+            {{nfc.serialNumber}}
+          </ng-option>
+        </ng-select>
+        <app-error [ref]="nfcId" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateVehicle.fuelType'"></app-label>
+        <ng-select dropdownPosition='bottom' #fuelType="ngModel" [disabled]="isUpdateView" required="true"
+                   [(ngModel)]="corporateVehicle.fuelType" name="fuelType"
+                   placeholder="{{'corporateVehicle.fuelType' | translate}}">
+          <ng-option *ngFor="let type of fuelTypes" [value]="type.value">
+            {{'fuelType.' + type.value | translate}}
+          </ng-option>
+        </ng-select>
+        <app-error [ref]="fuelType" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field
+          [(ngModel)]="corporateVehicle.vehicleCode" name="vehicleCode"
+          [placeholder]="'corporateVehicle.vehicleCode'"
+          [label]="'corporateVehicle.vehicleCode'"
+          [maxLength]="50"
+        >
+        </app-input-field>
+      </div>
+
+      <!-- <div class="field">
+        <app-input-field #mileageReading="ngModel" [ref]="mileageReading" [required]="true" [type]="'number'"
+                         [(ngModel)]="corporateVehicle.startingMilage" name="mileageReading"
+                         [placeholder]="'corporateVehicle.mileageReading'"
+                         [label]="'corporateVehicle.mileageReading'"></app-input-field>
+        <app-error [ref]="mileageReading"></app-error>
+      </div> -->
+      <div class="field">
+        <app-input-field #tankSize="ngModel" [ref]="tankSize" [required]="true"
+                         [type]="'number'"
+                         [disabled]="userType !== 'admin' && isUpdateView"
+                         [(ngModel)]="corporateVehicle.tankSize" name="tankSize"
+                         [placeholder]="'corporateVehicle.tankSize'" [label]="'corporateVehicle.tankSize'">
+        </app-input-field>
+        <app-error [ref]="tankSize"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [(ngModel)]="corporateVehicle.consumptionHighRate"
+                         #consumptionHighRate="ngModel" [ref]="consumptionHighRate" name="consumptionHighRate"
+                         [placeholder]="'corporateVehicle.consumptionHighRate'"
+                         [label]="'corporateVehicle.consumptionHighRate'">
+        </app-input-field>
+        <app-error [ref]="consumptionHighRate"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [(ngModel)]="corporateVehicle.consumptionLowRate"
+                         #consumptionLowRate="ngModel" [ref]="consumptionLowRate" name="consumptionLowRate"
+                         [placeholder]="'corporateVehicle.consumptionLowRate'"
+                         [label]="'corporateVehicle.consumptionLowRate'">
+        </app-input-field>
+        <app-error [ref]="consumptionLowRate"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [(ngModel)]="corporateVehicle.consumptionDefaultRate"
+                         #consumptionDefaultRate="ngModel" [ref]="consumptionDefaultRate"
+                         name="consumptionDefaultRate"
+                         [placeholder]="'corporateVehicle.consumptionDefaultRate'"
+                         [label]="'corporateVehicle.consumptionDefaultRate'">
+        </app-input-field>
+        <app-error [ref]="consumptionDefaultRate"></app-error>
+      </div>
+      <div class="field">
+        <app-label [label]="'corporateVehicle.authUser'"></app-label>
+        <ng-select [disabled]="corporateVehicle.allUsersAuthorized" dropdownPosition='bottom' #authorizedUserIds="ngModel"
+                   [(ngModel)]="corporateVehicle.authorizedUserIds" [multiple]="true"
+                   name="authorizedUserIds" placeholder="{{'corporateVehicle.authUser' | translate}}">
+          <ng-option *ngFor="let user of corporateUsers"
+                     [value]="user.id">{{currentLang === 'en' ? user.enName : user.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="authorizedUserIds" [message]="'app.selectRequired'"></app-error>
+
+      </div>
+      <div class="field d-flex align-items-center" style="margin-top: 20px;">
+        <app-label  [label]="'corporateVehicle.allUsersAuthorized'"></app-label>
+        
+          <nb-checkbox class="mx-2" [(ngModel)]="corporateVehicle.allUsersAuthorized" [ngModel]="corporateVehicle.allUsersAuthorized" name="allUsersAuthorized" (checkedChange)="toggle($event,'allUsersAuthorized')"></nb-checkbox>
+     
+      </div>
+      <!-- TODO: check BIND Policy -->
+      <div class="field">
+        <app-label [label]="'corporateVehicle.policy'"></app-label>
+        <ng-select dropdownPosition='bottom' [(ngModel)]="policyIds" [multiple]="true" name="assetPolicies"
+                   placeholder="{{'corporateVehicle.policy' | translate}}">
+          <ng-option *ngFor="let policy of policies" [value]="policy.id">
+            {{currentLang === 'en' ? policy.enName : policy.localeName}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field" *ngIf="isUpdateView && dynamicPoliciesNames">
+        <app-input-field [disabled]="true"
+                         [(ngModel)]="dynamicPoliciesNames" name="dynamicPolicies"
+                         [label]="'corporatePolicy.dynamicPolicies'">
+        </app-input-field>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'"
+                         [(ngModel)]="corporateVehicle.changingOilMilage" name="changingOilMilage"
+                         [placeholder]="'corporateVehicle.changingOilMilage'"
+                         [label]="'corporateVehicle.changingOilMilage'">
+        </app-input-field>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'"
+                         [(ngModel)]="corporateVehicle.servicePeriodInMonth" name="servicePeriodInMonth"
+                         [placeholder]="'corporateVehicle.servicePeriodInMonth'"
+                         [label]="'corporateVehicle.servicePeriodInMonth'">
+        </app-input-field>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'"
+                         [(ngModel)]="corporateVehicle.averageMilagePerDay" name="averageMilagePerDay"
+                         [placeholder]="'corporateVehicle.averageMilagePerDay'"
+                         [label]="'corporateVehicle.averageMilagePerDay'">
+        </app-input-field>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporateVehicle.originCity'"></app-label>
+        <ng-select dropdownPosition='bottom' #originCity="ngModel"
+                   [(ngModel)]="+corporateVehicle.originCity"
+                   name="originCity" placeholder="{{'corporateVehicle.originCity' | translate}}">
+          <ng-option *ngFor="let city of cities" [value]="city.id">
+            {{currentLang === 'en' ? city.enName : city.localeName}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-input-field
+          [(ngModel)]="corporateVehicle.modelYear" name="modelYear"
+          [placeholder]="'corporateVehicle.modelYear'"
+          [label]="'corporateVehicle.modelYear'">
+        </app-input-field>
+      </div>
+
+      <div class="field">
+        <app-input-field
+          [(ngModel)]="corporateVehicle.brand" name="brand"
+          [placeholder]="'corporateVehicle.brand'"
+          [label]="'corporateVehicle.brand'">
+        </app-input-field>
+      </div>
+
+
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" [(ngModel)]="corporateVehicle.description" nbInput
+                  fullWidth name="description" rows="3"></textarea>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporateVehicle.licenseExpiryDate'"></app-label>
+        <input *ngIf="!isUpdateView" type="date" [ngModel]="corporateVehicle.licenseExpiryDate"
+               (ngModelChange)="corporateVehicle.licenseExpiryDate = $event" name="licenseExpiryDate">
+        <input *ngIf="isUpdateView" type="date" [ngModel]="corporateVehicle.licenseExpiryDate"
+               (ngModelChange)="corporateVehicle.licenseExpiryDate = $event" name="licenseExpiryDate"
+               [min]="nextDayISOFormat">
+      </div>
+    </div>
+    <h6>{{'corporateVehicle.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button [disabled]="!corporateVehicleForm.form.valid" *ngIf="!isUpdateView" (click)="createCorporateVehicle()"
+              class="ui button btn-primary">{{'corporateVehicle.add' | translate}}</button>
+      <button [disabled]="!corporateVehicleForm.form.valid" *ngIf="isUpdateView" (click)="updateCorporateVehicle()"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>
+

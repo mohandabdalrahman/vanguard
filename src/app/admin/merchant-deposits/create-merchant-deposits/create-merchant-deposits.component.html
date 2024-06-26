@@ -1,0 +1,41 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="create">
+  <h6 class="create-title"> {{'merchant.addDeposit' | translate}}</h6>
+  <div class="ui dividing header"></div>
+  <form #merchantDepositForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+
+      <div class="field" *ngIf="billingAccount.depositType == 'SITE_DEPOSIT'">
+        <app-label [label]="'site.name'"></app-label><span class="required m-1">*</span>
+          <ng-select dropdownPosition='bottom' required="true" [(ngModel)]="merchantDeposit.siteId"
+                      name="site" placeholder="{{'site.name' | translate}}">
+            <ng-option *ngFor="let site of sites" [value]="site.id">
+              {{currentLang === 'en' ? site.enName : site.localeName}}
+            </ng-option>
+          </ng-select>
+      </div>
+
+        <div class="field">
+          <app-input-field [type]="'number'" [ref]="depositAmount" #depositAmount="ngModel" [required]="true" [(ngModel)]="merchantDeposit.depositAmount" name="depositAmount" [placeholder]="'merchant.depositAmount'" [label]="'merchant.depositAmount'"></app-input-field>
+          <app-error [ref]="depositAmount"></app-error>
+        </div>
+      <div class="field">
+          <app-input-field [ref]="depositReference" #depositReference="ngModel" [required]="true" [(ngModel)]="merchantDeposit.depositReference" name="depositReference" [placeholder]="'merchant.depositReference'" [label]="'merchant.depositReference'"></app-input-field>
+          <app-error [ref]="depositReference"></app-error>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'date'" [required]="true" [ref]="depositDate" #depositDate="ngModel" [(ngModel)]="merchantDeposit.depositDate" name="depositDate" [placeholder]="'merchant.depositDate'" [label]="'merchant.depositDate'"></app-input-field>
+          <app-error [ref]="depositDate"></app-error>
+        </div>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!merchantDepositForm.form.valid" (click)="createMerchantDeposit()"  class="ui button btn-primary">{{'merchant.addDeposit' | translate}}</button>
+    </div>
+  </form>
+</div>

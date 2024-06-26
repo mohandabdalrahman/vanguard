@@ -1,0 +1,125 @@
+
+<app-back-button></app-back-button>
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('user.admin.add' | translate) : ('user.admin.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #adminUserForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <ng-container *ngIf="!isUpdateView">
+        <div class="field">
+          <app-input-field [ref]="fLocaleName" #fLocaleName="ngModel" [required]="true"
+                           [(ngModel)]="adminUser.fLocaleName"
+                           name="fLocaleName" [placeholder]="'user.fLocaleName'"
+                           [label]="'user.fLocaleName'"></app-input-field>
+          <app-error [ref]="fLocaleName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="mLocaleName" #mLocaleName="ngModel" [(ngModel)]="adminUser.mLocaleName"
+                           name="mLocaleName" [placeholder]="'user.mLocaleName'"
+                           [label]="'user.mLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [required]="true" [ref]="lLocaleName" #lLocaleName="ngModel"
+                           [(ngModel)]="adminUser.lLocaleName"
+                           name="lLocaleName" [placeholder]="'user.lLocaleName'"
+                           [label]="'user.lLocaleName'"></app-input-field>
+          <app-error [ref]="lLocaleName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="fEnName" #fEnName="ngModel" [required]="true" [(ngModel)]="adminUser.fEnName"
+                           name="fEnName" [placeholder]="'user.fEnName'"
+                           [label]="'user.fEnName'"></app-input-field>
+          <app-error [ref]="fEnName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="mEnName" #mEnName="ngModel" [(ngModel)]="adminUser.mEnName"
+                           name="mEnName" [placeholder]="'user.mEnName'"
+                           [label]="'user.mEnName'"></app-input-field>
+          <app-error [ref]="mEnName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="lEnName" #lEnName="ngModel" [required]="true" [(ngModel)]="adminUser.lEnName"
+                           name="lEnName" [placeholder]="'user.lEnName'"
+                           [label]="'user.lEnName'"></app-input-field>
+          <app-error [ref]="lEnName"></app-error>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isUpdateView">
+        <div class="field">
+          <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="adminUser.localeName"
+                           name="arName" [placeholder]="'user.localeName'"
+                           [label]="'user.localeName'"></app-input-field>
+          <app-error [ref]="arName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="adminUser.enName"
+                           name="enName" [placeholder]="'user.enName'" [label]="'user.enName'"></app-input-field>
+          <app-error [ref]="enName"></app-error>
+        </div>
+      </ng-container>
+      <div class="field">
+        <app-label [required]="true" [label]="'user.userRole'"></app-label>
+        <ng-select [required]="true" dropdownPosition='bottom' [(ngModel)]="selectedRoles" [multiple]="true"
+                   placeholder="Allowed Access" name="userRoles">
+          <ng-option *ngFor="let role of roles"
+                     [value]="role.id">{{currentLang === 'en' ? role.enName : role.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [label]="'user.mobileNumber'" [required]="true"></app-label>
+        <input type="tel" id="mobNum" name="mobNum" autocomplete="off"
+               required minlength="11" maxlength="11"
+               placeholder="mobile Number"
+               [(ngModel)]="adminUser.mobileNumber" #mobNum="ngModel">
+        <app-error [ref]="mobNum"></app-error>
+      </div>
+    </div>
+
+    <h6>{{'user.systemInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [disabled]="isUpdateView" [ref]="username" #username="ngModel" [required]="true"
+                         [(ngModel)]="adminUser.username" name="username" [placeholder]="'app.username'"
+                         [label]="'app.username'" [pattern]="USERNAME_REGEX">
+        </app-input-field>
+        <app-error [ref]="username" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="email" #email="ngModel" [pattern]="EMAIL_REGEX" [required]="true"
+                         [type]="'email'" [(ngModel)]="adminUser.email" name="email" [placeholder]="'app.email'"
+                         [label]="'app.email'">
+        </app-input-field>
+        <app-error [ref]="email" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'user.address'"></app-label>
+        <textarea [required]="true" placeholder="{{'user.address' | translate}}" [(ngModel)]="adminUser.address" nbInput
+                  fullWidth
+                  name="address" rows="2"></textarea>
+      </div>
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" nbInput fullWidth name="description" rows="2"
+                  [(ngModel)]="adminUser.description"></textarea>
+      </div>
+
+    </div>
+
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!adminUserForm.form.valid" (click)="createAdminUser()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'user.admin.add' | translate}}</button>
+      <button [disabled]="!adminUserForm.form.valid" (click)="updateAdminUser()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

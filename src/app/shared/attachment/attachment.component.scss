@@ -1,0 +1,59 @@
+.drop-zone {
+  border: dashed 2px lightgray;
+  background-color: white;
+  color: #413a90;
+  border-radius: 5px;
+  height: 60px;
+  cursor: pointer;
+  position: relative;
+}
+
+.drop-zone:hover {
+  border: dashed 2px #413a90;
+}
+
+.drop-zone-hover {
+  border: dashed 2px #413a90;
+}
+
+.attachment-header {
+  font-weight: 600;
+  padding-bottom: 5px;
+  padding-top: 30px;
+}
+
+.attachment-icon {
+  margin-right: 5px;
+}
+
+.file-input {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  font-size: 0 !important;
+  cursor: pointer;
+  position: absolute;
+}
+
+.document {
+  margin-top: 10px;
+  padding: 10px;
+  border: solid 2px lightgray;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.document-remove {
+  cursor: pointer;
+  color: rgb(243, 6, 6);
+}
+
+.attachment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex{
+  display: flex;
+}

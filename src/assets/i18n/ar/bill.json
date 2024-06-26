@@ -1,0 +1,15 @@
+{
+  "bill": {
+        "title": "كل الفواتير",
+        "name": "فواتير مانكس",
+        "totalSalesAmount": "إجمالي المبيعات",
+        "commissionRate": "نسبة العمولة",
+        "commissionAmount": "قيمة العمولة",
+        "vatAmount": "قيمة ض.ق.م",
+        "detail": "التفاصيل",
+        "fromDate": "من تاريخ",
+        "toDate": "إلى تاريخ",
+        "grossAmount": "الإجمالي",
+        "corporateBill":"فاتورة الشركه"
+    }
+}

@@ -1,0 +1,19 @@
+
+<app-back-button></app-back-button>
+
+<div class="details">
+  <div class="details-content">
+    <h5>{{currentLang === 'en' ? masterMerchant?.enName : masterMerchant?.localeName }} </h5>
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of masterMerchant | keyvalue">
+        <app-item-details [head]="'masterMerchant.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column ng-star-inserted">
+        <app-item-details [head]="'app.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>
+    <app-update-button [path]="['/admin/master-merchants/',masterMerchantId,'update']" [role]="'MASTER_MERCHANT_UPDATE'"></app-update-button>
+  </div>
+</div>

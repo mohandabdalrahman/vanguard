@@ -1,0 +1,95 @@
+<app-back-button *ngIf="userType==='corporate' || (userType==='master_corporate' && !isTabsView)"></app-back-button>
+
+<div class="invoice-container" id="printable">
+
+  <div class="invoice-actions" style="justify-content: space-between">
+    <div class="invoice-actions-left">
+      <img class="bill-logo" src="assets/old-logo.svg" title="SOLARUS SMART SOLUTIONS">
+    </div>
+    <div class="invoice-actions-right" data-html2canvas-ignore="true">
+      <button (click)="print()" class="ui button btn-primary">
+        <nb-icon icon="printer-outline"></nb-icon>
+        {{'app.print' | translate}}</button>
+    </div>
+  </div>
+  <!--  <div class="invoice-header">-->
+  <!--    <div class="invoice-header-left">-->
+  <!--      <div class="invoice-info">-->
+  <!--        <strong style="color: #000; font-size: 2em"-->
+  <!--                class="invoice-info-label"></strong>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--    <div class="invoice-header-right">-->
+  <!--      <h3>{{'bill.detail' | translate}}</h3>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="invoice-container-merchant">
+    <div class="invoice-info">
+      <strong class="invoice-info-label">{{'invoice.seller.taxId' | translate}}:</strong>
+      <span class="invoice-info-value">628955804</span>
+    </div>
+    <div class="invoice-info">
+      <strong class="invoice-info-label">{{'invoice.seller.cr' | translate}}:</strong>
+      <span class="invoice-info-value">15620</span>
+    </div>
+  </div>
+  <div class="invoice-details">
+    <div class="invoice-details-right">
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'app.date' | translate}}:</strong>
+        <span class="invoice-info-value">{{corporateBill?.toDate }}</span>
+      </div>
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'invoice.merchant.address' | translate}}:</strong>
+        <span class="invoice-info-value">١٣أ ش يافع بن زيد متفرع من ش مراد الجيزة - مصر</span>
+      </div>
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'invoice.merchant.phonenumber' | translate}}:</strong>
+        <span class="invoice-info-value">01201111040</span>
+      </div>
+
+    </div>
+    <div class="invoice-details-left">
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'invoice.buyer.name' | translate}}:</strong>
+        <span class="invoice-info-value">{{currentLang == 'en'? corporate?.enName : corporate?.localeName}}</span>
+      </div>
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'invoice.buyer.taxId' | translate}}:</strong>
+        <span class="invoice-info-value">{{corporate?.taxId}}</span>
+      </div>
+      <div class="invoice-info">
+        <strong class="invoice-info-label">{{'invoice.buyer.cr' | translate}}:</strong>
+        <span class="invoice-info-value">{{corporate?.commercialRegistrationNumber}}</span>
+      </div>
+    </div>
+
+  </div>
+  <!--Table-->
+  <app-data-table [tableControls]="false" [colData]="colData"
+                  [gridData]="gridData"></app-data-table>
+
+  <div class="row">
+    <div class="col-lg-4 col-sm-5 m-auto">
+      <table class="table table-clear">
+        <tbody>
+        <tr>
+          <td class="left">
+            <strong class="text-dark">{{'invoice.totalNetAmount' | translate | titlecase}}</strong></td>
+          <td class="right">
+            <strong class="text-dark">{{billNetAmount?.toFixed(2)}} {{code}} </strong>
+          </td>
+        </tr>
+        <tr>
+          <td class="left">
+            <strong class="text-dark">{{'invoice.totalAmount' | translate | titlecase}}</strong></td>
+          <td class="right">
+            <strong class="text-dark">{{billGrossAmount?.toFixed(2)}} {{code}} </strong>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

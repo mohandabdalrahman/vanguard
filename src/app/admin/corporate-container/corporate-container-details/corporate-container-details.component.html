@@ -1,0 +1,20 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+<div class="details">
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of corporateContainer | keyvalue">
+        <app-item-details [head]="'corporateContainer.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+    </div>
+  </div>
+
+  <app-update-button *ngIf="userType==='admin'"
+                     [path]="['/admin/corporates/',corporateId,'details','containers',corporateContainerId,'update']" [role]="'ASSET_UPDATE'"></app-update-button>
+
+  <app-update-button *ngIf="userType==='corporate'"
+                     [path]="isTabView ? [updateUrl] : ['/corporate','containers',corporateContainerId,'update']" [role]="'ASSET_UPDATE'"></app-update-button>
+</div>

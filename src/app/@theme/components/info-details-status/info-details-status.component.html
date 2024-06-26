@@ -1,0 +1,9 @@
+<span
+  class="m-0"
+  [ngStyle]="{ color: suspended == false ? '#28be89' : '#e65151' }"
+  ><span
+    [ngClass]="{ active: suspended == false, Notactive: suspended }"
+    class=""
+  ></span
+  >{{ (suspended == false ? "app.active" : "app.inactive") | translate }}</span
+>

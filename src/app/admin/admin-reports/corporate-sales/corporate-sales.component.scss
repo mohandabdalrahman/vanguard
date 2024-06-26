@@ -1,0 +1,13 @@
+.center {
+  margin: 1em auto;
+}
+
+.modal-title, nb-card-header {
+  text-transform: capitalize;
+}
+
+@media (max-width: 575.98px) {
+  .col-md-4 {
+    margin-bottom: 1em;
+  }
+}

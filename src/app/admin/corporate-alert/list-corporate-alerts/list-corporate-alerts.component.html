@@ -1,0 +1,64 @@
+
+<nb-accordion>
+  <nb-accordion-item *ngFor="let type of alertTypes;" (collapsedChange)="getAlerts($event,type)">
+    <nb-accordion-item-header
+    >{{'alert.' + type | translate}} </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div class="d-flex align-items-center">
+        <h5>{{'app.description' | translate}}: </h5>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <h6 *ngIf="type === 'FUEL_CONSUMPTION_LIMIT'"> {{'alert.fuelConsumptionDescription' | translate}} </h6>
+        <h6 *ngIf="type === 'TANK_SIZE_LIMIT'"> {{'alert.tankSizeDescription' | translate}} </h6>
+        <h6 *ngIf="type === 'OIL_CHANGE'"> {{'alert.oilChangeDescription' | translate}} </h6>
+        <h6 *ngIf="type === 'WRONG_DISTANCE_READING'"> {{'alert.wrongDistanceDescription' | translate}} </h6>
+        <h6 *ngIf="type === 'VEHICLE_LICENSE_EXPIRY'"> {{'alert.VEHICLE_LICENSE_EXPIRY' | translate}} </h6>
+      </div>
+      <app-ou-tabs #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"
+                   (onNodeSelect)="selectOu($event)" [callOuHierarchy]="false"
+                   [ouHierarchy]="ouHierarchy"></app-ou-tabs>
+
+      <app-data-table [showTopContainer]="false" [tableControls]="false" [gridData]="gridData"
+                      [colData]="colData"></app-data-table>
+      <app-pagination [totalElements]="totalElements" [currentPage]="currentPage"
+                      (onPageChange)="loadPage($event)"
+                      (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+
+
+<nb-accordion class="mt-5">
+  <nb-accordion-item *ngFor="let type of genericAlertTypes;" (collapsedChange)="getGenericAlerts($event,type)">
+    <nb-accordion-item-header>
+      <div class="d-flex justify-content-between header-container">
+        <div class="header-left">
+          {{ currentLang === 'en' ? type?.enName : type?.localeName}}
+        </div>
+        <div class="header-right" (click)="openManualReviewModal(type)">
+          <img src="./assets/img/icons-edit.svg" alt="edit">
+          {{"corporateVehicle.manualReview" | translate}}
+        </div>
+      </div>
+
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+
+      <app-ou-tabs #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"
+                   (onNodeSelect)="selectOu($event , type)" [callOuHierarchy]="false"
+                   [ouHierarchy]="ouHierarchy"></app-ou-tabs>
+
+      <app-data-table *ngIf="type?.data?.length" [showTopContainer]="false" [tableControls]="false"
+                      [gridData]="type?.data"
+                      [colData]="genericAlertTypesColData"></app-data-table>
+      <!--PAGINATION-->
+      <app-pagination [totalElements]="type.totalElements" [currentPage]="genericAlertsCurrentPage"
+                      (onPageChange)="loadGenericAlertPage($event,type)"
+                      (onPageSizeChange)="handleGenericAlertsPageSizeChange($event , type)"></app-pagination>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+
+
+<app-create-manual-review #createManualReview [productCategoryId]="productCategoryId"
+                          [currentReviewName]="currentReviewName" [corporateId]="corporateId" [ouId]="ouIds"
+                          [showVehicles]="true" (onAssetIdChange)="setAssetId($event)"></app-create-manual-review>

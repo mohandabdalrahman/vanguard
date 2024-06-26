@@ -1,0 +1,61 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView? ('country.add' | translate) :('country.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #countryForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="country.localeName" name="localeName" [placeholder]="'country.localeName'" [label]="'country.localeName'"></app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="country.enName" name="enName" [placeholder]="'country.enName'" [label]="'country.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [maxLength]="2" [minLength]="2" [ref]="iso2Code" #iso2Code="ngModel" [required]="true" [(ngModel)]="country.iso2Code" name="iso2Code" [placeholder]="'country.iso2Code'" [label]="'country.iso2Code'"></app-input-field>
+        <app-error [ref]="iso2Code"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="defaultLocale" #defaultLocale="ngModel" [required]="true" [(ngModel)]="country.defaultLocale" name="defaultLocale" [placeholder]="'country.defaultLocale'" [label]="'country.defaultLocale'"></app-input-field>
+        <app-error [ref]="defaultLocale"></app-error>
+      </div>
+    </div>
+    <h6>{{'country.currency' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="currencyArName" #currencyArName="ngModel" [required]="true" [(ngModel)]="country?.currency.localeName" name="currencyArName" [placeholder]="'country.currencyArName'" [label]="'country.currencyArName'"></app-input-field>
+        <app-error [ref]="currencyArName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="currencyEnName" #currencyEnName="ngModel" [required]="true" [(ngModel)]="country?.currency.enName" name="currencyEnName" [placeholder]="'country.currencyEnName'" [label]="'country.currencyEnName'"></app-input-field>
+        <app-error [ref]="currencyEnName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [maxLength]="3" [minLength]="3" [ref]="code" #code="ngModel" [required]="true" [(ngModel)]="country?.currency.code" name="code" [placeholder]="'country.code'" [label]="'country.code'"></app-input-field>
+        <app-error [ref]="code"></app-error>
+      </div>
+    </div>
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}: </nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!countryForm.form.valid" (click)="createCountry()" *ngIf="!isUpdateView" class="ui button btn-primary">{{'country.add' | translate}}</button>
+      <button [disabled]="!countryForm.form.valid" (click)="updateCountry()" *ngIf="isUpdateView" class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>
+<!-- <form #testForm="ngForm">
+  <input type="text" minlength="3" maxlength="4" name="test" [(ngModel)]="country?.currency.localeName" #test="ngModel">
+  <app-error [ref]="test"></app-error>
+</form> -->

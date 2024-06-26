@@ -1,0 +1,5 @@
+export enum SystemType {
+  MERCHANT = "MERCHANT",
+  CORPORATE = "CORPORATE",
+  ADMINISTRATION = "ADMINISTRATION",
+}

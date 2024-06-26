@@ -1,0 +1,46 @@
+@import "src/app/scss/variables";
+
+.BoxContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 18px;
+    margin-bottom: 36px;
+}
+
+@media (max-width:970px){
+    .BoxContainer{
+        display: block;
+    }
+}
+.review,.transcationReports{
+    width: 181px;
+    height: 40px;
+    padding: 8px 24px 12px;
+    border-radius: 20px;
+    
+    border: none;
+    img{
+        margin-inline-end: 4px;
+    }
+}
+.review{
+    background-color: $primary;
+    color:#fff;
+}
+
+.transcationReports{
+    margin-inline-start: 16px;
+    color: $primary;
+    border: 1px solid $primary;
+
+}
+
+.filterBtn{
+    width: fit-content;
+    display: inline-block;
+    margin-inline-end: 10px;
+    margin-top: 5px;
+}

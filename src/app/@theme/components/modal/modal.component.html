@@ -1,0 +1,14 @@
+<ng-template #modal let-modal style="width: 200px">
+  <button *ngIf="showCloseBtn" type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <div class="modal-header">
+    <ng-content select="[head]"></ng-content>
+  </div>
+  <div class="modal-body" [class.center]="centerView">
+    <ng-content select="[body]"></ng-content>
+  </div>
+  <div class="modal-footer">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</ng-template>

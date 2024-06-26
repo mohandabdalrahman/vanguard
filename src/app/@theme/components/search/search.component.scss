@@ -1,0 +1,13 @@
+@import "../../../scss/common";
+
+.search {
+  padding: 16px;
+  &.search-tab {
+    border-radius: 0;
+    form {
+      .input {
+        width: 40%;
+      }
+    }
+  }
+}

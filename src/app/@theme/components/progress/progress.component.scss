@@ -1,0 +1,59 @@
+@import "../../../scss/variables";
+
+.alllimit{
+    div:first-of-type{
+        p:first-of-type{
+            font-size: 12px;
+            color: $misty;
+        }
+        p:nth-of-type(2){
+            color: $alpha;
+            font-weight: bolder;
+            font-size: 16px;
+            span img{
+                width: 12px;
+                height: 12px;
+                margin: 8px 4px ;
+            }
+        }
+       
+    }
+    div:nth-of-type(3) {
+        p:first-of-type{
+            font-size: 12px;
+            color: $misty;
+        }
+        p:nth-of-type(2){
+            color: $alpha;
+            font-size: 16px;
+        }
+    }
+}
+.Percentage {
+    position: relative;
+    height: 18px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    background-color: $light;
+
+    .Gradiant {
+        position: absolute;
+        
+        height: 100%;
+        padding: 4px 0 3px 0;
+        z-index: 999;
+        border-radius: 5px;
+        background-image: linear-gradient(86deg, #308df2 14%, #95a5ea 59%, #67e5d8 139%);
+
+        div {
+            position: absolute;
+            background-color: white;
+            width: 2px;
+            height: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+
+}

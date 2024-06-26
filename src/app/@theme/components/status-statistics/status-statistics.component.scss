@@ -1,0 +1,29 @@
+@import "../../../scss/variables";
+
+.status-validity {
+  strong {
+    color: $alpha;
+    font-size: 12px;
+    text-transform: capitalize;
+    margin: 0 1em;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    margin: 0 1em;
+    span {
+      width: 22px;
+      height: 4px;
+      border-radius: 3px;
+      display: inline-block;
+      margin: 0 2px;
+      &.active{
+        background-color: $positive;
+      }
+      &.inactive{
+        background-color: $negative;
+      }
+    }
+  }
+}

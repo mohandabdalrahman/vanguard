@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+  h6 {
+    width: 17em;
+  }
+}
+
+nb-radio-group {
+  display: flex;
+}
+
+.required {
+  color: red;
+}

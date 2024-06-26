@@ -1,0 +1,85 @@
+.login {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  &__form {
+    margin-left: 2em;
+    &-head {
+      p {
+        color: #969696;
+        margin-bottom: 2em;
+        width: 60%;
+        @media (max-width: 1024px) {
+          width: 85%;
+        }
+      }
+    }
+    &-body {
+      .field {
+        width: 25em;
+        &-input {
+          display: flex;
+          align-items: center;
+          em {
+            color: #e05c65;
+            padding-left: 10px;
+          }
+        }
+        &.forget-password {
+          text-align: right;
+          a {
+            color: #e65a9c;
+            text-align: left;
+            text-decoration: underline;
+            font: normal normal normal 16px/22px Geomanist;
+            letter-spacing: 0px;
+            color: #E65A9C;
+            opacity: 1;
+          }
+        }
+        &:nth-of-type(2) {
+          margin-bottom: 0.5em;
+        }
+        @media (max-width: 1024px) {
+          width: 100%;
+        }
+      }
+      .button {
+        width: 22em;
+        margin-top: 1em;
+        font: normal normal normal 16px/22px Geomanist;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+        @media (max-width: 1024px) {
+          width: 100%;
+        }
+      }
+    }
+    @media (max-width: 991.98px) {
+      width: 85%;
+      margin: 0 auto;
+    }
+    @media (min-width: 991.98px) and (max-width: 1024px) {
+      width: 40%;
+      margin: 0 auto;
+    }
+  }
+  .logo {
+    margin: 9em 0;
+    @media (max-width: 1399.98px) {
+      margin: 5em 0;
+    }
+  }
+  &__bg {
+    width: 65%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+    @media (max-width: 1024px) {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/common";
+
+.more-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid $primary;
+  @extend .d-flex-center;
+  cursor: pointer;
+}
+
+nb-card {
+  width: 185px;
+  border-radius: 22px;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+  border: solid 1px $ray;
+  background-color: #fff;
+  padding: 1em;
+  position: relative;
+  z-index: 999;
+
+  ul {
+    list-style: none;
+    margin-top: 0.5rem;
+
+    li {
+      margin-bottom: 1.5em;
+      transition: all 0.2s ease-in-out;
+
+      a,
+      p {
+        color: $primary;
+        text-decoration: none;
+        text-transform: capitalize;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+.context-menu-container {
+  position: relative;
+}
+
+app-details-drawer {
+  position: absolute;
+  top: 40px;
+}

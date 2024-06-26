@@ -1,0 +1,36 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView? ('masterCorporate.add' | translate) :('masterCorporate.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #createMasterCorporateForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" name="enName" [(ngModel)]="masterCorporate.enName" [label]="'masterCorporate.enName'" [placeholder]="'masterCorporate.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" name="arName" [(ngModel)]="masterCorporate.localeName" [label]="'masterCorporate.localeName'" [placeholder]="'masterCorporate.localeName'"></app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" [(ngModel)]="masterCorporate.description" nbInput fullWidth name="description" rows="3"></textarea>
+      </div>
+    </div>
+
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+      <div class="field">
+        <nb-toggle name="active" labelPosition="start" [(ngModel)]="isActive">{{'app.status' |translate}}: </nb-toggle>
+      </div>
+
+    <div class="row">
+      <button *ngIf="!isUpdateView" [disabled]="!createMasterCorporateForm.form.valid" class="ui button btn-primary" (click)="createMasterCorporate()">{{'masterCorporate.add' | translate}}</button>
+      <button *ngIf="isUpdateView" [disabled]="!createMasterCorporateForm.form.valid" class="ui button btn-primary" (click)="updateMasterCorporate()">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,65 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+.step-action {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
+
+::ng-deep .selectedVehiclesTable {
+
+  .data-table {
+    border-radius: 18px !important;
+  }
+}
+
+::ng-deep {
+  .data-table-top-container {
+    //border-radius: unset;
+    //background-color: unset !important;
+
+    .data-table-header {
+      //align-items: unset !important;
+      //padding: unset !important;
+
+      .vehicles-left-header {
+        width: 62%;
+        background-color: #fff;
+        border-radius: 18px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1em;
+      }
+
+      .vehicles-right-header {
+        width: 35%;
+        background-color: #fff;
+        border-radius: 18px;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0 1.5em;
+      }
+    }
+
+    .data-table-search {
+      background-color: #fff;
+    }
+  }
+}
+
+
+.mileage-container {
+  justify-content: space-between;
+  flex: 1;
+  align-items: center;
+
+  input {
+    border-radius: 8px;
+    border: solid 1px $misty;
+    padding: 0.5em;
+  }
+}
+

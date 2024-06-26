@@ -1,0 +1,32 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView? ('zone.add' | translate) :('zone.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #zoneForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="zone.localeName" name="zoneArName" [placeholder]="'zone.localeName'" [label]="'zone.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="zone.enName" name="zoneEnName" [placeholder]="'zone.enName'" [label]="'zone.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+    </div>
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}: </nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!zoneForm.form.valid" *ngIf="!isUpdateView" class="ui button btn-primary" (click)="createZone()">{{'zone.add' | translate}}</button>
+      <button [disabled]="!zoneForm.form.valid" *ngIf="isUpdateView" class="ui button btn-primary" (click)="updateZone()">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

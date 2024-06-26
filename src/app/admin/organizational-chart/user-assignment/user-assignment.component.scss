@@ -1,0 +1,95 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+.Userdisplay {
+  display: flex;
+  align-items: center;
+  height: 51px;
+  border: 1px solid $light;
+  border-radius: 8px;
+  padding: 0 16px;
+
+  p {
+    color: $legend
+  }
+
+  .unit {
+    font-size: 14px;
+    color: $alpha;
+  }
+}
+
+.BoxContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 18px;
+  margin: 36px 0;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.08);
+
+}
+
+@media (max-width: 970px) {
+  .BoxContainer {
+    display: block;
+  }
+}
+
+::ng-deep app-right-table-header {
+  .right-header {
+    align-items: flex-end;
+  }
+}
+
+.searchInput {
+  position: relative;
+
+  label {
+    display: block;
+    color: $misty;
+  }
+
+  input {
+    width: 224px;
+    height: 40px;
+
+    padding: 8px 16px 12px;
+    border-radius: 8px;
+    border: solid 1px $misty;
+  }
+
+  img {
+    position: absolute;
+    top: 55%;
+    //transform: translateY(-66%);
+  }
+}
+
+.ModelImage {
+  width: 84px;
+  height: 84px;
+  border-radius: 24px;
+  margin: 36px 0;
+  padding: 20px;
+  background-color: rgba(45, 65, 144, 0.1);
+
+  img {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.Modeltext {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 36px;
+  color: $alpha;
+}
+
+.modelButton{
+  display: flex;
+  margin: 0 auto 36px ;
+}

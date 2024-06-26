@@ -1,0 +1,17 @@
+{
+  "zone": {
+    "localeName": "Zone Name (Arabic)",
+    "enName": "Zone Name (English)",
+    "title": "All Zones",
+    "add": "Create Zone",
+    "name": "Zones",
+    "id": "ID",
+    "update": "Update Zone",
+    "city": "City",
+    "cityName": "City Name",
+    "suspended": "Zone Status",
+    "pageTitle": "Zone",
+    "creationDate": "Creation Date",
+    "lastModifiedDate": "Last Modified Date"
+  }
+}

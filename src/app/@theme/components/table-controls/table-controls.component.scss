@@ -1,0 +1,42 @@
+@import "../../../scss/variables";
+
+.table-controls {
+  .click {
+    background: transparent;
+    border: none;
+    nb-icon{
+      color: $misty;
+    }
+  }
+}
+
+.click-controls {
+  display: flex !important;
+  flex-direction: column;
+  padding: 0.5em 1em;
+
+  a {
+    cursor: pointer;
+    text-decoration: none;
+
+    &.eye {
+      color: #3498db;
+    }
+
+    &.edit {
+      color: #2ecc71
+    }
+
+    &.trash {
+      color: red
+    }
+
+    nb-icon {
+      margin-right: 0.3em;
+    }
+  }
+}
+
+.dividing {
+  margin: 0.2em 0;
+}

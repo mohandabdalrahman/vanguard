@@ -1,0 +1,26 @@
+@import "src/app/scss/variables";
+
+.tabs {
+  &-container {
+    margin: 36px 0;
+    display: block;
+  }
+
+  &-item {
+    border: 1px solid $misty;
+    border-radius: 10px;
+    margin: 0 0 .8em 6px;
+    padding: 5px 16px 5px;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: $legend;
+    display: inline-block;
+    width: fit-content;
+    transition: all 0.2s ease-in-out;
+
+    &.active-tab, &:hover {
+      background-color: $alpha;
+      color: $haze;
+    }
+  }
+}

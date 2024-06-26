@@ -1,0 +1,24 @@
+<div class="alllimit " *ngIf="data">
+  <div class="d-flex justify-content-between ">
+    <p>{{"app.payed"|translate}}</p>
+    <p class="">{{data.Expectation.Consumption}} {{"dashboard.currency"|translate}}<span>
+        <img
+          *ngIf="(data.Expectation.PlannedUsage*0.7>data.Expectation.Consumption) || (data.Expectation.Consumption==0) || (data.Expectation.Consumption>0&& data.Expectation.PlannedUsage==0)"
+          src="./assets/img/icons-donut-chart-down.svg" alt="">
+        <img *ngIf="(data.Expectation.PlannedUsage==data.Expectation.Consumption && data.Expectation.Consumption!=0) "
+          src="./assets/img/icons-donut-chart-up.svg" alt="">
+        <img
+          *ngIf="(data.Expectation.PlannedUsage>data.Expectation.Consumption&&data.Expectation.PlannedUsage*0.7<=data.Expectation.Consumption)"
+          src="./assets/img/icons-donut-chart.svg" alt="">
+      </span></p>
+  </div>
+  <div class="Percentage">
+    <div [ngStyle]="{'width':(data.Expectation.Consumption/data.Limit)*100+'%'}" class="Gradiant">
+      <div [ngStyle]="{'right':currentLang=='en'?'8px':'','left':currentLang=='ar'?'8px':''}"></div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <p>{{"app.limitInCycle"|translate}}</p>
+    <p class="">{{data.Limit}} {{"dashboard.currency"|translate}}</p>
+  </div>
+</div>

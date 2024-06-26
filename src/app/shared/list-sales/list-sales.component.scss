@@ -1,0 +1,54 @@
+.sales-container {
+  margin-top: 1em;
+}
+
+//Start sale card
+.sale-card {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+  padding: 1.5em .5em;
+  margin-bottom: 1em;
+  cursor: pointer;
+
+  &-text {
+    width: 70%;
+
+    h6, a {
+      font-family: 'Geomanist', sans-serif;
+      text-transform: capitalize;
+    }
+
+    h6 {
+      margin-bottom: 0.2em;
+      font-size: 1em;
+      @media (max-width: 575.98px) {
+        font-size: 0.8em;
+      }
+    }
+
+    a {
+      color: #413a90;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      nb-icon {
+        margin-left: .5em;
+      }
+    }
+  }
+
+  &-icon {
+    img {
+      width: 80%;
+    }
+  }
+}

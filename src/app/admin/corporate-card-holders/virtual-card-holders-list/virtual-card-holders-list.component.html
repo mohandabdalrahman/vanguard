@@ -1,0 +1,79 @@
+
+<app-back-button *ngIf="userType!=='admin'"></app-back-button>
+
+
+<app-data-table [tableControls]="false" [gridData]="gridData" [colData]="colData" [enableSorting]="true"
+                (onSortChange)="handleSortViewChange($event)" [showDelete]="false" [enableSelectAll]="true"
+                [enableCheckBox]="true" (onItemSelect)="onItemSelect($event)" [entityName]="'VIRTUALASSET'"
+                [selectRow]="true">
+  <ng-container header>
+    <app-left-table-header [title]="'user.virtualCardholders'" [name]="'cardHolder.title'" [length]="totalElements"
+    ></app-left-table-header>
+    <!-- [length]="totalElements" -->
+    <app-right-table-header>
+      <button class="ui button btn-primary"
+              (click)="print()"><nb-icon icon="printer-outline"></nb-icon> {{'app.print' | translate}}</button>
+      <app-filter-btn #filterBtn></app-filter-btn>
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'cardHolder.localeName'"
+                           [label]="'cardHolder.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'cardHolder.enName'"
+                           [label]="'cardHolder.enName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'cardHolder.policy'"></app-label>
+          <ng-select dropdownPosition='bottom' [multiple]="true" [ngModel] name="assetPoliciesIds"
+                     placeholder="{{'cardHolder.policy' | translate}}">
+            <ng-option *ngFor="let policy of policies" [value]="policy.id">
+              {{currentLang === 'en' ? policy.enName : policy.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'cardHolder.assetTag'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="assetTagId"
+                     placeholder="{{'cardHolder.assetTag' | translate}}">
+            <ng-option *ngFor="let assetTag of assetTags" [value]="assetTag.id">
+              {{currentLang === 'en' ? assetTag.enName : assetTag.localeName ?? assetTag.enName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<app-pagination [totalElements]="totalElements" [currentPage]="currentPage" (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)">
+</app-pagination>
+
+<div id="printableVirtualCards">
+  <ng-container *ngIf="printSelected">
+    <div *ngFor="let card of selectedVcardHoldersInfo" >
+      <div class="VCardContainer">
+        <app-vcard   [vcardInfo]="card"></app-vcard>
+      </div>
+    </div>
+  </ng-container>
+</div>
+

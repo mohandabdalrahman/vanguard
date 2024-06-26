@@ -1,0 +1,277 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+<div class="create">
+  <h6 class="create-title">
+    {{'corporatePolicy.add' | translate}}
+    <span
+      *ngIf="(selectedOuNode?.enName || selectedOuNode?.localeName) && selectedOuNode?.id !==0"> {{'unit.for' | translate}} {{currentLang === "en" ? this.selectedOuNode?.enName : this.selectedOuNode?.localeName}} </span>
+  </h6>
+  <div class="ui dividing header"></div>
+
+  <form #corporatePolicyForm="ngForm" class="ui form bg-form">
+    <!-- POLICY TYPE -->
+    <ng-container>
+      <div class="header">
+        <h6>{{'corporatePolicy.policyType' | translate |titlecase}} <span class="required">*</span></h6>
+        <div class="mode">
+          <nb-radio-group required="true" name="policyType" [(ngModel)]="corporatePolicy.policyType" (ngModelChange)="filterProductCategories()">
+            <nb-radio *ngFor="let type of policyTypes" [value]="type.value">
+              {{ 'corporatePolicy.' + type.value | translate }}
+            </nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+    </ng-container>
+    <div class="ui dividing header"></div>
+    <!-- BASIC INFO SECTION -->
+    <ng-container>
+      <h6>{{'app.basicInfo' | translate}}</h6>
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="corporatePolicy.localeName"
+                           name="arName" [placeholder]="'corporatePolicy.localeName'"
+                           [label]="'corporatePolicy.localeName'"></app-input-field>
+          <app-error [ref]="arName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="enName" #enName="ngModel" [required]="true"
+                           [(ngModel)]="corporatePolicy.enName"
+                           name="enName" [placeholder]="'corporatePolicy.enName'"
+                           [label]="'corporatePolicy.enName'"></app-input-field>
+          <app-error [ref]="enName"></app-error>
+        </div>
+
+        <div class="field">
+          <app-label [required]="true" [label]="'product.category.title'"></app-label>
+          <ng-select dropdownPosition='bottom' #product="ngModel" required="true" name="productCategoryId"
+                     [(ngModel)]="corporatePolicy.productCategoryId"
+                     placeholder="{{'product.category.title' | translate}}">
+            <ng-option *ngFor="let product of productCategories"
+                       [value]="product.id">{{currentLang === 'en' ? product.enName : product.localeName}}</ng-option>
+          </ng-select>
+          <app-error [ref]="product" [message]="'app.selectRequired'"></app-error>
+        </div>
+        <div class="field" *ngIf="corporatePolicy.policyType !== PolicyType.daily">
+          <app-label [required]="true" [label]="'corporatePolicy.assetType'"></app-label>
+          <ng-select dropdownPosition='bottom' #assetType="ngModel" required="true"
+                     [(ngModel)]="corporatePolicy.assetType" name="assetType"
+                     placeholder="{{'corporatePolicy.assetExamples' | translate}}">
+            <ng-option *ngFor="let assetType of assetTypes" [value]="assetType">
+              {{'app.assetType.' + assetType|translate}}
+            </ng-option>
+          </ng-select>
+          <app-error [ref]="assetType" [message]="'app.selectRequired'"></app-error>
+        </div>
+        <ng-container *ngIf="corporatePolicy.policyType === PolicyType.daily">
+          <div class="field">
+            <app-label [label]="'app.description'"></app-label>
+            <textarea placeholder="{{'app.description' | translate}}" [(ngModel)]="corporatePolicy.description"
+                       name="description" rows="3"></textarea>
+          </div>
+          <div class="field" >
+            <p> {{'corporatePolicy.assetType' | translate }}:
+              <strong> {{'corporateVehicle.deletedTitle' | translate}} </strong></p>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="corporatePolicy.policyType !== PolicyType.daily">
+      <!-- POLICY CYCLE  TYPE-->
+      <ng-container *ngIf="corporatePolicy.policyType === 'RECURRING'">
+        <h6>{{'corporatePolicy.policyCycleType' | translate |titlecase}}<span class="required">*</span></h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field">
+            <nb-radio-group required="true" name="policyCycleType" [(ngModel)]="corporatePolicy.policyCycleType">
+              <nb-radio *ngFor="let type of policyCycleTypes" [value]="type.value">
+                {{ 'corporatePolicy.' + type.value | translate }}
+              </nb-radio>
+            </nb-radio-group>
+          </div>
+
+          <div style="margin-left: 11em;
+    width: 5em;" class="field" *ngIf="corporatePolicy.policyCycleType === 'CUSTOM'">
+            <app-input-field [type]="'number'" [(ngModel)]="corporatePolicy.customCycleDays" [placeholder]="''"
+                             name="customCycleDays"></app-input-field>
+          </div>
+        </div>
+      </ng-container>
+      <!-- LIMIT -->
+      <ng-container>
+        <div class="header">
+          <div class="limit-header-text">
+            <h6>{{'app.limit' | translate |titlecase}}<span class="required">*</span></h6>
+          </div>
+          <div class="mode">
+            <nb-radio-group required="true" name="limitMode" [(ngModel)]="limitMode">
+              <nb-radio *ngFor="let type of limitModes" [value]="type.value">
+                {{ 'corporatePolicy.' + type.value | translate }}
+              </nb-radio>
+            </nb-radio-group>
+          </div>
+        </div>
+        <div class="ui dividing header"></div>
+        <div class="fields" *ngIf="limitMode!== 'NO_LIMIT'">
+          <div class="field">
+            <nb-checkbox
+              (checkedChange)="toggle($event,'amount')">{{'corporatePolicy.totalLimit' | translate}}</nb-checkbox>
+            <app-input-field *ngIf="amount" required="true" [type]="'number'" [(ngModel)]="corporatePolicy.amount"
+                             name="amount" [placeholder]="'corporatePolicy.limitPerCycle'"></app-input-field>
+          </div>
+          <div class="field">
+            <nb-checkbox
+              (checkedChange)="toggle($event,'limitPerTransaction')">{{'corporatePolicy.limitPerTransaction' | translate}}</nb-checkbox>
+            <app-input-field *ngIf="limitPerTransaction" required="true" [type]="'number'"
+                             [(ngModel)]="corporatePolicy.limitPerTransaction" name="limitPerTransaction"
+                             [placeholder]="'corporatePolicy.limitPerTransaction'"></app-input-field>
+          </div>
+          <div class="field" *ngIf="corporatePolicy.policyCycleType != 'DAILY'">
+            <nb-checkbox [disabled]="limitMode=== 'NO_LIMIT'"
+                         (checkedChange)="toggle($event,'limitPerDay')">{{'corporatePolicy.limitPerDay' | translate}}</nb-checkbox>
+            <app-input-field *ngIf="limitPerDay" required="true" [type]="'number'"
+                             [(ngModel)]="corporatePolicy.limitPerDay" name="limitPerDay"
+                             [placeholder]="'corporatePolicy.limitPerDay'"></app-input-field>
+          </div>
+
+        </div>
+      </ng-container>
+      <!-- TRANSACTIONS -->
+      <ng-container>
+        <h6>{{'corporatePolicy.transactions' | translate |titlecase}}</h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field" *ngIf="corporatePolicy.policyType === 'RECURRING'">
+            <nb-checkbox
+              (checkedChange)="toggle($event,'maxNumberOfTransactionPerCycle')">{{'corporatePolicy.maxNumberOfTransactionPerCycle' |translate}}</nb-checkbox>
+            <app-input-field *ngIf="maxNumberOfTransactionPerCycle" required="true" [type]="'number'"
+                             [(ngModel)]="corporatePolicy.maxNumberOfTransactionPerCycle"
+                             name="maxNumberOfTransactionPerCycle"
+                             [placeholder]="'corporatePolicy.maxNumberOfTransactionPerCycle'">
+            </app-input-field>
+          </div>
+          <div class="field" *ngIf="corporatePolicy.policyCycleType != 'DAILY'">
+            <nb-checkbox
+              (checkedChange)="toggle($event,'maxNumberOfTransactionPerDay')">{{'corporatePolicy.maxNumberOfTransactionPerDay' |translate}}</nb-checkbox>
+            <app-input-field *ngIf="maxNumberOfTransactionPerDay" required="true" [type]="'number'"
+                             [(ngModel)]="corporatePolicy.maxNumberOfTransactionPerDay"
+                             name="maxNumberOfTransactionPerDay"
+                             [placeholder]="'corporatePolicy.maxNumberOfTransactionPerDay'">
+            </app-input-field>
+          </div>
+        </div>
+      </ng-container>
+      <!-- VALIDITY -->
+      <ng-container>
+        <h6>{{'corporatePolicy.validity' | translate |titlecase}}</h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <ng-container *ngIf="corporatePolicy.policyType === 'ONE_TIME'">
+            <div class="field">
+              <app-input-field #startDate="ngModel" [ref]="startDate" [required]="true" [type]="'date'"
+                               [(ngModel)]="corporatePolicy.startDate" name="startDate" [label]="'app.startDate'"
+                               [placeholder]="'app.startDate'">
+              </app-input-field>
+              <app-error [ref]="startDate"></app-error>
+            </div>
+            <div class="field">
+              <app-input-field #endDate="ngModel" [ref]="endDate" [required]="true" [type]="'date'"
+                               [(ngModel)]="corporatePolicy.endDate" [label]="'app.endDate'" name="endDate"
+                               [placeholder]="'app.endDate'">
+              </app-input-field>
+              <app-error [ref]="endDate"></app-error>
+            </div>
+          </ng-container>
+          <div class="field" *ngIf="corporatePolicy.policyType === 'RECURRING' ">
+            <app-input-field #numOfCycle="ngModel" [ref]="numOfCycle" [type]="'number'"
+                             [(ngModel)]="corporatePolicy.numberOfCycle" [label]="'corporatePolicy.numberOfCycle'"
+                             name="numberOfCycle" [placeholder]="'corporatePolicy.numberOfCycle'">
+            </app-input-field>
+            <app-error [ref]="numOfCycle"></app-error>
+          </div>
+        </div>
+      </ng-container>
+      <!-- WORKING DAYS -->
+      <ng-container>
+        <h6>{{'corporatePolicy.workingDays' | translate |titlecase}}</h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field">
+            <app-label [label]="'corporatePolicy.workingDays'"></app-label>
+            <ng-select dropdownPosition='bottom' (change)="selectAll($event)" [multiple]="true"
+                       [(ngModel)]="corporatePolicy.workingDays"
+                       name="workingDays" placeholder="{{'corporatePolicy.workingDays' | translate}}">
+              <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+              <ng-option *ngFor="let day of workingDays" [value]="day.value">
+                {{ 'corporatePolicy.' + day.value | translate }}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- LOCATIONS -->
+      <ng-container>
+        <h6>{{'app.location' | translate |titlecase}}</h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field">
+            <app-label [label]="'city.name'"></app-label>
+            <ng-select dropdownPosition='bottom' (change)="getZones(countryId, $event);" [multiple]="true"
+                       [(ngModel)]="corporatePolicy.cities"
+                       name="cities" placeholder="{{'city.name' | translate}}">
+              <ng-option *ngFor="let city of cities" [value]="city.id">
+                {{currentLang === 'en' ? city.enName : city.localeName}}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="field">
+            <app-label [label]="'zone.name'"></app-label>
+            <ng-select [disabled]="!corporatePolicy?.cities?.length" dropdownPosition='bottom' [multiple]="true"
+                       [(ngModel)]="corporatePolicy.zones" name="zones"
+                       placeholder="{{'zone.name' | translate}}">
+              <ng-option *ngFor="let zone of zones" [value]="zone.id">
+                {{currentLang === 'en' ? zone.enName : zone.localeName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </ng-container>
+      <!-- APPLY TIME -->
+      <ng-container *ngIf="corporatePolicy.policyType === 'RECURRING'">
+        <h6>{{'corporatePolicy.applyTime' | translate |titlecase}} <span class="required">*</span></h6>
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field">
+            <nb-radio-group required="true" name="applyTime" [(ngModel)]="corporatePolicy.applyTime">
+              <nb-radio *ngFor="let time of ApplyTimes" [value]="time.value">
+                {{ 'corporatePolicy.' + time.value | translate }}
+
+              </nb-radio>
+            </nb-radio-group>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+    <!-- STATUS -->
+    <ng-container>
+      <h6>{{'corporatePolicy.status' | translate |titlecase}}</h6>
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+        </div>
+        <div *ngIf="corporatePolicy.assetType == 'VEHICLE' && corporatePolicy.policyType !== PolicyType.daily" class="field">
+          <nb-checkbox name="skipMileage"
+                       [(ngModel)]="corporatePolicy.skipMileage">{{'corporatePolicy.skipMileage' |translate}}</nb-checkbox>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row">
+      <button [disabled]="!corporatePolicyForm.form.valid" (click)="createCorporatePolicy()"
+              class="ui button btn-primary">{{'corporatePolicy.add' | translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,53 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('product.category.add' | translate) : ('product.category.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #productForm="ngForm" class="ui form bg-form">
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="product.localeName"
+                         name="productLocalName" [placeholder]="'product.localeName'"
+                         [label]="'product.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="product.enName"
+                         name="productEnglishName" [placeholder]="'product.enName'"
+                         [label]="'product.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'product.country'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="country" [(ngModel)]="product.countryId"
+                   placeholder="{{'bankAccount.country' | translate}}">
+          <ng-option *ngFor="let country of countries"
+                     [value]="country.id">{{ currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea nbInput fullWidth name="description" [(ngModel)]="product.description" rows="2"></textarea>
+      </div>
+    </div>
+
+    <h6>{{'product.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+      </div>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!productForm.form.valid" (click)="createProduct()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'product.category.add' | translate}}</button>
+      <button [disabled]="!productForm.form.valid" (click)="updateProduct()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

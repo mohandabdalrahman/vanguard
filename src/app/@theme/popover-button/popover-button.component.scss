@@ -1,0 +1,21 @@
+button {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: transparent;
+  margin: 0 1em;
+  border: 1px solid #c9cbd5;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    background-color: #2d4190;
+
+    img {
+      filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7488%) hue-rotate(294deg) brightness(106%) contrast(100%)
+    }
+  }
+
+  img {
+    filter: brightness(0) saturate(100%) invert(68%) sepia(2%) saturate(1474%) hue-rotate(182deg) brightness(93%) contrast(92%);
+  }
+}

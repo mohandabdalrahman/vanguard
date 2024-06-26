@@ -1,0 +1,75 @@
+
+
+<app-ou-hierarchy-tree *ngIf="authService.getUserType() === 'corporate' && authService.isOuEnabled()"></app-ou-hierarchy-tree>
+<app-ou-tabs  #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"  [title]="'user.name'" (onNodeSelect)="selectOu($event)"> </app-ou-tabs>
+<app-data-table [gridData]="gridData" [colData]="colData" [entityName]="'CORPORATE_USER'" [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="(!showCreateBtn)? 'user.corporate.title' : ''" [name]="'user.name'" [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [showCreateBtn]="showCreateBtn" [role]="'USER_CREATE'" [addText]="'user.corporate.add'">
+      <div  *ngIf="authService.isAdminCorporateOuEnabled()">
+        <button
+          *appHasRole="['CORPORATE_USER_TRANSFER']"
+          class="ui mx-2 button btn-primary"
+          [routerLink]="[
+            '/admin/corporates',
+            corporateId,
+            'assignment'
+          ]"
+        >
+          <nb-icon icon="people-outline"></nb-icon>
+          {{ "unit.userAssignment" | translate }}
+        </button> 
+      </div>
+      <app-filter-btn #filterBtn></app-filter-btn>
+    </app-right-table-header>
+    
+  </ng-container>
+ 
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'user.localeName'" [label]="'user.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'user.enName'" [label]="'user.enName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="username" [placeholder]="'user.username'" [label]="'user.username'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="mobileNumber" [placeholder]="'user.mobileNumber'" [label]="'user.mobileNumber'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="userIds" [placeholder]="'user.id'" [label]="'user.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'userRole.title'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="roleId" placeholder="{{'userRole.title' | translate}}">
+            <ng-option *ngFor="let role of userRoles" [value]="role.id">
+              {{currentLang === 'en' ? role.enName : role.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'user.corporate.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteCorporateUser()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>

@@ -1,0 +1,39 @@
+
+<app-data-table [tableControls]="false" [gridData]="gridData" [colData]="colData">
+
+  <ng-container header>
+    <app-left-table-header [title]="'corporateCard.title'" [name]="'corporateCard.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <app-filter-btn #filterBtn></app-filter-btn>
+
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form"
+          (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="serialNumber" [placeholder]="'corporateCard.serialNumber'"
+                           [label]="'corporateCard.serialNumber'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<!--<app-delete-modal #modal [name]="'Corporate Card'">-->
+<!--  <button footer class="btn btn-danger" (click)="deleteCorporateCard()">{{'app.confirm' | translate}}</button>-->
+<!--</app-delete-modal>-->

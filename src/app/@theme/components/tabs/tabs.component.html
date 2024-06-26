@@ -1,0 +1,9 @@
+<div class="tabs">
+  <div class="tab-container tabular menu">
+    <ng-container *ngFor="let tab of tabs">
+      <a *appHasRole="[tab.role]" routerLinkActive="active-tab" class="tab-item"
+         [routerLink]="[tab.path]">{{ 'tabs.' + tab.name | translate }}</a>
+    </ng-container>
+  </div>
+  <router-outlet></router-outlet>
+</div>

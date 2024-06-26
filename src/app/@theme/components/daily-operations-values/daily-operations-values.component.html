@@ -1,0 +1,34 @@
+<div class="daily-operations-values">
+  <div class="daily-operations-values-item">
+    <p class="daily-operations-values-item-label">
+      {{ 'corporateVehicle.liters' | translate }}
+    </p>
+    <span class="daily-operations-values-item-value">
+                  {{ record['liters']  }}
+                </span>
+  </div>
+  <div class="daily-operations-values-item">
+    <p class="daily-operations-values-item-label">
+      {{ 'corporateVehicle.kiloMeters' | translate }}
+    </p>
+    <span class="daily-operations-values-item-value">
+                  {{ record['kilometers']  }}
+                </span>
+  </div>
+  <div class="daily-operations-values-item">
+    <p class="daily-operations-values-item-label">
+      {{ 'corporateVehicle.exchangeLimit' | translate }}
+    </p>
+    <span class="daily-operations-values-item-value">
+                  {{ record['exchangeLimit']  }}
+                </span>
+  </div>
+  <div class="attention">
+    <app-tooltip
+      *ngIf="record['exchangeLimit'] && record['lastExchangeLimit'] && (record['exchangeLimit'] !=  record['lastExchangeLimit'])"
+      [infoText]="'app.attentionNotEntered'" [iconName]="'alert-triangle-outline'"
+      [mode]="'warning'"></app-tooltip>
+    <app-tooltip *ngIf="isProductCategoryIdSame(record)" [infoText]="'app.policyOverwriteBody'"
+                 [iconName]="'alert-triangle-outline'" [mode]="'error'"></app-tooltip>
+  </div>
+</div>

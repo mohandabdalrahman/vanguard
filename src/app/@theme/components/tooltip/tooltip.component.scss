@@ -1,0 +1,13 @@
+nb-icon {
+  color: #2d4190;
+  cursor: pointer;
+  margin: 0 5px;
+
+  &.alert-icon {
+    color: #ffac3a;
+  }
+
+  &.error-icon {
+    color: #dc3545;
+  }
+}

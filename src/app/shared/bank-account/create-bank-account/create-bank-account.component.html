@@ -1,0 +1,52 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('bankAccount.create' | translate) : ('bankAccount.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #bankForm="ngForm" class="ui form bg-form">
+    <div class="fields">
+      <div class="field" *ngIf="isUpdateView">
+        <app-input-field [disabled]="true" [type]="'number'" [(ngModel)]="bank.id" name="bankId"
+                         [placeholder]="'bankAccount.id'" [label]="'bankAccount.id'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-label [label]="'bankAccount.country'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="country" [(ngModel)]="bank.countryId"
+                   placeholder="{{'bankAccount.country' | translate}}">
+          <ng-option *ngFor="let country of countries"
+                     [value]="country.id">{{currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="bank.localeName"
+                         name="bankArName" [placeholder]="'bankAccount.localeName'"
+                         [label]="'bankAccount.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="bank.enName" name="bankEnName"
+                         [placeholder]="'bankAccount.enName'" [label]="'bankAccount.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+
+    </div>
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!bankForm.form.valid" (click)="createBank()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'bankAccount.create' | translate}}</button>
+
+      <button [disabled]="!bankForm.form.valid" (click)="updateBank()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,29 @@
+<app-back-button></app-back-button>
+
+
+<app-invoice (onAddSerialNumber)="openSerialModal()"
+             (onSettleInvoice)="openSettleModal()"
+             [invoice]="adminInvoice"
+             [showSettleBtn]="true"
+             [invoiceProducts]="invoiceProducts"></app-invoice>
+
+<!--SERIAL NUMBER-->
+<app-modal #serialModal>
+  <h4 head class="modal-title">{{'invoice.addSerial' | translate}}</h4>
+  <form body class="ui form" #serialNumberForm="ngForm" (ngSubmit)="submitSerialNumber(serialNumberForm.value)">
+    <input autocomplete="off" type="text" nbInput ngModel name="serialNumber">
+    <br/><br/>
+    <button class="ui button btn-primary" type="submit">
+      {{'invoice.addSerial' | translate}}</button>
+  </form>
+
+</app-modal>
+
+<app-modal #settleModal>
+  <h4 head class="modal-title">{{'invoice.setSettle' | translate }}</h4>
+  <div footer class="modal-actions">
+    <button class="btn btn-success" (click)="settleInvoice()">
+      {{'invoice.settle' | translate}}
+    </button>
+  </div>
+</app-modal>

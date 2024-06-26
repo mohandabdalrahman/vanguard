@@ -1,0 +1,25 @@
+<!--<nb-card>-->
+<!--  <nb-card-header><h5>{{'report.merchant.sales.name' | translate}}</h5></nb-card-header>-->
+<!--  <nb-card-body>-->
+<!--    <app-merchant-info></app-merchant-info>-->
+<!--  </nb-card-body>-->
+<!--</nb-card>-->
+
+<div class="sales-container">
+  <div class="row">
+    <div class="col-6 col-lg-3" *ngFor="let card of saleCards">
+      <div class="sale-card" [routerLink]="'list/' + card.link">
+        <div class="sale-card-icon">
+          <img [src]="'assets/img/sales/' + card.icon">
+        </div>
+        <div class="sale-card-text">
+          <h6>{{currentLang === 'en' ? card.title : card.localeTitle}}</h6>
+          <!--          <a [routerLink]="'list/' + card.link">{{'app.seeMore' | translate}}-->
+          <!--            <nb-icon *ngIf="currentLang === 'en'" icon="arrow-forward-outline"></nb-icon>-->
+          <!--            <nb-icon *ngIf="currentLang === 'ar'" icon="arrow-back-outline"></nb-icon>-->
+          <!--          </a>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+.actions {
+  display: flex;
+  justify-content: space-between;
+
+  &-btns {
+    button {
+      border-radius: 5px;
+      border: solid 1px #c9cbd5;
+      background-color: #fff;
+      padding: 0.7em 2em;
+      text-transform: capitalize;
+
+      &.accept {
+        color: #28be89;
+      }
+
+      &.reject {
+        color: #e65151
+      }
+    }
+  }
+}
+
+.header {
+  margin-top: 1.5em;
+
+  .title {
+    color: #2d4190;
+    text-transform: capitalize;
+  }
+
+  .summary {
+    display: flex;
+
+    &-text {
+      color: #6a6d7e;
+      text-transform: capitalize;
+    }
+
+    &-count {
+      width: 37px;
+      height: 20px;
+      text-align: center;
+      border-radius: 10px;
+      margin: 0 0.5em;
+
+      &.changed {
+        border: 1px solid #e65151;
+        color: #e65151;
+      }
+
+      &.not-changed {
+        border: 1px solid #28be89;
+        color: #28be89;
+      }
+    }
+  }
+}
+
+
+nb-card {
+  padding: 2em !important;
+
+  p {
+    text-transform: capitalize;
+    color: #9ca0b0;
+  }
+}
+
+.no-changes {
+  h6 {
+    margin: 2em 0;
+    color: #0a143a;
+  }
+
+  .card-info {
+    strong {
+      color: #0a143a;
+    }
+  }
+}
+
+//modal design
+
+.modal {
+  &-title {
+    color: #0a143a;
+  }
+
+  &-text {
+    color: #6a6d7e;
+  }
+}
+
+.new-changes {
+  .icon {
+    display: flex;
+    align-items: flex-end;
+
+    &-en {
+      transform: rotate(180deg);
+    }
+
+    &-ar {
+      transform: unset;
+    }
+  }
+}
+
+
+

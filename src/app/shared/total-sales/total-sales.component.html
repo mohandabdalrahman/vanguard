@@ -1,0 +1,86 @@
+<nb-card>
+  <nb-card-header>
+    <h5>{{'app.total' | translate}}</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="merchantSale">
+      <div class="col-6">
+        <label>{{'report.noOfTransactions' | translate}}</label>
+        <strong>{{merchantSale?.totalNumberOfTransactions}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalVat' | translate}}</label>
+        <strong>{{merchantSale?.totalProductsVat}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+
+      </div>
+      <div class="col-6">
+        <label>{{'report.total' | translate}}</label>
+        <strong>{{merchantSale?.totalSales}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.amountWithVat' | translate}}</label>
+        <strong>{{merchantSale?.totalSalesIncludingVat}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="transactionsItemsReportDta">
+      <div class="col-6">
+        <label>{{'report.noOfTransactions' | translate}}</label>
+        <strong>{{transactionsItemsReportDta?.totalNumberOfTransactions}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalTransactionGrossAmount' | translate}}</label>
+        <strong>{{transactionsItemsReportDta?.totalAmountsIncludingVat}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalTransactionNetAmount' | translate}}</label>
+        <strong>{{transactionsItemsReportDta?.totalNetAmounts}}</strong>
+      </div>
+      <div class="col-6" *ngIf="reportName != 'DETAILED_EXPENSES'">
+        <label>{{'report.transactionTotalVat' | translate}}</label>
+        <strong>{{transactionsItemsReportDta?.totalVatAmounts}}</strong>
+      </div>
+      <div class="col-6" *ngIf="reportName == 'DETAILED_EXPENSES'">
+        <label>{{'report.totalManexCommision' | translate}}</label>
+        <strong>{{transactionsItemsReportDta?.totalCommissionAmounts}}</strong>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="TransactionsReportDto">
+      <div class="col-6" *ngIf="reportName != 'TOP_UP_DETAILS'">
+        <label>{{'report.noOfTransactions' | translate}}</label>
+        <strong>{{TransactionsReportDto?.totalNumberOfTransactions}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalTransactionAmount' | translate}}</label>
+        <strong *ngIf="reportName == 'TOP_UP_DETAILS'">{{TransactionsReportDto.totalAmounts}}</strong>
+        <strong *ngIf="reportName != 'CARDHOLDER_EXPENSES_PER_PRODUCT_CATEGORY' || reportName != 'TOTAL_CARDHOLDER_EXPENSES_PER_PRODUCT' || reportName != 'TOTAL_EXPENSES_PER_MERCHNAT'" >{{TransactionsReportDto?.totalAmountsIncludingVat}}</strong>
+        <strong *ngIf="reportName == 'CARDHOLDER_EXPENSES_PER_PRODUCT_CATEGORY' || reportName == 'TOTAL_CARDHOLDER_EXPENSES_PER_PRODUCT' || reportName == 'TOTAL_EXPENSES_PER_MERCHNAT'">{{TransactionsReportDto?.totalSalesIncludingVat}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="totalSales">
+      <div class="col-6">
+        <label>{{'report.totalNumberOfTransactions' | translate}}</label>
+        <strong>{{totalSales?.totalNumberOfTransactions}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalSales' | translate}}</label>
+        <strong>{{totalSales?.totalSales}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalProductsVat' | translate}}</label>
+        <strong>{{totalSales?.totalProductsVat}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalSalesIncludingVat' | translate}}</label>
+        <strong>{{totalSales?.totalSalesIncludingVat}}  {{currentLang === 'en' ? 'EGP' : 'ج.م'}}</strong>
+      </div>
+      <div class="col-6">
+        <label>{{'report.totalQuantity' | translate}}</label>
+        <strong>{{totalSales?.totalQuantity}}</strong>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

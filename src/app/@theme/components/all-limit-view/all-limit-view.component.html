@@ -1,0 +1,26 @@
+<div  *ngIf="details" class="Alllimit">
+    <div class="d-flex justify-content-between">
+        <p>{{"corporatePolicy.Politiclimit"|translate}}</p>
+        <p><span [ngClass]="details?.amount!=null && details?.limitPerTransaction!=null && details?.maxNumberOfTransactionPerDay!=null?'active':'Notactive'"></span> 
+            
+            
+            
+            {{((details?.amount==null && details?.limitPerTransaction==null && details?.maxNumberOfTransactionPerDay==null) ?'corporatePolicy.NOTLIMIT':'corporatePolicy.LIMIT') |translate}}</p>
+    </div>
+    <div class="d-flex justify-content-between">
+        <p>{{"corporatePolicy.totalLimit"|translate}}</p>
+        <p *ngIf="details?.amount!=null">{{details?.amount}} {{"dashboard.currency"|translate}}</p>
+        <p *ngIf="details?.amount==null">{{"corporatePolicy.Notfound"|translate}}</p>
+    </div>
+    <div class="d-flex justify-content-between">
+        <p>{{"corporatePolicy.transactionlimit"|translate}}</p>
+        <p *ngIf="details?.limitPerTransaction!=null">{{details?.limitPerTransaction}} {{"dashboard.currency"|translate}}</p>
+        <p *ngIf="details?.limitPerTransaction==null">{{"corporatePolicy.Notfound"|translate}}</p>
+    </div>
+    <div class="d-flex justify-content-between">
+        <p>{{"corporatePolicy.limitPerDay"|translate}}</p>
+        <p *ngIf="details?.limitPerDay!=null">{{details?.limitPerDay}} {{"dashboard.currency"|translate}}</p>
+        <p *ngIf="details?.limitPerDay==null">{{"corporatePolicy.Notfound"|translate}}</p>
+    </div>
+
+</div>

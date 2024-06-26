@@ -1,0 +1,130 @@
+
+<app-ou-hierarchy-tree *ngIf="authService.getUserType() === 'corporate' && authService.isOuEnabled()"></app-ou-hierarchy-tree>
+
+
+
+
+<app-ou-tabs #ouTabs  [title]="'corporatePolicy.name'"
+             (onNodeSelect)="selectOu($event) " (ChangeView)="ChangeView($event)" ></app-ou-tabs>
+
+
+
+
+<div class="BoxContainer ">
+    <app-left-table-header [title]="'corporatePolicy.Allpolicies' "
+                           [name]="'corporatePolicy.name'"
+                           [length]="totalElements"
+                           [icon]="'./assets/img/icons-policies.svg'"></app-left-table-header>
+
+    <app-right-table-header [showCreateBtn]="showCreateBtn" [role]="'POLICY_CREATE'" [addText]="'corporatePolicy.add'">
+
+      <div class="searchInput">
+        <label>{{"app.search" | translate}}</label>
+        <input type="text" (keyup.enter)="handlePolicySearch($event)"  placeholder="{{'corporatePolicy.policyName' | translate}}" >
+        <img [ngStyle]="{'right':currentLang=='en'?'10px':'','left':currentLang=='ar'?'10px':''}" src="./assets/img/icons-search.svg" alt="">
+      </div>
+
+      <div  class="separator"></div>
+      <app-filter-btn #filterBtn></app-filter-btn>
+    </app-right-table-header>
+
+</div>
+
+
+<app-search *ngIf="filterBtn.showAdvanceSearch" search>
+  <form #advanceSearchForm="ngForm" class="ui form"
+        (ngSubmit)="handleSearch()">
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field ngModel name="localeName" [placeholder]="'corporatePolicy.localeName'"
+                         [label]="'corporatePolicy.localeName'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-input-field ngModel name="enName" [placeholder]="'corporatePolicy.enName'"
+                         [label]="'corporatePolicy.enName'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-label [label]="'corporatePolicy.assetType'"></app-label>
+        <ng-select [ngModel] name="assetType" placeholder="{{'corporatePolicy.assetType' | translate}}">
+          <ng-option *ngFor="let assetType of assetTypes" [value]="assetType">
+            {{'app.assetType.' + assetType|translate|lowercase}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporatePolicy.policyType'"></app-label>
+        <ng-select [ngModel] name="policyType" placeholder="{{'corporatePolicy.policyType' | translate}}">
+          <ng-option *ngFor="let policyType of policyTypes" [value]="policyType">
+            {{'corporatePolicy.' + policyType|translate|lowercase}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporatePolicy.policyCycleType'"></app-label>
+        <ng-select [ngModel] name="policyCycleType" placeholder="{{'corporatePolicy.policyCycleType' | translate}}">
+          <ng-option *ngFor="let policyCycleType of policyCycleTypes" [value]="policyCycleType">
+            {{'corporatePolicy.' + policyCycleType|translate|lowercase}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporatePolicy.workingDays'"></app-label>
+        <ng-select [ngModel] multiple="true" name="workingDays"
+                   placeholder="{{'corporatePolicy.workingDays' | translate}}">
+          <ng-option *ngFor="let workingDay of workingDays" [value]="workingDay">
+            {{'corporatePolicy.' + workingDay|translate|lowercase}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'product.category.title'"></app-label>
+        <ng-select [multiple]="true" [(ngModel)]="productCategoryIds" name="productCategoryIds" placeholder="{{'product.category.title' | translate}}" (change)="selectAll($event,'productCategoryIds')">
+          <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+          <ng-option *ngFor="let productCategory of productCategories" [value]="productCategory.id">
+            {{currentLang === 'en' ? productCategory.enName : productCategory.localeName|lowercase}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporatePolicy.skipMileage'"></app-label>
+        <ng-select [ngModel] name="skipMileage" placeholder="{{'corporatePolicy.skipMileage' | translate}}">
+          <ng-option value="false">{{'app.false' | translate}}</ng-option>
+          <ng-option value="true">{{'app.true' | translate}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-status ngModel name="suspended"></app-status>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field search">
+        <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+      </div>
+    </div>
+  </form>
+</app-search>
+
+<app-data-table *ngIf="ShowTable==true" [gridData]="gridData" [showTopContainer]="false" [colData]="colData" [entityName]="'POLICY'" [enableSorting]="false"
+                (onSortChange)="handleSortViewChange($event)">
+
+</app-data-table>
+
+
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="currentLang === 'en' ? 'Corporate Policy' : 'سياسة النظام'">
+  <button footer class="btn btn-danger" (click)="deleteCorporatePolicy()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>
+
+<app-grid-view *ngIf="ShowTable==false"  [type]="'corporatePolicyList'" [allCorporatePolicy]="allCorporatePolicy"  [gridData]="gridData" [currentLang]="currentLang" (onUpdatePolicy)="getCorporatePolicies(corporateId)" [queryParamName]="'policyIds'"></app-grid-view>
+
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>

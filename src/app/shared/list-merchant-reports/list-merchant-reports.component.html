@@ -1,0 +1,65 @@
+
+<app-back-button *ngIf="userType === 'corporate' || userType === 'merchant'"></app-back-button>
+
+<nb-card style="height: 18em">
+  <nb-card-body>
+    <!-- <h4>Sales Per</h4> -->
+
+    <!--    <ul ngbNav class="nav-container">-->
+    <!--      <li [ngbNavItem]="link.path" *ngFor="let link of links">-->
+    <!--        <a [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-tab" ngbNavLink-->
+    <!--           [routerLink]="link.path">{{ currentLang === 'en' ? link.title : link.localeTitle }}</a>-->
+    <!--      </li>-->
+    <!--    </ul>-->
+
+    <div class="dropdown">
+      <button class="dropbtn">
+        <span>{{pageTitle}}</span>
+        <nb-icon icon="arrowhead-down-outline"></nb-icon>
+      </button>
+      <div class="dropdown-content" ngbNav>
+        <li [ngbNavItem]="link.path" *ngFor="let link of links">
+          <a [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-tab" ngbNavLink
+             [routerLink]="link.path">{{ currentLang === 'en' ? link.title : link.localeTitle }}</a>
+        </li>
+      </div>
+    </div>
+
+
+  </nb-card-body>
+  <nb-card-body *ngIf="!hideDate">
+    <!--    <app-merchant-info></app-merchant-info>-->
+    <div class="date">
+      <form class="ui form bg-form">
+        <div class="fields row">
+          <div class="col-md-3 date-field">
+            <app-label [label]="'app.fromDate'"></app-label>
+            <input #fromDate [type]="isVehicleReport ? 'month':'date'" name="fromDate"
+                   [max]="toDate.value"
+                   (change)="reportService.sendDate({fromDate:fromDate.value,toDate:toDate.value})">
+          </div>
+
+          <div class="col-md-3 date-field">
+            <app-label [label]="'app.toDate'"></app-label>
+            <input #toDate [type]="isVehicleReport ? 'month':'date'" name="toDate"
+                   [min]="fromDate.value"
+                   (change)="reportService.sendDate({toDate:toDate.value,fromDate:fromDate.value})">
+          </div>
+
+          <div class="col-md-3 date-field" *ngIf="ouEnabled && pageTitle != 'Top Up Details'">
+            <app-label [label]="'report.ouName'"></app-label>
+            <ng-select dropdownPosition='bottom' [multiple]="true" (change)="selectedOus($event,'corporateOus')" 
+                 name="corporateOus" placeholder="{{'report.ouName' | translate}}">
+              <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+              <ng-option *ngFor="let ou of corporateOus" [value]="ou.id">
+                {{currentLang == "en" ? ou.enName : ou.localeName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nb-card-body>
+
+</nb-card>
+<router-outlet></router-outlet>

@@ -1,0 +1,33 @@
+{
+  "dashboard": {
+    "greeting": "Hi,",
+    "totalNumber": "Total number of",
+    "merchant": {
+      "welcome": "Welcome aboard! We are proud to you with us",
+      "averageTransactionSizePerCategory": "Average transaction size per category",
+      "currentMonthTotalSalesPerCategory": "Current month total sales per category",
+      "currentMonthTotalSalesPerSite": "Current month total sales per site",
+      "totalSalesAcrossMonthsPerCategory": "Total sales across months per category",
+      "totalSalesAcrossMonthsPerSite": "Total sales across months per site",
+      "totalSalesAcrossMonthDaysPerCategory": "Total sales across month days per category",
+      "totalSalesAcrossMonthDaysPerSite": "Total sales across month days per site",
+      "invoicesSettledAmount": "Invoices settled amount",
+      "invoicesIssuedAmount": "Invoices issued amount",
+      "invoicesPreIssuedAmount": "Invoices pre issued amount"
+    },
+    "corporate": {
+      "welcome": "Welcome aboard! We are proud to you with us",
+      "totalExpensesPerCategory": "Total expenses per product category",
+      "totalExpensesPerCity": "Total expenses per city",
+      "topTenCardHolders": "Top 10 Expenses Cardholders",
+      "topTenVehicles": "Top 10 Expenses Vehicles",
+      "topTenHardware": "Top ten hardwares",
+      "topTenContainers": "Top ten containers",
+      "currentMonthTotalSalesPerCategory": "Total expenses per category for the current month",
+      "totalSalesAcrossMonthsPercategory": "Total Sales Across Months Per category",
+      "totalSalesAcrossMonthsPerZone": "Total Sales Across Months Per Zone",
+      "totalExpenses": "Total Expenses"
+    },
+    "currency": "EGP"
+  }
+}

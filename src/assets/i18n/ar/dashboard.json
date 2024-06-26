@@ -1,0 +1,33 @@
+{
+  "dashboard": {
+    "greeting": "اهلاً,",
+    "totalNumber": "العدد الكلي لـ",
+    "merchant": {
+      "welcome": "نحن فخورين بالتعامل معك.",
+      "averageTransactionSizePerCategory": "متوسط عدد العمليات لكل تصنيف منتج",
+      "currentMonthTotalSalesPerCategory": "إجمالي عدد المبيعات لكل تصنيف منتج لهذا الشهر",
+      "currentMonthTotalSalesPerSite": "إجمالي عدد المبيعات لكل منفذ بيع",
+      "totalSalesAcrossMonthsPerCategory": "إجمالي المبيعات عبر الشهور لكل تصنيف منتج",
+      "totalSalesAcrossMonthsPerSite": "إجمالي المبيعات عبر الشهور لكل منفذ بيع",
+      "totalSalesAcrossMonthDaysPerCategory": "إجمالي المبيعات (ايام) لكل منفذ بيع",
+      "totalSalesAcrossMonthDaysPerSite": "إجمالي المبيعات (ايام) لكل منفذ بيع",
+      "invoicesSettledAmount": "مبلغ تسوية الفواتير",
+      "invoicesIssuedAmount": "قيمه الفواتير المصدره",
+      "invoicesPreIssuedAmount": "مبالغ قيد الأصدار للفواتير"
+    },
+    "corporate": {
+      "welcome": "نحن فخورين بالتعامل معك.",
+      "totalExpensesPerCategory": "إجمالي المصروفات لكل التصنيفات",
+      "totalExpensesPerCity": "إجمالي المصروفات لكل المدن",
+      "topTenCardHolders": "أكثر عشر حاملي كروت صرفاً",
+      "topTenVehicles": "أكثر عشر سيارات صرفاً",
+      "topTenHardware": "أكثر عشر مُعدات صرفاً",
+      "topTenContainers": "أكثر عشر حاويات صرفاً",
+      "currentMonthTotalSalesPerCategory": "إجمالي المصروفات لهذا الشهر لكل التصنيفات",
+      "totalSalesAcrossMonthsPercategory": "إجمالي المصروفات عبر الشهور لكل التصنيفات",
+      "totalSalesAcrossMonthsPerZone": "إجمالي المصروفات عبر الشهور لكل منطقه",
+      "totalExpenses": "إجمالي المصروفات"
+    },
+    "currency": "ج.م"
+  }
+}

@@ -1,0 +1,41 @@
+<ng-container >
+<div class="d-flex-container">
+<div class="tabs-header">
+<!--  <h4 *ngIf="title && authService.getUserType() !== 'admin'">{{title | translate}}</h4>-->
+
+  <div  *ngIf="PolicyList" class="list-view">
+    <span (click)="DefaultView=true;showGrid('Table')" [ngStyle]="{'background-color':DefaultView && PolicyList?'#2d4190':''}"><img src="./assets/img/icons-table.svg" alt=""></span>
+    <span (click)="DefaultView=false;showGrid('Grid')"  [ngStyle]="{'background-color':DefaultView==false && PolicyList?'#2d4190':'transparent'}"><img src="./assets/img/icons-layout.svg" alt=""></span>
+  </div>
+
+</div>
+
+<div class="Expected-limit" *ngIf="PolicyList">
+  <ul class="">
+    <li> <span class="unlimit"><img  src="./assets/img/icons-infinity.svg" alt=""></span>{{"corporatePolicy.unlimited"|translate}}</li>
+    <li><span class="downImg"><img  src="./assets/img/icons-donut-chart-down.svg" alt=""></span>{{"corporatePolicy.limitDontExceed"|translate}}</li>
+    <li><span class="Img"><img  src="./assets/img/icons-donut-chart.svg" alt=""></span>{{"corporatePolicy.CloseToExpectedLimit"|translate}}</li>
+    <li> <span class="upImg"><img  src="./assets/img/icons-donut-chart-up.svg" alt=""></span>{{"corporatePolicy.MaximumlimitReached"|translate}}</li>
+  </ul>
+</div>
+</div>
+<ul class="ou-tabs" *ngIf="ouNodes.length">
+  <li class="tab" *ngFor="let node of ouNodes" (click)="selectNode(node)" [class.active]="node.active">
+    <div class="tab-icon">
+      <img
+        [src]="
+          node?.type === 'MAIN'
+            ? './assets/img/pending-requests/icons-master-corporate.svg' :
+            node?.type ==='all' ? './assets/img/icons-tree-primary.svg'
+            : './assets/img/icons-corporates.svg'
+        "
+        alt="node-icon"
+      />
+    </div>
+    <span>
+      {{ currentLang === "en" ? node?.enName : node?.localeName }}
+    </span>
+  </li>
+</ul>
+
+</ng-container>

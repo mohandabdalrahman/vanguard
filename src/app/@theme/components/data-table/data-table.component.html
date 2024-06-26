@@ -1,0 +1,327 @@
+<div class="data-table" [class.saleView]="saleView">
+  <div class="data-table-top-container" *ngIf="showTopContainer"  [class.headerClass]="addHeaderClass">
+    <div class="data-table-header">
+      <ng-content select="[header]"></ng-content>
+    </div>
+    <div class="data-table-search">
+      <ng-content select="[search]"></ng-content>
+    </div>
+  </div>
+
+  <table class="ui striped table" id="printable-sale" *ngIf="gridData?.length" [class.noRadius]="!showTopContainer">
+    <thead>
+    <tr>
+      <th *ngIf="itemsColData.length > 0"></th>
+      <th *ngIf="enableCheckBox" data-html2canvas-ignore="true">
+        <nb-checkbox *ngIf="enableSelectAll" (checkedChange)="selectAll($event)">
+        </nb-checkbox>
+        <span *ngIf="!enableSelectAll"> {{ "app.select" | translate }} </span>
+      </th>
+      <th [class.invoice-header]="!tableControls" *ngFor="let key of colData">
+        <div [ngClass]="enableSorting ? 'header-sorting' : ''">
+          <span class="mx-2" *ngIf="enableSortIcon&&key.header!=='corporatePolicy.Consumption'&&key.header!=='product.category.title'">
+            <img src="./assets/img/icons-sort.svg" alt="">
+          </span>
+          {{ key.header | translate }}
+          <span
+            class="sorting-icons"
+            *ngIf="enableSorting && key['sortable'] === undefined"
+          >
+              <nb-icon
+                (click)="handleSortView('ASC', key['field'])"
+                icon="chevron-up-outline"
+              ></nb-icon>
+              <nb-icon
+                (click)="handleSortView('DESC', key['field'])"
+                icon="chevron-down-outline"
+              ></nb-icon>
+            </span>
+        </div>
+      </th>
+      <th *ngIf="placeViews?.length > 0" data-html2canvas-ignore="true"></th>
+      <th *ngIf="tableControls" data-html2canvas-ignore="true"></th>
+      <ng-container *appHasRole="[role]">
+        <th *ngIf="showEditBtn && userType === 'admin'"></th>
+      </ng-container>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let record of gridData; let i = index">
+      <tr>
+        <td *ngIf="record?.transactionItemReportDtoList?.length > 0">
+          <button
+            class="expand-btn"
+            data-html2canvas-ignore="true"
+            (click)="record.isExpanded = !record.isExpanded"
+          >
+            <nb-icon
+              *ngIf="!record.isExpanded"
+              icon="plus-square-outline"
+            ></nb-icon>
+            <nb-icon
+              *ngIf="record.isExpanded"
+              icon="minus-square-outline"
+            ></nb-icon>
+            <!--            {{'report.showItems' | translate}}-->
+          </button>
+        </td>
+        <td *ngIf="enableCheckBox" data-html2canvas-ignore="true">
+          <nb-checkbox
+            [checked]="record.settled"
+            [disabled]="!enableSelectAll ? record.settled : false"
+            [id]="currentUrl + record.id"
+            (checkedChange)="onSelect($event, record, currentUrl + record.id)"
+          ></nb-checkbox>
+          <!--          <nb-checkbox [checked]="record.settled" [disabled]="record.settled"-->
+          <!--                       (change)="onSelect($event,record,i,currentUrl+record.id)"></nb-checkbox>-->
+        </td>
+        <td
+          *ngFor="let key of colData"
+          [class.clickable]="key.clickable"
+          [class.idField]="key.field === 'id'"
+          (click)="
+              key.clickable
+                ? handleCellClick({
+                    id: record['id'],
+                    field: key.field,
+                    value: record[key.field],
+                    data: record
+                  })
+                : ''
+            "
+        >
+            <span
+              *ngIf="key.field!='Expectation'&&key.field!='Availableforthenexttransaction'&&key.field!='Availablefortoday'&&key.field!='consumptionRate' && key.field !== 'downloadUrl' &&key.field!='trxReviewStatus'"
+              [innerHTML]="record[key.field] | translate"
+              [ngClass]="{
+                status:
+                  key.field === 'status' ||
+                  key.field === 'consumptionAlertType',
+                active:
+                  record[key.field] === 'active' ||
+                  record[key.field] === 'SUCCESS' ||
+                  record[key.field] === 'GREEN'  ||
+                  record[key.field] === 'PASSED',
+                inactive:
+                  record[key.field] === 'inactive' ||
+                  record[key.field] === 'FAILED' ||
+                  record[key.field] === 'RED' ||
+                  record[key.field] === 'notFound',
+                operatingValidity:
+                  key.field === 'operatingValidity'
+              }"
+            >
+              </span>
+              <nb-checkbox
+                *ngIf="
+                  key.field === 'checkbox' && entityName != 'unassigned-users'
+                "
+                (change)="onSelect($event, record)"
+              ></nb-checkbox>
+
+              <ng-container
+                *ngIf="
+                  entityName == 'unassigned-users' && key.field === 'checkbox'
+                "
+              >
+                <ng-container
+                  *ngIf="key.header === 'cardHolder.setVirtualCard'"
+                >
+                  <input
+                    type="checkbox"
+                    [checked]="record.userCardType"
+                    [disabled]="record.userCardType"
+                    [id]="'virtual' + currentUrl + record.id"
+                    (change)="
+                      onSelect(
+                        $event,
+                        record,
+                        'virtual' + currentUrl + record.id
+                      )
+                    "
+                  />
+                </ng-container>
+                <!--              <ng-container *ngIf="key.header === 'cardHolder.setPrintCard'" >-->
+                <!--                <input type="checkbox" [checked]="record.userCardType==false"   [disabled]="record.userCardType==false" [id]="'physical'+currentUrl+record.id"-->
+                <!--                (change)="onSelect($event,record,i,currentUrl+record.id)">-->
+                <!--              </ng-container>-->
+              </ng-container>
+              <app-file-extension-icon
+                *ngIf="record.fileName"
+                [fileName]="record.fileName"
+              ></app-file-extension-icon>
+
+
+              <div *ngIf="key.field=='trxReviewStatus'" class="trx-review">
+                <img *ngIf="record[key.field]=='PASSED' || record[key.field]=='ACCEPTED'" src="./assets/img/transactions/check-active.svg" alt="">
+                <img *ngIf="record[key.field]=='FAILED' || record[key.field]=='REJECTED'" src="./assets/img/transactions/check-failed.svg" alt="">
+                <img *ngIf="record[key.field]=='NOT_REVIEWED'" src="./assets/img/transactions/check-inactive.svg" alt="">
+                <img *ngIf="record[key.field]=='IN_REVIEW'" src="./assets/img/transactions/pending.svg" alt="">
+              </div>
+
+          <div *ngIf="key.field=='Expectation'" class="Expectation">
+            <div class="Limit">
+              <div class="icon">
+                    <span   [ngClass]="{'greenBackground':(((record[key.field].PlannedUsage*0.7>record[key.field].Consumption) || (record[key.field].Consumption==0) || (record[key.field].Consumption>0&& record[key.field].PlannedUsage==0)) && (record[key.field].openned !== true)),'redBackground':(record[key.field].PlannedUsage==record[key.field].Consumption && record[key.field].Consumption!=0)
+                    , 'yellowBackground':record[key.field].PlannedUsage>record[key.field].Consumption&&record[key.field].PlannedUsage*0.7<=record[key.field].Consumption , 'legendBackground' : record[key.field].openned}"
+                      >
+                      <img *ngIf="((record[key.field].PlannedUsage*0.7>record[key.field].Consumption) || (record[key.field].Consumption==0) || (record[key.field].Consumption>0&& record[key.field].PlannedUsage==0)) && (record[key.field].openned !== true)"
+                           src="./assets/img/icons-donut-chart-down.svg" alt="">
+                      <img *ngIf="(record[key.field].PlannedUsage==record[key.field].Consumption && record[key.field].Consumption!=0) "
+                           src="./assets/img/icons-donut-chart-up.svg" alt="">
+                      <img
+                        *ngIf="record[key.field].PlannedUsage>record[key.field].Consumption&&record[key.field].PlannedUsage*0.7<=record[key.field].Consumption"
+                        src="./assets/img/icons-donut-chart.svg" alt="">
+                      <img
+                        *ngIf="record[key.field].openned"
+                        src="./assets/img/icons-infinity.svg" alt="">
+
+                    </span>
+              </div>
+              <div class="payed">
+                <span>{{"app.payed"|translate}}</span>
+                <p>{{ record[key.field]?.Consumption| translate }} {{"dashboard.currency"|translate}}</p>
+              </div>
+            </div>
+            <div class="Limit ">
+              <div class="ExpectedLimitIcon">
+                <span><img src="./assets/img/icons-calculator.svg" alt=""></span>
+              </div>
+              <div class="payed">
+                <span>{{"app.thePlanForIt"|translate}}</span>
+                <p *ngIf="record[key.field].openned !== true">{{record[key.field]?.PlannedUsage| translate}} {{"dashboard.currency"|translate}}</p>
+                <p *ngIf="record[key.field].openned">
+                  {{'app.notAvailable' | translate}}
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <span *ngIf="key.field=='Availableforthenexttransaction'||key.field=='Availablefortoday'">{{
+            record[key.field]|translate}} {{"dashboard.currency"|translate}}</span>
+
+          <span *ngIf="key.field=='consumptionRate' && this.tableControls">
+                <p>{{"app.payed"|translate}} {{record[key.field]?.Expectation?.Consumption}}
+                  {{"dashboard.currency"|translate}}</p>
+
+                <div class="d-flex align-items-center" >
+                  <div class="Percentage ">
+                    <div
+                      [ngStyle]="{'width':(record[key.field]?.Expectation?.Consumption/record[key.field].Limit)>=0 ?  ((record[key.field].Expectation.Consumption/record[key.field].Limit)*100+'%'):'0%'}"
+                      class="Gradiant">
+                    </div>
+                  </div>
+                  <p class="PercentNumber">
+                    {{(record[key.field]?.Expectation?.Consumption/record[key.field].Limit)>=0 ?  ((record[key.field]?.Expectation?.Consumption/record[key.field].Limit)*100+'%'):'0%'}}
+                  </p>
+                </div>
+              </span>
+              <!--in alerts view-->
+              <span *ngIf="key.field=='consumptionRate' && !this.tableControls">
+              {{record[key.field]}}
+              </span>
+              <nb-icon
+                *ngIf="key.clickable && key.field !== 'users'"
+                icon="external-link-outline"
+              ></nb-icon>
+
+
+          <ng-container *appHasRole="[role]">
+            <nb-icon
+              style="cursor: pointer"
+              *ngIf="
+                    key.field === 'currentMileage' &&
+                    record[key.field] >= 0 &&
+                    userType === 'admin'
+                  "
+              icon="edit-outline"
+              (click)="handleEditBtnClick(record)"
+            ></nb-icon>
+          </ng-container>
+          <span *ngIf="key.field === 'downloadUrl'">
+              <app-download-button
+                [id]="record.documentId"
+                [merchantId]="merchantId"
+                [fileToDownload]="'merchantAttachment'"
+                [fileName]="record.fileName"
+              ></app-download-button>
+            </span>
+          <div *ngIf="key.field === 'remainingLiters' && record['lastLiters'] && record['latestTrxItemQuantity']">
+            {{+record['lastLiters'] - +record['latestTrxItemQuantity']}}
+          </div>
+          <div *ngIf="key.field === 'availableKilometersForLitres' && record['lastLiters'] && record['latestTrxItemQuantity']">
+            {{(((+record['lastLiters'] - +record['latestTrxItemQuantity']) * 100) / record['consumptionDefaultRate'])?.toFixed(2)}}
+          </div>
+          <ng-container *ngIf="key.field === 'inputs' && price">
+            <app-operating-values-inputs #operatingInputs [record]="record"
+                                         [price]="price"></app-operating-values-inputs>
+          </ng-container>
+
+          <ng-container *ngIf="key.field === 'dailyOperationsValues'">
+            <app-daily-operations-values [record]="record"></app-daily-operations-values>
+          </ng-container>
+
+          <ng-container *ngIf="key.field === 'manualMeterReading'">
+            <app-input-field
+              name="kilometers"
+              [neglectNum]="'0'"
+              [size]="'md'"
+              [type]="'number'"
+              [label]="'app.kilometers'"
+              [(ngModel)]="record['kilometers']"
+            ></app-input-field>
+          </ng-container>
+        </td>
+        <ng-container
+          *ngIf="placeViews?.length > 0"
+          data-html2canvas-ignore="true"
+        >
+          <td *ngFor="let placeView of placeViews">
+            <a
+              class="ui"
+              [routerLink]="[record.id ? record.id : i + 1, placeView.route]"
+            >
+              {{ placeView.text | translate }}
+            </a>
+          </td>
+        </ng-container>
+        <td *ngIf="tableControls" data-html2canvas-ignore="true">
+          <app-table-controls
+            [showView]="showView"
+            [showInvoice]="showInvoice"
+            [showDelete]="showDelete"
+            [showUpdate]="!record?.isGlobal"
+            [viewLink]="viewLink"
+            [userTypeId]="record?.userTypeId"
+            [id]="record.id ? record.id : i + 1"
+            [entityName]="entityName"
+          ></app-table-controls>
+        </td>
+      </tr>
+      <ng-container *ngIf="record.isExpanded">
+        <tr class="sub-table">
+          <th
+            [class.invoice-header]="!tableControls"
+            *ngFor="let key of itemsColData"
+          >
+            {{ key.header | translate }}
+          </th>
+        </tr>
+
+        <tr
+          class="sub-table"
+          *ngFor="
+              let item of record.transactionItemReportDtoList;
+              let i = index
+            "
+        >
+          <td *ngFor="let key1 of itemsColData">
+            {{ item[key1.field] | translate }}
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+</div>

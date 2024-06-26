@@ -1,0 +1,94 @@
+<div *ngFor="let node of nodes" class="tree-view">
+    <div class="tree-node" (click)="selectNode(node)" [id]="node.id">
+        <img class="main" src="./assets/img/root-bg.png" alt="">
+        <span> {{ currentLang === 'en' ? node?.enName : node?.localeName}} </span>
+    </div>
+    <div *ngFor="let node of node.children" class="childnode">
+        <div class="d-flex align-items-center">
+            <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+            <div class=" mt-2 node" [ngStyle]="{'width':nodeWidth+'px'}"   (click)="selectNode(node)" [id]="node.id">
+                <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+            </div>
+        </div>
+        <!-- add Node Here  1-->
+        <div *ngFor="let node of node.children" class="_2ndnode">
+            <div class="d-flex align-items-center">
+                <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                <div class=" mt-2 node"  [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}"(click)="selectNode(node)" [id]="node.id">
+                    <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                    <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                </div>
+            </div>
+            <!-- add Node Here 2-->
+            <div *ngFor="let node of node.children" class="_2ndnode">
+                <div class="d-flex align-items-center">
+                    <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                    <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                        <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                        <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                    </div>
+                </div>
+                <!-- add Node Here 3 -->
+                <div *ngFor="let node of node.children" class="_2ndnode">
+                    <div class="d-flex align-items-center">
+                        <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                        <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                            <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                            <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                        </div>
+                    </div>
+                    <!-- add Node Here 4-->
+                    <div *ngFor="let node of node.children" class="_2ndnode">
+                        <div class="d-flex align-items-center">
+                            <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                            <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                                <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                                <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                            </div>
+                        </div>
+                        <!-- add Node Here 5-->
+                        <div *ngFor="let node of node.children" class="_2ndnode">
+                            <div class="d-flex align-items-center">
+                                <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                                <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                                    <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                                    <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                                </div>
+                            </div>
+                            <!-- add Node Here 6-->
+                            <div *ngFor="let node of node.children" class="_2ndnode">
+                                <div class="d-flex align-items-center">
+                                    <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                                    <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                                        <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                                        <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                                    </div>
+                                </div>
+                                <!-- add Node Here 7-->
+                                <div *ngFor="let node of node.children" class="_2ndnode">
+                                    <div class="d-flex align-items-center">
+                                        <div [ngStyle]="{'width':((26*node.level)+'px')}" class="root"></div>
+                                        <div class=" mt-2 node" [ngStyle]="{'width':(nodeWidth-(node.level-1)*26)+'px'}" (click)="selectNode(node)" [id]="node.id">
+                                            <div class="node"><img src="./assets/img/icons-branchs.svg" alt=""></div>
+                                            <span>{{ currentLang === 'en' ? node?.enName : node?.localeName}}</span>
+                                        </div>
+                                    </div>
+                                    <!-- add Node Here 8-->
+            
+                                </div>
+        
+                            </div>
+    
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

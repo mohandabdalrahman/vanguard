@@ -1,0 +1,94 @@
+<div class="login">
+  <div class="loginImage">
+    <div class="solarusLogo">
+      <p class="text-white">Powered by</p>
+      <img src="./assets/logos-sss-omega.svg" alt="" />
+    </div>
+    <div class="loginContainer">
+      <div class="login-form">
+        <div class="Manexlogo text-center">
+          <img
+            [src]="currentLang == 'ar' ? './assets/manex-logo-ar.svg' : './assets/manex-logo-en.svg'"
+            alt=""
+          />
+        </div>
+        <div class="languageSelect"  >
+          <p (click)="changeLang('ar')" [ngClass]="{ activeLanguage: currentLang == 'ar' }">
+            <img src="./assets/img/icons-egypt-flag.svg" alt="" class="mx-2" />
+            العربية
+          </p>
+          <p (click)="changeLang('en')" [ngClass]="{ activeLanguage: currentLang == 'en' }">
+            English
+            <img src="./assets/img/icons-uk-flag.svg" alt="" class="mx-2" />
+          </p>
+        </div>
+        <form #loginForm="ngForm" class="ui form" (ngSubmit)="login(loginForm.value)" [dir]="currentLang=='en'?'ltr':'rtl'">
+          <div class="loginInput w-100" >
+            <label for="username" >
+              {{'login.username-1'|translate }}
+            </label>
+            <input
+              id="username"
+              [placeholder]="'login.username-1'|translate"
+              type="text"
+              name="username"
+              (ngModel)="(username)"
+              required
+            />
+            <app-error [ref]="username" [message]="'Username is required'"></app-error>
+          </div>
+          <div class="loginInput my-2 w-100" >
+            <label for="password" >
+              {{ "login.password"|translate }}
+            </label>
+            <div class="passwordInput">
+              <input
+                id="password"
+                [placeholder]="'login.password'|translate"
+                [type]="showPassword ? 'text' : 'password'"
+                required
+                (ngModel)="(password)"
+                name="password"
+              />
+              <div  
+                class="showIcon"
+                (click)="showPassword = !showPassword"
+                [ngStyle]="{
+                  right: currentLang == 'en' ? '10px' : '',
+                  left: currentLang == 'ar' ? '10px' : ''
+                }"
+              >
+                <img *ngIf="showPassword" src="./assets/img/view.svg" alt="view" />
+                <img *ngIf="!showPassword" src="./assets/img/view-off.svg" alt="view" />
+              </div>
+            </div>
+            <app-error [ref]="password" [message]="'Password is required'"></app-error>
+          </div>
+          <div class="field w-100"  
+            >
+            <a
+              class="forgetPassword"
+              [routerLink]="['/auth/request-password']"
+              routerLinkActive="router-link-active"
+            >
+              {{'login.forgetPassword'|translate}}
+            </a>
+          </div>
+          <div class="text-center submitButton" >
+            <button
+              class="ui w-75 button btn-primary d-flex align-items-center mx-auto justify-content-center"
+              type="submit"
+              [disabled]="loginForm.invalid"
+            >
+              {{'login.loginBtn'|translate}}
+              <div *ngIf="loading" class="cssload-container mx-2">
+                <div class="cssload-speeding-wheel"></div>
+              </div>
+            </button>
+          </div>
+          <div class="emptySpace"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

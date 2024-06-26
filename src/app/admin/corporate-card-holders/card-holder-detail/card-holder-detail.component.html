@@ -1,0 +1,42 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+<div class="details">
+  <h5> {{'cardHolder.details' | translate}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngIf="assetPloliciesView.length > 0">
+        <app-item-details [head]="'cardHolder.policy' | translate"></app-item-details>
+        <span
+          *ngFor="let policy of policies; let i = index">
+          {{ i + 1 == assetPloliciesView.length ? assetPloliciesView[i] + '.' : assetPloliciesView[i] + ' - '}}
+        </span>
+      </div>
+      <div class="column" *ngFor="let prop of cardHolderView | keyvalue">
+        <app-item-details [head]="'cardHolder.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'cardHolder.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>
+  </div>
+
+  <app-update-button *ngIf="userType==='admin' || userType ==='master_corporate'"
+                     [path]="[userType==='admin' ? '/admin/corporates/' : '/master_corporate/corporates/',corporateId,'details','card-holders',cardHolderId,'update']"
+                     [role]="'ASSET_UPDATE'"></app-update-button>
+  <app-update-button *ngIf="userType==='corporate'"
+                     [path]=" isTabView ? [updateUrl] : ['/corporate','card-holder',cardHolderId,'update']"
+                     [role]="'ASSET_UPDATE'"></app-update-button>
+</div>
+
+<div *ngIf="vcardInfo.serialNumber" class="VCardContainer">
+  <div class="VCardContainer__header">
+    <h5> {{'user.virtualCard' | translate}}</h5>
+    <!-- <app-print-button [fileName]="'vcard'" [defaultPrint]="false" [qrData]="vcardInfo.serialNumber"></app-print-button> -->
+    <app-print-button [fileName]="'vcard'" [defaultPrint]="false"></app-print-button>
+  </div>
+  <app-vcard [vcardInfo]="vcardInfo" id="printable"></app-vcard>
+</div>

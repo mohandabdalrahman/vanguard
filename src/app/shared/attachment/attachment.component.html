@@ -1,0 +1,70 @@
+<div class="attachment-header" style="margin-top: -15px;">{{'app.contactAttachment' | translate}}</div>
+<div [hidden]="contractUploader.queue.length>0" ng2FileDrop [ngClass]="{'drop-zone-hover': isContractZoneOver}"
+     (fileOver)="markContractFileOver($event)" (onFileDrop)="uploadContract()" [uploader]="contractUploader"
+     class="attachment drop-zone">
+  <input class="file-input" type="file" ng2FileSelect [uploader]="contractUploader"
+         (change)="uploadContract()"/>
+  <nb-icon icon="attach-2-outline" class="attachment-icon"></nb-icon>
+  {{'app.drag' | translate}}
+</div>
+<div class="d-flex justify-content-between align-items-center document"
+     *ngFor="let item of contractUploader.queue">
+  <div>
+    <app-file-extension-icon [fileName]="item?.file?.name"></app-file-extension-icon>
+    {{ item?.file?.name }}
+  </div>
+  <div class="document-remove" (click)="item.remove()">{{'app.remove' | translate}}</div>
+</div>
+
+<div class="attachment-header">{{'app.bankAttachment' | translate}}</div>
+<div [hidden]="bankStatementUploader.queue.length>0" ng2FileDrop [ngClass]="{'drop-zone-hover': isBankZoneOver}"
+     (fileOver)="markBankFileOver($event)" (onFileDrop)="uploadBankStatement()"
+     [uploader]="bankStatementUploader"
+     class="attachment drop-zone">
+  <input class="file-input" type="file" ng2FileSelect [uploader]="bankStatementUploader"
+         (change)="uploadBankStatement()"/>
+  <nb-icon icon="attach-2-outline" class="attachment-icon"></nb-icon>
+  {{'app.drag' | translate}}
+</div>
+<div class="d-flex justify-content-between align-items-center document"
+     *ngFor="let item of bankStatementUploader.queue">
+  <div>
+    <app-file-extension-icon [fileName]="item?.file?.name"></app-file-extension-icon>
+    {{ item?.file?.name }}
+  </div>
+  <div class="document-remove" (click)="item.remove()">{{'app.remove' | translate}}</div>
+</div>
+
+<div class="attachment-header">{{'app.taxAttachment' | translate}}</div>
+<div [hidden]="taxIdUploader.queue.length>0" ng2FileDrop [ngClass]="{'drop-zone-hover': isTaxZoneOver}"
+     (fileOver)="markTaxFileOver($event)" (onFileDrop)="uploadTaxId()" [uploader]="taxIdUploader"
+     class="attachment drop-zone">
+  <input class="file-input" type="file" ng2FileSelect [uploader]="taxIdUploader" (change)="uploadTaxId()"/>
+  <nb-icon icon="attach-2-outline" class="attachment-icon"></nb-icon>
+  {{'app.drag' | translate}}
+</div>
+<div class="d-flex justify-content-between align-items-center document"
+     *ngFor="let item of taxIdUploader.queue">
+  <div>
+    <app-file-extension-icon [fileName]="item?.file?.name"></app-file-extension-icon>
+    {{ item?.file?.name }}
+  </div>
+  <div class="document-remove" (click)="item.remove()">{{'app.remove' | translate}}</div>
+</div>
+
+<div class="attachment-header">{{'app.otherAttachment' | translate}}</div>
+<div [hidden]="otherUploader.queue.length>0" ng2FileDrop [ngClass]="{'drop-zone-hover': isOtherZoneOver}"
+     (fileOver)="markOtherFileOver($event)" (onFileDrop)="uploadOther()" [uploader]="otherUploader"
+     class="attachment drop-zone">
+  <input class="file-input" type="file" ng2FileSelect [uploader]="otherUploader" (change)="uploadOther()"/>
+  <nb-icon icon="attach-2-outline" class="attachment-icon"></nb-icon>
+  {{'app.drag' | translate}}
+</div>
+<div class="d-flex justify-content-between align-items-center document"
+     *ngFor="let item of otherUploader.queue">
+  <div>
+    <app-file-extension-icon [fileName]="item?.file?.name"></app-file-extension-icon>
+    {{ item?.file?.name }}
+  </div>
+  <div class="document-remove" (click)="item.remove()">{{'app.remove' | translate}}</div>
+</div>

@@ -1,0 +1,106 @@
+
+<div class="details">
+  <div *ngIf="userType === 'admin'" class="head" head>
+    <div class="ui two column grid">
+      <div class="column">
+        <h6>{{ "billingAccount.title" | translate }}</h6>
+      </div>
+
+      <div class="column right">
+        <div class="button-wrapper">
+          <a
+            class="ui button btn-success"
+            [routerLink]="['create']"
+            *ngIf="isAccountEmpty"
+          >
+            <nb-icon icon="plus-outline"></nb-icon>
+            {{ "billingAccount.create" | translate }}
+          </a>
+
+          <div *ngIf="!isAccountEmpty" class="button-wrapper">
+            <button
+              *appHasRole="['CORPORATE_BILLING_ACCOUNT_UPDATE']"
+              class="ui button"
+              [routerLink]="['update']"
+            >
+              <nb-icon icon="edit-2"></nb-icon>
+              {{ "billingAccount.update" | translate }}
+            </button>
+            <button
+              *appHasRole="['CORPORATE_BILLING_ACCOUNT_UPDATE']"
+              class="ui button"
+              [routerLink]="['topup']"
+            >
+              <nb-icon icon="plus-outline"></nb-icon>
+              {{ "billingAccount.topup" | translate }}
+            </button>
+            <div  *ngIf="authService.isAdminCorporateOuEnabled()">
+              <button
+                *appHasRole="['OU_BALANCE_TRANSFER']"
+                class="ui button btn-primary"
+                [routerLink]="[
+                  '/admin/corporates',
+                  corporateId,
+                  'balance-transfer'
+                ]"
+              >
+                <nb-icon icon="flip-2-outline"></nb-icon>
+                {{ "balance-transfer" | translate }}
+              </button> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="userType === 'admin'"
+    class="ui dividing header"
+    style="margin-top: 1.2em"
+  ></div>
+  <div class="details-content">
+    <div class="ui dividing header" *ngIf="!isAccountEmpty"></div>
+    <div class="ui three column grid" *ngIf="!isAccountEmpty">
+      <div class="column">
+        <app-item-details
+          [head]="'billingAccount.accountType'"
+          [body]="'billingAccount.accountTypes.' + accountType | translate"
+        ></app-item-details>
+      </div>
+      <div class="column" *ngFor="let prop of billingAccount | keyvalue">
+        <app-item-details
+          [head]="'billingAccount.' + prop.key"
+          [body]="prop.value + '%'"
+          *ngIf="prop.key === 'commissionRate'"
+        ></app-item-details>
+        <app-item-details
+          [head]="'billingAccount.' + prop.key"
+          [body]="prop.value"
+          *ngIf="prop.key !== 'commissionRate'"
+        ></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details
+          [head]="'billingAccount.suspended'"
+          [body]="'app.' + suspended | translate"
+        ></app-item-details>
+      </div>
+    </div>
+
+    <div *ngIf="isAccountEmpty">
+      <h4 class="text-center">No Billing Account Available</h4>
+
+      <div class="button-wrapper center-flex">
+        <a
+          class="ui button btn-success"
+          [routerLink]="['create']"
+          *ngIf="isAccountEmpty"
+        >
+          <nb-icon icon="plus-outline"></nb-icon>
+          {{ "billingAccount.create" | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

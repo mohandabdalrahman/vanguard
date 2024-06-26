@@ -1,0 +1,27 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="details">
+  <h5>{{currentLang === 'en' ? merchantBankAccount["enName"] : merchantBankAccount["localeName"]}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of merchantBankAccount | keyvalue">
+        <app-item-details [head]="'bankAccount.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column">
+        <app-item-details [head]="'bankAccount.suspended'" [body]="'app.'+active  | translate"></app-item-details>
+      </div>
+    </div>
+  </div>
+
+  <app-update-button *ngIf="userType==='admin'"
+                     [path]="['/admin/merchants',merchantId,'details','bank-accounts',merchantBankAccountId,'update']" [role]="'MERCHANT_BANK_ACCOUNT_UPDATE'"></app-update-button>
+
+  <app-update-button *ngIf="userType==='merchant'"
+                     [path]="['/merchant','bank-accounts',merchantBankAccountId,'update']" [role]="'MERCHANT_BANK_ACCOUNT_UPDATE'"></app-update-button>
+
+
+</div>

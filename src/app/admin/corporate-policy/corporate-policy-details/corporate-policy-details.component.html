@@ -1,0 +1,114 @@
+
+<!-- <div class="FirstView" ngIf="false">
+  <app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+  <div class="details">
+    <h5>{{currentLang === 'en' ? corporatePolicy["enName"] : corporatePolicy["localeName"]}} </h5>
+    <div class="ui dividing header"></div>
+    <div class="details-content">
+      <h6>{{'app.basicInfo' | translate}}</h6>
+      <div class="ui dividing header"></div>
+      <div class="ui three column grid">
+        <div class="column" *ngFor="let prop of corporatePolicy | keyvalue">
+          <app-item-details [head]="'corporatePolicy.' + prop.key" [body]="prop.value"></app-item-details>
+        </div>
+      <div class="column" *ngIf="policyType === 'DYNAMIC'">
+        <app-item-details [head]="'app.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>
+    <div class="ui three column grid" *ngIf="policyType !== 'DYNAMIC'">
+      <div class="column" >
+          <app-item-details [head]="'app.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+        </div>
+      <div class="column ng-star-inserted">
+          <app-item-details [head]="'corporatePolicy.applyTime'"
+            [body]="'corporatePolicy.'+applyTime | translate"></app-item-details>
+        </div>
+        <div class="column ng-star-inserted" *ngIf="assetType != null">
+          <app-item-details [head]="'corporatePolicy.assetType'"
+            [body]="'app.assetType.'+assetType | translate"></app-item-details>
+        </div>
+        <div class="column ng-star-inserted" *ngIf="policyCycleType != null">
+          <app-item-details [head]="'corporatePolicy.policyCycleType'"
+            [body]="'corporatePolicy.'+policyCycleType | translate"></app-item-details>
+        </div>
+       TODO: THIS NEEDS TO BE FIXED ASAP -->
+<!--        <div class="column ng-star-inserted">-->
+<!--          <h6 style="text-transform: capitalize;-->
+<!--        font-size: 14px;-->
+<!--        font-family: 'Geomanist', sans-serif; color: black;">{{'corporatePolicy.workingDays' | translate}}: </h6>-->
+<!--          <div class="d-flex">-->
+<!--            <p style="color: #9e9e9e;" *ngFor="let workingDay of workingDays">{{'corporatePolicy.' + workingDay |-->
+<!--              translate}}, </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="column ng-star-inserted">-->
+<!--          <app-item-details [head]="'corporatePolicy.policyType'"-->
+<!--            [body]="'corporatePolicy.'+policyType | translate"></app-item-details>-->
+<!--        </div>-->
+<!--        <div class="column ng-star-inserted">-->
+<!--          <app-item-details [head]="'corporatePolicy.skipMileage'"-->
+<!--            [body]="'app.'+skipMileage | translate"></app-item-details>-->
+<!--        </div>-->
+
+
+<!--    <app-update-button *ngIf="userType==='admin' || userType === 'master_corporate'"-->
+<!--      [path]="[ userType==='admin' ? '/admin/corporates/' : '/master_corporate/corporates/' ,corporateId,'details','policies',corporatePolicyId,'update']"-->
+<!--      [role]="'POLICY_UPDATE'"></app-update-button>-->
+
+<!--    <app-update-button *ngIf="userType==='corporate'"-->
+<!--      [path]="isTabView ? [updateUrl] : ['/corporate','policies',corporatePolicyId,'update']"-->
+<!--      [role]="'POLICY_UPDATE'"></app-update-button>-->
+
+
+<div class="secondView mt-3">
+  <div class="d-flex" [ngClass]=" userType === 'admin' ? 'justify-content-end' : 'justify-content-between' " >
+    <app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+    <div  [ngStyle]="{'border-color':details?.skipMileage?'#28be89':'#e65151'}"  class="SkipBox d-flex justify-content-between align-items-center">
+      <p >{{"corporatePolicy.skipMileage"|translate}}</p>
+
+      <p [ngStyle]="{'color':details?.skipMileage?'#28be89':'#e65151'}"><span [ngClass]="{'active':details?.skipMileage,'Notactive':details?.skipMileage==false}"  class="active"></span> {{(details?.skipMileage?"app.true":"app.false") |translate}}</p>
+    </div>
+  </div>
+
+
+  <app-details-view [details]="details"></app-details-view>
+  <div class="row mt-3">
+    <div class="col-lg-4 col-md-6 my-3 my-xl-0 my-lg-0 my-md-0 ">
+      <app-all-limit-view [details]="details"></app-all-limit-view>
+    </div>
+
+    <div class="col-lg-4 col-md-12 my-3 my-xl-0 my-lg-0 ">
+      <div *ngIf="progressData?.Limit!=undefined && progressData?.Expectation" class="Consumption">
+        <h6 class="mb-3">{{"corporatePolicy.Consumption"|translate}}</h6>
+        <app-progress [data]="progressData" [currentLang]="currentLang"></app-progress>
+      </div>
+    </div>
+
+    <div *ngIf="Cities.length>0" class="col-lg-4 col-md-6 my-3 my-xl-0 my-lg-0 my-md-0">
+      <app-cities-view [Cities]="Cities" [zones]="zones"></app-cities-view>
+    </div>
+
+
+  </div>
+
+
+
+
+  <div *ngIf="PolicyUsers?.length>0">
+    <app-consumption-rate [title]="assetType"  [userDetails]="userDetails" [vehicleDetails]="vehicleDetails" [gridData]="gridData" [Goto]="Goto" [showUpdate]="showUpdate" [colData]="colData" [currentLang]="currentLang">
+
+    </app-consumption-rate>
+
+  </div>
+
+
+
+  <div class="Paginate" *ngIf="PolicyUsers?.length>0">
+    <app-pagination [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+        (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+</div>
+
+  <div>
+  </div>
+</div>

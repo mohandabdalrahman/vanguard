@@ -1,0 +1,46 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+<app-data-table [tableControls]="false" [enableSorting]="true" [gridData]="gridData" [colData]="colData"
+                (onItemSelect)="onItemSelect($event)" [entityName]="'unassigned-users'">
+  <ng-container header>
+    <app-left-table-header [title]="'user.unAssignedUsersTitle'" [name]="'user.name'"
+                           [length]="totalElements"></app-left-table-header>
+    <app-right-table-header>
+      <button (click)="assignCard()" [disabled]="!selectedUnAssignedUsers.length" class="ui button btn-primary">
+        {{ 'cardHolder.assignCard' | translate}}
+      </button>
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="username" [placeholder]="'cardHolder.username'"
+                           [label]="'cardHolder.username'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel [type]="'number'" name="mobileNumber" [placeholder]="'cardHolder.mobileNumber'"
+                           [label]="'cardHolder.mobileNumber'"></app-input-field>
+        </div>
+        <div class="field my-4 p-3 d-flex justify-content-around">
+          <!-- <nb-toggle [(ngModel)]="hasVirtualCard" (change)="switchPhysicalToggle()" name="virtualCard" labelPosition="start">{{'cardHolder.hasVirtual' | translate}}:</nb-toggle> -->
+          <nb-toggle [(ngModel)]="hasPhysicalCard" (change)="switchVirtualToggle()" name="physicalCard"
+                     labelPosition="start">{{'cardHolder.hasPhysical' | translate}}:
+          </nb-toggle>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)">
+</app-pagination>

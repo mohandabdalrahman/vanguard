@@ -1,0 +1,116 @@
+
+<app-ou-hierarchy-tree *ngIf="authService.getUserType() === 'corporate' && authService.isOuEnabled()"></app-ou-hierarchy-tree>
+
+<app-ou-tabs #ouTabs *ngIf="corporateOuService.getOuTabsStatus() || corporateOuService.getAdminOuTabsStatus()"  [title]="'cardHolder.title'" (onNodeSelect)="selectOu($event)"> </app-ou-tabs>
+
+<app-data-table [showDelete]="false" [gridData]="gridData" [colData]="colData" [enableCheckBox]="true"
+                (onItemSelect)="onItemSelect($event)" [entityName]="'ASSET'" [selectRow]="true">
+
+  <ng-container header>
+    <app-left-table-header [title]="'cardHolder.title' | translate " [name]="'cardHolder.title' | translate"
+                           [length]="totalElements"></app-left-table-header>
+    <div class="d-flex" style="gap: 0.5em">
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+
+      <!-- <button *ngIf="selectedVirtualCardHolder.length" class="ui button btn-primary" (click)="print()">{{'app.print' | translate}}</button> -->
+      <button style="margin: 0 .5em" *ngIf="showAssignPolicyBtn" (click)="openAssignPolicy();" type="button" class="ui button btn-primary">
+        {{ 'cardHolder.assignPolicy' | translate}} </button>
+
+      <a [routerLink]="['add']" class="ui button btn-primary">
+        {{ 'cardHolder.add' | translate}} </a>
+
+      <a [routerLink]="['print']" class="ui button btn-primary">
+        {{ 'cardHolder.printVirtualCardholders' | translate}} </a>
+
+    </div>
+
+    <!-- <app-right-table-header [removeAddBtn]="true">
+
+
+    </app-right-table-header> -->
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'cardHolder.localeName'"
+                           [label]="'cardHolder.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'cardHolder.enName'"
+                           [label]="'cardHolder.enName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'cardHolder.policy'"></app-label>
+          <ng-select dropdownPosition='bottom' [multiple]="true" [ngModel] name="assetPoliciesIds"
+                     placeholder="{{'cardHolder.policy' | translate}}">
+            <ng-option *ngFor="let policy of policies" [value]="policy.id">
+              {{currentLang === 'en' ? policy.enName : policy.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'cardHolder.assetTag'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="assetTagId"
+                     placeholder="{{'cardHolder.assetTag' | translate}}">
+            <ng-option *ngFor="let assetTag of assetTags" [value]="assetTag.id">
+              {{currentLang === 'en' ? assetTag.enName : assetTag.localeName ?? assetTag.enName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)">
+</app-pagination>
+
+<app-overwrite-confirm-modal [title]="'app.policyOverwriteTitle'" [body]="'app.policyOverwriteBody'" #overwritePolicy>
+  <button rightButton class="btn btn-primary"
+          (click)="AssignPolicyForCardHolder(false)">{{'cardHolder.dontOverwrite' | translate}}</button>
+  <button leftButton class="btn btn-danger"
+          (click)="AssignPolicyForCardHolder(true)">{{'cardHolder.overwrite' | translate}}</button>
+
+</app-overwrite-confirm-modal>
+
+<!--assign policy modal -->
+<app-modal #assignPolicy>
+  <h4 head class="modal-title">{{'corporates.assignPolicy' | translate}}</h4>
+  <form body class="ui form">
+    <ng-select dropdownPosition='bottom' [(ngModel)]="assginedPolicy" #assignedPolicy="ngModel" name="assignedPolicy">
+      <ng-option *ngFor="let policy of policies"
+                 [value]="policy.id">{{currentLang === 'en' ? policy.enName : policy.localeName}}</ng-option>
+    </ng-select>
+    <br/><br/>
+    <button class="ui button btn-primary" type="submit" (click)="handleAssignPolicy(assignedPolicy.value)">
+      {{'cardHolder.assignPolicy' | translate}}</button>
+
+  </form>
+
+</app-modal>
+
+
+<!-- <div  id="printableVirtualCards" >
+  <ng-container *ngIf="printSelected">
+    <div  class="VCardContainer">
+      <app-vcard *ngFor="let card of selectedVcardHoldersInfo" [vcardInfo]="card"></app-vcard>
+    </div>
+  </ng-container>
+</div> -->

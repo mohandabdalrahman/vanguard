@@ -1,0 +1,19 @@
+{
+  "country": {
+    "localeName": "Country Name (Arabic)",
+    "enName": "Country Name (English)",
+    "currency": "Currency",
+    "title": "All Countries",
+    "add": "Add Country",
+    "name": "Countries",
+    "id": "ID",
+    "update": "Update Country",
+    "iso2Code": "Country Code",
+    "defaultLocale": "Default language",
+    "currencyArName": "Currency Name (Arabic)",
+    "currencyEnName": "Currency Name (English)",
+    "code": "Currency Code",
+    "suspended": "Country Status",
+    "deletedTitle": "Country"
+  }
+}

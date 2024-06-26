@@ -1,0 +1,22 @@
+
+<ng-container>
+  <app-data-table [saleView]="true" [tableControls]="false" [gridData]="gridData" [colData]="colData">
+    <ng-container header>
+      <app-left-table-header [length]="totalGroup?.length" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"></app-left-table-header>
+
+      <div class="header-actions">
+        <button class="ui button btn-primary" (click)="searchSales()">{{'report.applyBtn' | translate}}</button>
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+
+    </ng-container>
+  </app-data-table>
+
+  <!--PAGINATION-->
+  <app-pagination [totalElements]="totalElements" [currentPage]="currentPage"
+                  (onPageChange)="loadPage($event)"></app-pagination>
+
+  <app-total-sales *ngIf="merchantTotal" [totalSales]="merchantTotal" ></app-total-sales>
+</ng-container>

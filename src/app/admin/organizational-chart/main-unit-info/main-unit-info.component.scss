@@ -1,0 +1,146 @@
+@import "../../../scss/variables";
+@import "../../../scss/common";
+
+nb-card {
+  nb-card-body {
+    padding: 1rem 1.3rem;
+  }
+}
+
+.unit {
+  padding: .7em 0;
+  @extend .d-flex-align-center;
+  justify-content: space-between;
+
+  &_info, &_info_name {
+    @extend .d-flex-align-center;
+
+    &_icon {
+      width: 40px;
+      height: 40px;
+      background-color: $ray;
+      border-radius: 50%;
+      @extend .d-flex-center;
+    }
+
+    &_name {
+      h4 {
+        margin: 0 16px;
+        color: $primary;
+        text-transform: capitalize;
+      }
+    }
+
+    &_type {
+      @extend .d-flex-align-center;
+
+      p {
+        margin: 0 16px;
+        color: $misty;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  &_actions {
+    @extend .d-flex-align-center;
+
+    .separator {
+      margin: 0 16px;
+      height: 40px;
+    }
+
+    .btn {
+      border-radius: 20px;
+
+      &-primary {
+        width: 111px;
+      }
+    }
+  }
+}
+
+.d-flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.separator {
+  display: inline-block;
+  width: 1px;
+  height: 47px;
+  background-color: $light;
+}
+
+.unit-data {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: .7em 0;
+
+  &-item {
+    &__info {
+      h6 {
+        font-size: 12px;
+        color: $misty;
+        font-weight: normal;
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+.unit-balance {
+  @extend .d-flex-align-center;
+  padding: .7em 0;
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    @extend .d-flex-center;
+
+    &.primary {
+      background-color: #d5d9e9;
+    }
+
+    &.positive {
+      background-color: #d4f2e7;
+    }
+
+    &.secondary {
+      background-color: #f9deeb;
+    }
+
+    &.orange {
+      background-color: #ffeed8;
+    }
+  }
+
+  &__info {
+    margin: 0 .7em;
+
+    p {
+      color: $misty;
+      font-size: 12px;
+      font-weight: normal;
+      margin-bottom: 4px;
+      text-transform: capitalize;
+    }
+
+    h6 {
+      color: $alpha;
+      font-size: 1.3em;
+    }
+  }
+}
+
+h5 {
+  text-transform: capitalize;
+  color: $alpha;
+  font-size: 1rem;
+}
+
+.inactive-highlight:nth-of-type(2) {
+  margin: 0 .5em;
+}

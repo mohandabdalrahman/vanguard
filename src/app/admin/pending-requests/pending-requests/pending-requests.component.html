@@ -1,0 +1,8 @@
+
+<app-pending-requests-header [totalPendingRequests]="totalPendingRequests" [systemType]="systemType"
+                             [systemData]="systemData"
+                             (onSearchFormChange)="handleSearch($event)"></app-pending-requests-header>
+<div class="ui dividing header"></div>
+
+<app-scrollable-tabs *ngIf="tabs.length" [tabs]="tabs"></app-scrollable-tabs>
+<nb-alert *ngIf="!tabs.length">{{'pendingRequest.finish' | translate}}</nb-alert>

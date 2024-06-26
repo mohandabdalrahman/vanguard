@@ -1,0 +1,12 @@
+{
+  "contextMenu": {
+    "details": "details",
+    "edit": "edit",
+    "addUnit": "add unit",
+    "addPolicy": "add policy",
+    "addVehicle": "add vehicle",
+    "addCardHolder": "add cardHolder",
+    "addEquipment": "add equipment",
+    "attachments": "attachments"
+  }
+}

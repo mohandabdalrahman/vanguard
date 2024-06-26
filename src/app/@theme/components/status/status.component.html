@@ -1,0 +1,5 @@
+<app-label [label]="status"></app-label>
+<ng-select #select (change)="onChange($event)"  placeholder="{{status | translate}}">
+  <ng-option value="false">{{'app.active' | translate}}</ng-option>
+  <ng-option value="true">{{'app.inactive' | translate}}</ng-option>
+</ng-select>

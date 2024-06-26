@@ -1,0 +1,45 @@
+<div class="field-inputs">
+  <app-input-field
+    name="liters"
+    [neglectNum]="'0'"
+    [size]="'sm'"
+    [type]="'number'"
+    [display]="'inline-block'"
+    [label]="'corporateVehicle.liters'"
+    [required]="true"
+    [(ngModel)]="record['liters']"
+    (input)="calculateDailyOperatingValues(record , 'liters')"
+  ></app-input-field>
+  <img
+    class="exchange-icon"
+    src="./assets/img/icons-exchange.svg"
+    alt="exchange icon"
+  />
+  <app-input-field
+    name="kiloMeters"
+    [neglectNum]="'0'"
+    [size]="'md'"
+    [type]="'number'"
+    [display]="'inline-block'"
+    [label]="'corporateVehicle.kiloMeters'"
+    [required]="true"
+    [(ngModel)]="record['kilometers']"
+    (input)="calculateDailyOperatingValues(record , 'kiloMeters')"
+  ></app-input-field>
+  <img
+    class="exchange-icon"
+    src="./assets/img/icons-exchange.svg"
+    alt="exchange icon"
+  />
+  <app-input-field
+    name="exchangeLimit"
+    [neglectNum]="'0'"
+    [size]="'md'"
+    [type]="'number'"
+    [display]="'inline-block'"
+    [label]="'corporateVehicle.exchangeLimit'"
+    [required]="true"
+    [(ngModel)]="record['exchangeLimit']"
+    (input)="calculateDailyOperatingValues(record , 'exchangeLimit')"
+  ></app-input-field>
+</div>

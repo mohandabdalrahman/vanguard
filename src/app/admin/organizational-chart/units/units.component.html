@@ -1,0 +1,77 @@
+
+
+
+<app-ou-header [branchUnitsNum]="tree?.numberOfBranchChild" [mainUnitsNum]="tree?.numberOfMainChild"></app-ou-header>
+<div id="units-container">
+  <angular-org-chart  #orgChart [nodeTemplate]="nodeTemplate" [data]="tree" #exampleChart="orgChart">
+  </angular-org-chart>
+  <!--Node Template-->
+  <ng-template #nodeTemplate let-node>
+    <nb-card class="ou-card" [class.root]="node.type=== 'ROOT'">
+      <nb-card-body>
+        <div class="card-container">
+          <app-context-menu [items]="items" [node]="node"></app-context-menu>
+          <span *ngIf="node.type!== 'ROOT'" class="border" [class.branch]="node.type==='BRANCH'"></span>
+          <img *ngIf="node.type=== 'ROOT'" style="margin: 0 .5em"
+               src='./assets/img/root-bg.png' alt="root-icon">
+          <div class="card-icon" *ngIf="node.type!== 'ROOT'">
+            <img
+              [src]="node.type==='MAIN' ? './assets/img/pending-requests/icons-master-corporate.svg':'./assets/img/icons-corporates.svg'"
+              alt="node-icon">
+          </div>
+          <div class="card-info">
+            <div class="card-info-name">
+              <h6>{{currentLang === 'en' ? node.enName : node.localeName}}</h6>
+              <p class="admin">
+                <img src="./assets/img/icons-admin.svg" alt="admin-icon">
+                {{
+                  corporateOuUsersMap?.get(node.id) ? 
+                    currentLang === 'en' ? corporateOuUsersMap?.get(node.id)[0]['enName'] : corporateOuUsersMap?.get(node.id)[0]['localeName'] :
+                    currentLang === "en" ? "No admin found" : "لا يوجد مسئول" 
+                }}
+                <span class="count-ou-admin-users" (click)="showRestAdminUsers(corporateOuUsersMap?.get(node.id))"
+                      *ngIf="corporateOuUsersMap?.get(node.id)?.length -1 > 0"> +{{corporateOuUsersMap?.get(node.id)?.length - 1 }}</span>
+              </p>
+            </div>
+            <p class="card-nums">
+              <span>
+                {{
+                  userCountsMap?.get(node.id)? 
+                    userCountsMap?.get(node.id):
+                    0
+                }}{{'assetType.USER' | translate}}
+              </span>
+              <span>
+                {{ 
+                  assetCountsMap?.get(node.id)?.VEHICLE ? 
+                  assetCountsMap?.get(node.id)?.VEHICLE :
+                  0
+                }}{{'app.assetType.VEHICLE' | translate}}
+              </span>
+            </p>
+          </div>
+                    <div *ngIf="node.children.length && node.cssClass !=='rootLevel'" (click)="handleCollapse(node)"
+                         class="tree-fold-btn">
+                      <nb-icon *ngIf="node?.hideChildren" icon="plus-circle-outline"></nb-icon>
+                      <nb-icon *ngIf="!node?.hideChildren" icon="minus-circle-outline"></nb-icon>
+                    </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </ng-template>
+
+</div>
+
+
+<app-modal #adminUsersModal [size]="'sm'">
+  <nb-card size="small" body>
+    <nb-card-header>
+      <h5 style="text-align: center">{{'app.superAdminUsers' | translate}}</h5>
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let user of restAdminUsers">
+        {{ currentLang === 'en' ? user.enName : user.localeName }}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</app-modal>

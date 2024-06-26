@@ -1,0 +1,70 @@
+<app-back-button></app-back-button>
+
+<div class="pageTitle mt-4">
+    <h2>{{"transaction.Transactionreport"|translate}}</h2>
+    
+    <ng-container header>
+        <app-right-table-header>
+            <h3>{{"transaction.inreview.lastTrxId"|translate }} : {{lastTrxId}} </h3>
+        </app-right-table-header>
+    </ng-container>
+    <div class="separator"></div>
+</div>
+
+<div></div>
+
+ <div class="mt-1 tableDiv">
+    <app-data-table [showView]="false" [showTopContainer]="true" [showDelete]="true" [selectRow]="true"
+        [showUpdate]="false" [gridData]="gridData" [colData]="colData" [entityName]="'TRANSACTION_REVIEW'" (onCellClick)="handleCellClick($event)"
+        >
+        <ng-container header>
+            <app-left-table-header
+              [title]="'transaction.inreview.title'"
+              [name]="'transaction.name'"
+              [length]="totalElements"
+            ></app-left-table-header>
+        </ng-container>
+       
+    </app-data-table>
+
+    <!-- <div class="Paginate">
+        <app-pagination [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+            (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+    </div> -->
+
+</div>
+
+<div class="mt-3 tableDiv">
+    <app-data-table [showTopContainer]="true" 
+        [tableControls]="false"[gridData]="unprocessedGridData" 
+        [colData]="unprocessedColData" [entityName]="'TRANSACTION_REVIEW'" >
+        <ng-container header>
+            <app-left-table-header
+              [title]="'transaction.unprocessed.title'"
+              [name]="'transaction.name'"
+              [length]="totalUnprocessedTransaction"
+            ></app-left-table-header>
+        </ng-container>
+    </app-data-table>
+
+
+</div>
+
+<app-modal #transactionUuidsModal [size]="'sm'">
+    <nb-card size="small" body>
+      <nb-card-header>
+        <h5 style="text-align: center">{{ 'transaction.uuid' | translate }}</h5>
+      </nb-card-header>
+      <ul>
+        <ui class="margin: 1em" *ngFor="let transaction of selectedUserTransactions">
+          {{ transaction }}
+        </ui>
+        
+    </ul>
+    </nb-card>
+  </app-modal>
+
+  <!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'otu.deletedTitle'">
+    <button footer class="btn btn-danger" (click)="releaseTransactions()">{{'app.confirm' | translate}}</button>
+  </app-delete-modal>

@@ -1,0 +1,11 @@
+<div (click)="openDropMenu=!openDropMenu"  [ngStyle]="{'right':currentLang=='en'?'24px':'','left':currentLang=='ar'?'24px':''}" class="icon-drop">
+    <img   src="./assets/img/icons-more-menu.svg" alt="">
+  </div>
+  <div class="dropdownMenu"  [ngStyle]="{'right':currentLang=='en'?'0px':'','left':currentLang=='ar'?'175px':''}" *ngIf="openDropMenu">
+    <ul [routerLink]="UpdateLink">
+      <li><img src="./assets/img/icons-edit.svg" alt="">{{'app.update' | translate}}</li>
+    </ul>
+    <!-- <p style="cursor: pointer;"  (click)="SuspendedPolicy()" [ngStyle]="{color:details.suspended?'#28be89':'#e65151'}">
+      <img [src]="details.suspended? './assets/img/enable-policy.svg':'./assets/img/icons-suspend.svg'" alt="">{{(details.suspended? "app.Activethispolicy":"app.stopthispolicy")|translate}}
+    </p> -->
+  </div>

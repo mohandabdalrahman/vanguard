@@ -1,0 +1,78 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('bankAccount.create' | translate) : ('bankAccount.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #createMerchantBankAccountForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" name="enName"
+                         [(ngModel)]="merchantBankAccount.enName" [label]="'bankAccount.enAliasName'"
+                         [placeholder]="'bankAccount.enAliasName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="localeName" #localeName="ngModel" [required]="true" name="localeName"
+                         [(ngModel)]="merchantBankAccount.localeName" [label]="'bankAccount.localeAliasName'"
+                         [placeholder]="'bankAccount.localeAliasName'"></app-input-field>
+        <app-error [ref]="localeName"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'bankAccount.bankName'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="bankId" #bank="ngModel" [(ngModel)]="merchantBankAccount.bankId"
+                   placeholder="{{'bankAccount.bankName' | translate}}">
+          <ng-option *ngFor="let bank of banks"
+                     [value]="bank.id">{{currentLang === 'en' ? bank?.enName : bank?.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="bank"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="branchAddress" #branchAddress="ngModel" [required]="true" name="branchAddress"
+                         [(ngModel)]="merchantBankAccount.branchAddress" [label]="'bankAccount.branchAddress'"
+                         [placeholder]="'bankAccount.branchAddress'">
+        </app-input-field>
+        <app-error [ref]="branchAddress"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'text'" [ref]="accountNumber" #accountNumber="ngModel" [required]="true"
+                         name="accountNumber"
+                         [(ngModel)]="merchantBankAccount.accountNumber" [label]="'bankAccount.number'"
+                         [placeholder]="'bankAccount.number'"></app-input-field>
+        <app-error [ref]="accountNumber"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'text'" [ref]="iban" #iban="ngModel" [required]="true" name="iban"
+                         [(ngModel)]="merchantBankAccount.iban" [label]="'site.ibanNumber'"
+                         [placeholder]="'site.ibanNumber'"></app-input-field>
+        <app-error [ref]="iban"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="swiftCode" #swiftCode="ngModel" name="swiftCode"
+                         [(ngModel)]="merchantBankAccount.swiftCode" [label]="'bankAccount.swiftCode'"
+                         [placeholder]="'bankAccount.swiftCode'"></app-input-field>
+      </div>
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea placeholder="{{'app.description' | translate}}" nbInput fullWidth
+                  [(ngModel)]="merchantBankAccount.description" name="description" rows="3"></textarea>
+      </div>
+    </div>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="active" labelPosition="start" [(ngModel)]="isActive">{{'bankAccount.active' |translate}}:
+        </nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button *ngIf="!isUpdateView" [disabled]="!createMerchantBankAccountForm.form.valid" class="ui button btn-primary"
+              (click)="createMerchantBankAccount()">{{'bankAccount.create' | translate}}</button>
+      <button *ngIf="isUpdateView" [disabled]="!createMerchantBankAccountForm.form.valid" class="ui button btn-primary"
+              (click)="updateMerchantBankAccount()">{{'bankAccount.update' | translate}}</button>
+    </div>
+  </form>
+</div>

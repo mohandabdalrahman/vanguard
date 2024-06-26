@@ -1,0 +1,73 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('product.global.add' | translate) : ('product.global.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #productForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="product.localeName"
+                         name="productLocalName" [placeholder]="'product.localeName'"
+                         [label]="'product.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="product.enName"
+                         name="productEnglishName" [placeholder]="'product.enName'"
+                         [label]="'product.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'product.country'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="country" [(ngModel)]="product.countryId"
+                   placeholder="{{'bankAccount.country' | translate}}">
+          <ng-option *ngFor="let country of countries"
+                     [value]="country.id">{{ currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'product.unit'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="unit" [(ngModel)]="product.measurementUnitId"
+                   placeholder="{{'product.unit' | translate}}">
+          <ng-option *ngFor="let unit of units"
+                     [value]="unit.id">{{currentLang === 'en' ? unit.enName : unit.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'product.type'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="productType" [(ngModel)]="product.globalProductTypeId"
+                   placeholder="{{'product.type' | translate}}">
+          <ng-option *ngFor="let productType of productTypes"
+                     [value]="productType.id">{{ currentLang === 'en' ? productType.enName : productType.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="price" #price="ngModel" [required]="true" [type]="'number'" [(ngModel)]="product.price"
+                         name="price" [placeholder]="'product.price'" [label]="'product.price'"></app-input-field>
+        <app-error [ref]="price" [message]="'app.required'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea nbInput fullWidth name="description" [(ngModel)]="product.description" rows="2"></textarea>
+      </div>
+    </div>
+    <h6>{{'app.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button [disabled]="!productForm.form.valid" (click)="createProduct()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'product.global.add' | translate}}</button>
+      <button [disabled]="!productForm.form.valid" (click)="updateProduct()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

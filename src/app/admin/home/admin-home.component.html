@@ -1,0 +1,14 @@
+<div class="home">
+  <app-home-card [img]="'/assets/img/home/home.svg'">
+    <h3>Hi,Administrator</h3>
+    <p>Welcome aboard! We are proud to you with us.</p>
+    <p>We all have faith that you i'll deliver results</p>
+  </app-home-card>
+</div>
+
+<!--TODO CALL API-->
+<div class="ui grid centered">
+  <div class="four wide column" *ngFor="let card  of cards">
+    <app-card [name]="card.name" [count]="card.count" [icon]="card.icon"></app-card>
+  </div>
+</div>

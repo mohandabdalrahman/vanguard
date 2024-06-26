@@ -1,0 +1,93 @@
+
+<app-data-table [showInvoice]="false" [showView]="true" [showDelete]="false" [showUpdate]="false" [gridData]="gridData"
+                [colData]="colData" [entityName]="'INVOICE'" [enableCheckBox]="userRoles.includes('INVOICE_SETTLE')"
+                (onItemSelect)="onItemSelect($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'invoice.title'" [name]="'invoice.name'"
+                           [length]="totalElements"></app-left-table-header>
+
+    <div class="actions d-flex">
+      <div class="d-flex">
+        <ng-container *appHasRole="['INVOICE_SETTLE']">
+          <button (click)="openSettleModal()" *ngIf="selectedInvoices.length" class="ui button btn-success">
+            {{'invoice.settleBtn' | translate }}
+          </button>
+        </ng-container>
+        <app-filter-btn #filterBtn></app-filter-btn>
+
+      </div>
+    </div>
+
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="corporateLocaleName" [placeholder]="'corporates.corporateName'"
+                           [label]="'corporates.corporateName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="merchantLocaleName" [placeholder]="'invoice.merchant.name'"
+                           [label]="'invoice.merchant.name'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="siteLocaleName" [placeholder]="'invoice.site.name'"
+                           [label]="'invoice.site.name'"></app-input-field>
+        </div>
+
+        <!--        <div class="field">-->
+        <!--          <app-input-field [type]="'number'" ngModel name="siteId" [placeholder]="'invoice.site.id'" [label]="'invoice.site.id'"></app-input-field>-->
+        <!--        </div>-->
+        <!--        <div class="field">-->
+        <!--          <app-input-field [type]="'number'" ngModel name="merchantId" [placeholder]="'invoice.merchant.id'" [label]="'invoice.merchant.id'"></app-input-field>-->
+        <!--        </div>-->
+        <!--        <div class="field">-->
+        <!--          <app-input-field [type]="'number'" ngModel name="corporateId" [placeholder]="'invoice.corporate.id'" [label]="'invoice.corporate.id'"></app-input-field>-->
+        <!--        </div>-->
+        <!--        <div class="field">-->
+        <!--          <app-input-field [type]="'number'" ngModel name="corporateTaxId" [placeholder]="'invoice.corporateTaxId'" [label]="'invoice.corporateTaxId'"></app-input-field>-->
+        <!--        </div>-->
+        <!--        <div class="field">-->
+        <!--          <app-input-field [type]="'number'" ngModel name="merchantTaxId" [placeholder]="'invoice.merchantTaxId'" [label]="'invoice.merchantTaxId'"></app-input-field>-->
+        <!--        </div>-->
+        <div class="field">
+          <app-label [label]="'app.fromDate'"></app-label>
+          <input type="date" [(ngModel)]="fromDate" name="fromDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'app.toDate'"></app-label>
+          <input type="date" [(ngModel)]="toDate" name="toDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'invoice.settled'"></app-label>
+          <ng-select [ngModel] name="settled" placeholder="{{'invoice.settled' | translate}}">
+            <ng-option value="false">{{'app.false' | translate}}</ng-option>
+            <ng-option value="true">{{'app.true' | translate}}</ng-option>
+          </ng-select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)"
+                (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+
+<app-modal #settleModal>
+  <h4 head class="modal-title">{{'invoice.setSettle' | translate }}</h4>
+  <div footer class="modal-actions">
+    <button class="btn btn-success" (click)="settleInvoices()">
+      {{'invoice.settle' | translate}}
+    </button>
+  </div>
+</app-modal>

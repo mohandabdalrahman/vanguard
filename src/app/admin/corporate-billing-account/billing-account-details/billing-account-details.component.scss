@@ -1,0 +1,23 @@
+@import '../../../scss/variables';
+
+.button-wrapper{ 
+    display: flex;
+    flex-direction: row-reverse;
+    .button:first-of-type{
+        background-color: transparent;
+        color: $main-color;
+    }
+    .button:nth-of-type(2){
+        background-color: transparent;
+        border: 1px solid $main-color;
+        border-radius: 20px;
+        color: $main-color;
+        margin-inline-start: 8px;
+}
+    
+}
+
+
+.center-flex{ 
+    justify-content: center;
+}

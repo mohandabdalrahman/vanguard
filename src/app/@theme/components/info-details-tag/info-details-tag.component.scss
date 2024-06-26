@@ -1,0 +1,41 @@
+@import "../../../scss/variables";
+
+.tag {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  height: 34px;
+  border-radius: 30px;
+  padding: 0 2px;
+  padding-inline-end: 10px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: $ray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-inline-end: 5px;
+  img {
+    width: 14px;
+    height: 14px;
+  }
+}
+.text {
+  display: flex;
+  align-items: center;
+}
+
+.space {
+  width: 20px;
+}
+
+.period {
+  p {
+    color: $alpha;
+    font-weight: bold;
+  }
+}

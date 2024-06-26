@@ -1,0 +1,293 @@
+@import "./app/scss/variables";
+
+.btn-success {
+  nb-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+//pending request
+.no-changes {
+  .card-info {
+    border-left: 1px solid $primary;
+    padding-left: 1em;
+  }
+}
+
+.drawer {
+  &__header {
+    padding: 0 1em 0 0 !important;
+  }
+
+  &__info {
+    .unit-title {
+      text-align: left !important;
+    }
+
+    &__container {
+      .data-row {
+        justify-content: flex-start;
+
+        .inactive-highlight {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  &__details {
+    &__row {
+      flex-direction: row-reverse;
+
+      .data-value {
+        text-align: left;
+      }
+    }
+  }
+}
+
+.data-label {
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+* {
+  font-family: "Geomanist", sans-serif !important;
+}
+
+.modal-body {
+  text-align: left;
+}
+
+.step-action {
+  right: 50%;
+  @media (min-width: 1400px) {
+    right: 40%;
+  }
+  @media (min-width: 1900px) {
+    right: 50%;
+  }
+}
+
+span.required {
+  margin-left: -4px;
+}
+
+.tree-node {
+  > img,
+  .tree-node-icon {
+    left: -9px;
+  }
+}
+
+// org chart style
+
+#units-container > angular-org-chart {
+  transform: rotate(270deg) scale(0.8);
+}
+
+#units-container:has(.hasNoChildren) {
+  angular-org-chart {
+    transform: translateX(4em) rotate(270deg) scale(0.8) !important;
+  }
+}
+
+#units-container {
+  transform: translateX(170px);
+}
+
+.ng13-org-chart-entity:has(.rootLevel) {
+  right: 0 !important;
+}
+
+nb-card.ou-card {
+  transform: translatex(-131px) translatey(145px) rotate(90deg);
+  @media (max-width: 1400px) {
+    transform: translatex(-128px) translatey(16px) rotate(90deg);
+  }
+}
+
+.tree-fold-btn {
+  right: -12px;
+}
+
+app-parent-card {
+  .parent-info {
+    border-right: 1px solid $light;
+  }
+
+  app-context-menu {
+    right: 17px;
+  }
+}
+
+.context-menu-container {
+  nb-card {
+    right: 0px;
+    left: 200px;
+  }
+
+  app-details-drawer {
+    left: -122%;
+  }
+
+  &.firstLevel {
+    app-details-drawer {
+      left: 185%;
+    }
+  }
+}
+
+//drawer style
+.rootLevel {
+  app-details-drawer {
+    left: 185%;
+  }
+}
+
+.card-container {
+  app-context-menu {
+    right: 14px;
+
+    .more-icon {
+      margin-left: auto;
+    }
+  }
+}
+
+table {
+  thead {
+    tr:first-child > th:first-child {
+      border-radius: 20px 0 0 0 !important;
+    }
+
+    tr:first-child > th:last-child {
+      border-radius: 0 20px 0 0 !important;
+    }
+  }
+}
+
+//balance distribution card
+.balance-cards {
+  .firstLevel,
+  .rootLevel {
+    .tree-fold-btn {
+      top: 164px;
+      right: -15px;
+    }
+
+    nb-card.nb-card-balance {
+      transform: translatex(23px) translatey(-250px) rotate(90deg) !important;
+    }
+
+    nb-card.nb-card-balance:has(.balance-card__body-limit) {
+      transform: translatex(23px) translatey(-220px) rotate(90deg) !important;
+    }
+
+    &.hasNoChildren {
+      nb-card.nb-card-balance {
+        transform: translatex(102px) translatey(-124px) rotate(90deg) !important;
+      }
+    }
+  }
+
+  .tree-fold-btn {
+    top: 140px;
+  }
+}
+
+#units-container.balance-cards:has(.hasNoChildren) {
+  angular-org-chart {
+    transform: translateX(8em) rotate(270deg) scale(0.8) !important;
+  }
+}
+
+.balance-card {
+  &__body {
+    &-balance {
+      .distribution-balance {
+        p {
+          flex-direction: row-reverse;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+.nb-card-balance {
+  transform: translatey(-129px) rotate(90deg);
+}
+
+.nb-card-balance:has(.balance-card__body-limit) {
+  transform: translatey(-100px) rotate(90deg);
+}
+
+app-ou-tabs .tabs-header p {
+  margin-left: auto;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.step-action {
+  margin-left: 700px;
+}
+
+nb-accordion-item-header {
+  .header-info {
+    border-left: 1px solid $light;
+  }
+}
+
+//stepper style
+nb-stepper {
+  .step {
+      .label {
+        .ng-star-inserted {
+          left: 41%;
+        }
+      }
+    }
+  }
+.float{
+  right: 40%;
+}
+
+
+
+// Transaction Review
+.header-level-one .showtotals {
+  padding-right: 16px;
+}
+
+.action span {
+  margin-left: 5px;
+}
+
+.header-level-two .info {
+  padding: 0 16px 0 0;
+}
+
+.idDiv {
+  right: 0px;
+  width: fit-content !important;
+}
+
+.nextToolTip {
+  right: 7px;
+  width: fit-content !important;
+}
+
+.details-card-context-menu{
+  right: 8px;
+  .context-menu-container{
+    right: 0;
+  }
+}
+
+.header-numbers-right {
+  border-left: 1px solid $light;
+}

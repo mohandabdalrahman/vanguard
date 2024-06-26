@@ -1,0 +1,45 @@
+<app-back-button></app-back-button>
+
+<app-data-table [gridData]="gridData" [colData]="colData" [entityName]="'ZONE'">
+  <ng-container header>
+    <app-left-table-header [title]="cityName" [name]="'zone.name'" [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'ZONE_CREATE'" [addText]="'zone.add'">
+      <app-filter-btn #filterBtn></app-filter-btn>
+
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'zone.localeName'"
+                           [label]="'zone.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'zone.enName'"
+                           [label]="'zone.enName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'zone.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteZone()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>

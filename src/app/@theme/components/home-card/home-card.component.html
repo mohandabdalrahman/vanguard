@@ -1,0 +1,8 @@
+<div class="home-card">
+  <div class="home-card-info">
+    <ng-content></ng-content>
+  </div>
+  <div class="home-card-img" [style]="userType==='master_corporate'?'top:-2em':''">
+    <img [src]="img" alt="homeImg">
+  </div>
+</div>

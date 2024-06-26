@@ -1,0 +1,9 @@
+{
+  "balanceTransfer": {
+    "convertFrom": "Source OU",
+    "convertTo": "Destination OU",
+    "amount": "Balance Transfer",
+    "from": "The balance will be transferred from the unit",
+    "to": "To Unit"
+  }
+}

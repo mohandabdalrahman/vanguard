@@ -1,0 +1,56 @@
+
+<app-data-table [showInvoice]="false" [showView]="true" [showDelete]="false" [showUpdate]="false" [gridData]="gridData" [colData]="colData" [entityName]="'INVOICE'" [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'invoice.title'" [name]="'invoice.name'" [length]="totalElements"></app-left-table-header>
+    <app-filter-btn #filterBtn></app-filter-btn>
+  </ng-container>
+
+  <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="merchantLocaleName" [placeholder]="'invoice.search.merchantLocaleName'" [label]="'invoice.search.merchantLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="merchantEnName" [placeholder]="'invoice.search.merchantEnName'" [label]="'invoice.search.merchantEnName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field ngModel name="siteLocaleName" [placeholder]="'invoice.search.siteLocaleName'" [label]="'invoice.search.siteLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="siteEnName" [placeholder]="'invoice.search.siteEnName'" [label]="'invoice.search.siteEnName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="siteId" [placeholder]="'invoice.site.id'" [label]="'invoice.site.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="merchantId" [placeholder]="'invoice.merchant.id'" [label]="'invoice.merchant.id'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [type]="'number'" ngModel name="merchantTaxId" [placeholder]="'invoice.merchantTaxId'" [label]="'invoice.merchantTaxId'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-label [label]="'app.fromDate'"></app-label>
+          <input type="date" [(ngModel)]="fromDate" name="fromDate">
+        </div>
+        <div class="field">
+          <app-label [label]="'app.toDate'"></app-label>
+          <input type="date" [(ngModel)]="toDate" name="toDate">
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"  (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>

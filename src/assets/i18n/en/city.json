@@ -1,0 +1,15 @@
+{
+  "city": {
+    "localeName": "City Name (Arabic)",
+    "enName": "City Name (English)",
+    "title": "All Cities",
+    "id": "ID",
+    "add": "Add City",
+    "name": "Cities",
+    "update": "Update city",
+    "countryName": "Country Name",
+    "suspended": "City Status",
+    "deletedTitle": "city",
+    "viewZones":"View zones"
+  }
+}

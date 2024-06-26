@@ -1,0 +1,41 @@
+@import "../scss/common";
+
+.create {
+  @include card;
+  padding: 2em;
+  .dividing {
+    margin-top: 0;
+  }
+  &-title {
+    text-transform: capitalize;
+  }
+
+  form {
+    &.bg-form {
+      background-color: #ecf0f3;
+      padding: 1em;
+      h6 {
+        text-transform: capitalize;
+      }
+    }
+    padding: 0 3em;
+    .field {
+      label {
+        color: #333333de;
+        text-transform: capitalize;
+      }
+    }
+    .row {
+      justify-content: center;
+      .button {
+        width: 32%;
+        @media (max-width: 767.98px) {
+          width: 70%;
+        }
+      }
+    }
+    .checkbox {
+      margin-bottom: 1em;
+    }
+  }
+}

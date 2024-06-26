@@ -1,0 +1,25 @@
+
+<app-back-button></app-back-button>
+
+<div class="details">
+  <h5>{{currentLang === 'en' ? masterCorporate?.enName : masterCorporate?.localeName}}</h5>
+  <div class="ui dividing header"></div>
+  <div class="details-content">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="ui three column grid">
+      <div class="column" *ngFor="let prop of masterCorporate | keyvalue">
+        <app-item-details [head]="'masterCorporate.' + prop.key" [body]="prop.value"></app-item-details>
+      </div>
+      <div class="column ng-star-inserted">
+        <app-item-details [head]="'app.suspended'" [body]="'app.'+suspended | translate"></app-item-details>
+      </div>
+    </div>
+  </div>
+
+  <!--  <button class="ui button btn-primary" (click)="showDrawerDetails()">Details</button>-->
+  <!--  <app-details-drawer *ngIf="showDrawer"></app-details-drawer>-->
+
+  <app-update-button [path]="['/admin/master-corporates/',masterCorporateId,'update']"
+                     [role]="'MASTER_CORPORATE_UPDATE'"></app-update-button>
+</div>

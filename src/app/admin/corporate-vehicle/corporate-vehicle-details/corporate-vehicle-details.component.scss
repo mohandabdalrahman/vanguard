@@ -1,0 +1,9 @@
+@import '../../../scss/variables';
+.unit{
+    display: flex;
+    align-items: center;
+    span{
+        color: $legend;
+        margin-inline-end: 8px;
+    }
+}

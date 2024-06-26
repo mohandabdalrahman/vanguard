@@ -1,0 +1,18 @@
+<app-data-table  [saleView]="true" [tableControls]="false" [gridData]="gridData"
+                  [colData]="colData">
+
+    <ng-container header>
+      <app-left-table-header [length]="totalElements" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"></app-left-table-header>
+      <div class="d-flex" *ngIf="bankStatements?.length">
+        <button class="ui button btn-primary" (click)="exportFile('pdf')">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportFile.bind(this , 'excel')"></app-export-button>
+      </div>
+    </ng-container>
+  </app-data-table>
+
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+

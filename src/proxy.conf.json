@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://vanguard-dev-fb382b996773a66cd49ca06f5b5ccc93.s3.me-south-1.amazonaws.com",
+    "secure": false
+  }
+}

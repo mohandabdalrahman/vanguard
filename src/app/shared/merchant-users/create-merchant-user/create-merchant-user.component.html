@@ -1,0 +1,121 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('user.merchant.add' | translate) : ('user.merchant.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #merchantUserForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <ng-container *ngIf="!isUpdateView">
+        <div class="field">
+          <app-input-field [ref]="fLocaleName" #fLocaleName="ngModel" [required]="true" [(ngModel)]="merchantUser.fLocaleName" name="fLocaleName" [placeholder]="'user.fLocaleName'" [label]="'user.fLocaleName'"></app-input-field>
+          <app-error [ref]="fLocaleName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="mLocaleName" #mLocaleName="ngModel" [(ngModel)]="merchantUser.mLocaleName" name="mLocaleName" [placeholder]="'user.mLocaleName'" [label]="'user.mLocaleName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field [required]="true" [ref]="lLocaleName" #lLocaleName="ngModel" [(ngModel)]="merchantUser.lLocaleName" name="lLocaleName" [placeholder]="'user.lLocaleName'" [label]="'user.lLocaleName'"></app-input-field>
+          <app-error [ref]="lLocaleName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="fEnName" #fEnName="ngModel" [required]="true" [(ngModel)]="merchantUser.fEnName" name="fEnName" [placeholder]="'user.fEnName'" [label]="'user.fEnName'"></app-input-field>
+          <app-error [ref]="fEnName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="mEnName" #mEnName="ngModel" [(ngModel)]="merchantUser.mEnName" name="mEnName" [placeholder]="'user.mEnName'" [label]="'user.mEnName'"></app-input-field>
+          <app-error [ref]="mEnName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="lEnName" #lEnName="ngModel" [required]="true" [(ngModel)]="merchantUser.lEnName" name="lEnName" [placeholder]="'user.lEnName'" [label]="'user.lEnName'"></app-input-field>
+          <app-error [ref]="lEnName"></app-error>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isUpdateView">
+        <div class="field">
+          <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="merchantUser.localeName" name="arName" [placeholder]="'user.localeName'" [label]="'user.localeName'"></app-input-field>
+          <app-error [ref]="arName"></app-error>
+        </div>
+        <div class="field">
+          <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="merchantUser.enName" name="enName" [placeholder]="'user.enName'" [label]="'user.enName'"></app-input-field>
+          <app-error [ref]="enName"></app-error>
+        </div>
+      </ng-container>
+      <div class="field">
+        <app-label [label]="'user.address'"></app-label>
+        <textarea placeholder="{{'user.address' | translate}}" [(ngModel)]="merchantUser.address" nbInput fullWidth name="address" rows="2"></textarea>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'user.description'"></app-label>
+        <textarea placeholder="{{'user.description' | translate}}" nbInput fullWidth name="description" rows="2" [(ngModel)]="merchantUser.description"></textarea>
+      </div>
+    </div>
+    <h6>{{'user.systemInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [disabled]="isUpdateView" [ref]="username" #username="ngModel" [required]="true" [(ngModel)]="merchantUser.username" name="username" [placeholder]="'app.username'" [label]="'app.username'"
+          [pattern]="USERNAME_REGEX">
+        </app-input-field>
+        <app-error [ref]="username"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="email" #email="ngModel" [pattern]="EMAIL_REGEX" [required]="true" [type]="'email'" [(ngModel)]="merchantUser.email" name="email" [placeholder]="'app.email'" [label]="'app.email'">
+        </app-input-field>
+        <app-error [ref]="email" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="mobNum" #mobNum="ngModel" [required]="true" [(ngModel)]="merchantUser.mobileNumber" name="mobNum" [placeholder]="'user.mobileNumber'" [label]="'user.mobileNumber'"></app-input-field>
+        <app-error [ref]="mobNum"></app-error>
+      </div>
+
+
+      <div class="field">
+        <app-label [label]="'merchant.merchantUserId'"></app-label>
+        <app-input-field placeholder="{{'merchant.merchantUserId' | translate}}" [(ngModel)]="merchantUser.merchantUserId" name="merchantUserId" rows="2"></app-input-field>
+      </div>
+
+
+      <div class="field">
+        <app-label [label]="'user.userRole'"></app-label>
+        <ng-select dropdownPosition='bottom' (change)="onRoleChange()" name="roles" [multiple]="true" [(ngModel)]="selectedRoles" placeholder="{{'user.userRole' | translate}}">
+          <ng-option *ngFor="let role of roles" [value]="role.id">{{currentLang === 'en' ? role.enName : role.localeName}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field" [hidden]="!isRequired">
+        <app-label [required]="isRequired" [label]="'site.label'"></app-label>
+        <ng-select dropdownPosition='bottom' [(ngModel)]="merchantUser.siteId" name="siteId" placeholder="{{'site.label' | translate}}">
+          <ng-option *ngFor="let site of sites" [value]="site.id">
+            {{currentLang==='en'?site.enName:site.localeName}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div *ngIf="isUpdateView" class="field">
+        <app-label [label]="'merchantCard.serialNumber'"></app-label>
+        <ng-select dropdownPosition='bottom' disabled="true" [(ngModel)]="merchantUser.nfcId" name="nfcId" placeholder="{{'merchantCard.serialNumber' | translate}}">
+          <ng-option *ngFor="let card of merchantCards" [value]="card.id">
+            {{card.decimalRep}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+
+
+    </div>
+
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button [disabled]="!merchantUserForm.form.valid" (click)="createMerchantUser()" *ngIf="!isUpdateView" class="ui button btn-primary">{{'user.merchant.add' | translate}}</button>
+      <button [disabled]="!merchantUserForm.form.valid" (click)="updateMerchantUser()" *ngIf="isUpdateView" class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,31 @@
+{
+  "login": {
+    "title": "تسجيل دخول",
+    "body": "",
+    "username": "اسم المستخدم/البريد الإليكتروني",
+    "username-1": "اسم المستخدم",
+    "password": "كلمة السر",
+    "loginBtn": "تسجيل دخول",
+    "forgetPassword": "نسيت كلمة السر",
+    "email": "البريد الإليكتروني",
+    "sendBtn": "أرسل",
+    "resetTitle": "اعادة ضبط كلمه السر",
+    "resetText": "سيصلك رسالة تأكيد على بريدك الإليكتروني للتحقق",
+    "newPassText": "أدخل كلمة السر الجديدة",
+    "confirmPassword": "تأكيد كلمة السر",
+    "required": "مطلوب",
+    "resetBtn": "اعادة ضبط كلمه السر",
+    "successChanged": "تم تغيير كلمة السر بنجاح",
+    "validEmail": "أدخل بريد إليكتروني صحيح",
+    "validUsername": "أدخل إسم مستخدم صحيح, يجب ان لا يزيد عن 20 حرف",
+    "currentPassword": "كلمة السر الحالية",
+    "changePassword": "تغيير كلمة السر",
+    "changePasswordTxt": "أدخل كلمة السر القديمة و الجديدة",
+    "newPassword": "كلمة السر الجديدة",
+    "invalidLogin": "خطأ في إسم المستخدم أو كلمة السر",
+    "currentPasswordRequired": "أدخل كلمة السر الحالية",
+    "newPasswordRequired": "أدخل كلمة السر الجديدة",
+    "passwordValidation": "كلمة السر تحتوي على حروف غير صالحة",
+    "errorMsg": "فشل تسجيل الدخول يرجى المحاولة مرة أخرى في وقت لاحق"
+  }
+}

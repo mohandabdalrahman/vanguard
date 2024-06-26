@@ -1,0 +1,39 @@
+@import "../scss/common";
+
+.details {
+  @include card;
+  padding: 2em;
+  border-radius: unset;
+
+
+  h5 {
+    text-transform: capitalize;
+  }
+
+  &-content {
+    background-color: #ffffff;
+    padding: 1em 2em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    //webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    //-moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    //box-shadow: 10px 10px 5px 0px rgb(0 0 0 / 4%);
+    border: 1px solid #f8f7f7;
+    padding-bottom: 1.5em;
+
+    h6 {
+      font-size: 1.5em;
+      color: #413a90;
+    }
+  }
+
+  .dividing {
+    margin-top: 0.5em;
+  }
+
+  .column {
+    @media (max-width: 575.98px) {
+      width: 100% !important;
+    }
+  }
+}

@@ -1,0 +1,217 @@
+
+
+<nb-stepper #stepper disableStepNavigation>
+  <nb-step
+    [label]="!isManualMileageMode ? ('corporateVehicle.dailyPolicy' | translate): ('corporateVehicle.vehiclesMeterReading' |translate) ">
+    <app-data-table
+      [entityName]="'ASSET'" [colData]="!isManualMileageMode ? colData : mileageColData" [gridData]="gridData"
+      [enableCheckBox]="true" [tableControls]="false"
+      [enableSelectAll]="true" (onItemSelect)="getSelectedVehicles($event)" [selectRow]="true"
+      (onCellClick)="handleCellClick($event)">
+      <ng-container header>
+        <div class="vehicles-left-header d-flex" [ngStyle]="{
+        width: isManualMileageMode ? '100%' : '62%'
+        }">
+          <app-left-table-header
+            [unitName]="currentLang === 'en' ? selectedOuNode?.enName : selectedOuNode?.localeName"
+            [name]="'corporateVehicle.name'" [length]="totalElements" [icon]="'./assets/img/icons-truck-merchants.svg'"
+          ></app-left-table-header>
+          <app-filter-btn #filterBtn></app-filter-btn>
+
+        </div>
+        <div class="vehicles-right-header" *ngIf="!isManualMileageMode">
+          <app-label [label]="'cardHolder.assignedPolicy'"></app-label>
+          <ng-select style="width: 290px" [(ngModel)]="assignedPolicy" name="assignedPolicy"
+                     placeholder="{{'cardHolder.assignedPolicy' | translate}}">
+            <ng-option *ngFor="let policy of policies"
+                       [value]="policy.id">{{ currentLang === 'en' ? policy.enName : policy.localeName }}
+            </ng-option>
+          </ng-select>
+        </div>
+      </ng-container>
+
+      <app-search *ngIf="filterBtn.showAdvanceSearch" search>
+        <form #advanceSearchForm="ngForm" class="ui form"
+              (ngSubmit)="handleSearch()">
+          <div class="ui dividing header"></div>
+          <div class="fields">
+            <div class="field">
+              <app-input-field ngModel name="ids" [placeholder]="'corporateVehicle.id'" [label]="'corporateVehicle.id'">
+              </app-input-field>
+            </div>
+            <div class="field">
+              <app-input-field ngModel name="modelYear" [placeholder]="'corporateVehicle.modelYear'"
+                               [label]="'corporateVehicle.modelYear'"></app-input-field>
+            </div>
+            <div class="field">
+              <app-input-field ngModel name="brand" [placeholder]="'corporateVehicle.brand'"
+                               [label]="'corporateVehicle.brand'"></app-input-field>
+            </div>
+
+            <div class="field">
+              <app-input-field ngModel name="vehiclePlateNumber" [placeholder]="'corporateVehicle.plateNumber'"
+                               [label]="'corporateVehicle.plateNumber'"></app-input-field>
+            </div>
+
+            <div class="field">
+              <app-input-field ngModel name="vehicleCode" [placeholder]="'corporateVehicle.vehicleCode'"
+                               [label]="'corporateVehicle.vehicleCode'"></app-input-field>
+            </div>
+
+            <div class="field">
+              <app-label [label]="'user.nfcId'"></app-label>
+              <ng-select dropdownPosition='bottom' [ngModel] name="nfcId" placeholder="{{'user.nfcId' | translate}}">
+                <ng-option *ngFor="let nfc of nfcTags" [value]="nfc.id">
+                  {{ nfc.serialNumber }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="field">
+              <app-label [label]="'corporateVehicle.vehicleType'"></app-label>
+              <ng-select dropdownPosition='bottom' [ngModel] name="vehicleTypeId"
+                         placeholder="{{'corporateVehicle.vehicleType' | translate}}">
+                <ng-option *ngFor="let vehicleType of vehicleTypes" [value]="vehicleType.id">
+                  {{ currentLang === 'en' ? vehicleType.enName : vehicleType.localeName }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="field">
+              <app-label [label]="'corporateVehicle.fuelType'"></app-label>
+              <ng-select dropdownPosition='bottom' [ngModel] name="fuelType"
+                         placeholder="{{'corporateVehicle.fuelType' | translate}}">
+                <ng-option *ngFor="let fuelType of vehicleFuelTypes | keyvalue" [value]="fuelType.key">
+                  {{ fuelType.value | translate }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="field">
+              <app-label [label]="'corporateVehicle.assetTag'"></app-label>
+              <ng-select dropdownPosition='bottom' [ngModel] name="assetTagId"
+                         placeholder="{{'corporateVehicle.assetTag' | translate}}">
+                <ng-option *ngFor="let assetTag of assetTags" [value]="assetTag.id">
+                  {{ assetTag.enName }}
+                </ng-option>
+              </ng-select>
+            </div>
+
+            <div class="field">
+              <app-label [label]="'corporateVehicle.authUser'"></app-label>
+              <ng-select dropdownPosition='bottom' [ngModel] [multiple]="true" name="authorizedUserIds"
+                         placeholder="{{'corporateVehicle.authUser' | translate}}">
+                <ng-option *ngFor="let user of corporateUsers"
+                           [value]="user.id">{{ currentLang === 'en' ? user.enName : user.localeName }}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="field">
+              <app-label [label]="'corporateVehicle.policy'"></app-label>
+              <ng-select [ngModel] [multiple]="true" name="policiesIds"
+                         placeholder="{{'corporateVehicle.policy' | translate}}">
+                <ng-option *ngFor="let policy of policies" [value]="policy.id">
+                  {{ currentLang === 'en' ? policy.enName : policy.localeName }}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="field">
+              <app-status ngModel name="suspended"></app-status>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field search">
+              <button type="submit" class="ui button">{{ 'app.search' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </app-search>
+    </app-data-table>
+
+    <div class="step-action">
+      <button *ngIf="!isManualMileageMode" class="ui button btn-primary float" (click)="goToNextStep()"
+              [disabled]="(!assignedPolicy || !selectedVehicles?.length)">{{ 'app.continue' | translate }}
+      </button>
+      <button *ngIf="isManualMileageMode" class="ui button btn-primary float" (click)="goToNextStep()"
+              [disabled]="(!selectedVehicles?.length)">{{ 'app.continue' | translate }}
+      </button>
+    </div>
+
+  </nb-step>
+  <nb-step [label]="'app.dataEntry' | translate">
+    <app-vehicle-daily-policy-header *ngIf="!isManualMileageMode" [headerData]="{
+    corporateOu,
+    selectedPolicy,
+    productCategory,
+    litersSum,
+    kilometersSum,
+    exchangeLimitSum
+    }"></app-vehicle-daily-policy-header>
+    <app-data-table *ngIf="!isManualMileageMode && price" #datatable class="selectedVehiclesTable"
+                    [colData]="selectedVehiclesColData"
+                    [gridData]="selectedVehicles"
+                    [tableControls]="false"
+                    [price]="price"
+                    [addHeaderClass]="true"
+                    [showTopContainer]="false"
+    >
+    </app-data-table>
+
+    <app-data-table *ngIf="isManualMileageMode" [colData]="manualMileageColData" [gridData]="selectedVehicles"
+                    [tableControls]="false">
+      {{ selectedVehicles | json }}
+      <div class="d-flex validity" header>
+        <div class="d-flex mileage-container">
+          <h6> {{ selectedVehicles?.length }} {{ 'corporateVehicle.name' | translate }}</h6>
+          <!--          <div class="field">-->
+          <!--            <input style="width: 200px" #date type="date" name="" id="" (change)="emitDate(date.value)">-->
+          <!--          </div>-->
+        </div>
+      </div>
+    </app-data-table>
+
+    <div class="step-action float">
+      <button class="ui button btn-transparent" (click)="stepper.previous()"
+      >{{ 'app.back' | translate }}
+      </button>
+      <button *ngIf="!isManualMileageMode" class="ui button btn-primary" (click)="goToPreviewStep()"
+      >{{ 'app.continue' | translate }}
+      </button>
+      <button *ngIf="isManualMileageMode" class="ui button btn-positive" (click)="updateManualMileage()"
+      >{{ 'app.saveAndQuit' | translate }}
+      </button>
+    </div>
+  </nb-step>
+  <nb-step [label]="'app.dataReview' | translate" *ngIf="!isManualMileageMode">
+    <app-data-table class="selectedVehiclesTable"
+                    [colData]="reviewSelectedVehiclesColData"
+                    [gridData]="selectedVehicles"
+                    [tableControls]="false"
+
+                    [showTopContainer]="false"
+    >
+    </app-data-table>
+    <div class="step-action float">
+      <button class="ui button btn-transparent" (click)="stepper.previous()"
+      >{{ 'app.back' | translate }}
+      </button>
+      <button class="ui button btn-positive" (click)="assignDynamicPolicy()"
+      >{{ 'app.saveAndQuit' | translate }}
+      </button>
+    </div>
+  </nb-step>
+</nb-stepper>
+
+
+<app-modal #restUsersModal [size]="'sm'">
+  <nb-card size="small" body>
+    <nb-card-header>
+      <h5 style="text-align: center">{{ 'app.superAdminUsers' | translate }}</h5>
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let user of restOfUsers">
+        {{ currentLang === 'en' ? user.enName : user.localeName }}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</app-modal>

@@ -1,0 +1,73 @@
+@import "app/scss/variables";
+@import "app/scss/common";
+
+.header-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 115px;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 18px;
+  position: relative;
+
+  .card-info {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      background-color: #f9deeb;
+      border-radius: 7px;
+      @extend .d-flex-center;
+
+      img {
+        filter: brightness(0) saturate(100%) invert(55%) sepia(9%) saturate(3371%) hue-rotate(283deg) brightness(91%) contrast(91%);
+      }
+    }
+
+    .name {
+      p, h5 {
+        margin: 0;
+      }
+
+      p {
+        color: $misty
+      }
+    }
+  }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+
+    button {
+      img {
+        filter: brightness(0) saturate(100%) invert(100%) sepia(67%) saturate(0%) hue-rotate(50deg) brightness(104%) contrast(102%);
+        width: 15px;
+      }
+    }
+  }
+}
+
+::ng-deep app-context-menu {
+  position: absolute;
+  top: 8px;
+
+  .context-menu-container {
+    position: absolute !important;
+    nb-card {
+      position: unset;
+      width: 100px;
+      padding: .5em;
+    }
+  }
+}

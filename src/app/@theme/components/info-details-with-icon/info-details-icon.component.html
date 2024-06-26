@@ -1,0 +1,10 @@
+<div class="left-header">
+  <div *ngIf="icon" class="left-header-icon" [ngStyle]="{'background-color':iconbBackground}">
+    <img [src]="icon" [alt]="name" >
+  </div>
+  <div class="left-header-content">
+    <p *ngIf="title">{{title | translate}}</p>
+    <h6 *ngIf="name">{{length| translate}} <span *ngIf="length!='app.notFound'">{{name | translate}}</span></h6>
+    <span *ngIf="unitName">{{unitName}}</span>
+  </div>
+</div>

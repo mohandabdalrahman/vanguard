@@ -1,0 +1,82 @@
+.invoice {
+  &-container {
+    background-color: #fff;
+
+    &-merchant {
+      max-width: 80%;
+      margin: 2em auto;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    justify-content: end;
+    padding: 1em 3em;
+    border-bottom: 1px solid rgba(34, 36, 38, .15);
+
+    &-right {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &-header {
+    max-width: 80%;
+    margin: 1em auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(34, 36, 38, .15);
+
+  }
+
+  &-title {
+    text-align: center;
+    text-transform: capitalize;
+    color: #413a90;
+  }
+
+  &-details {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #858585;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 1em 2em;
+    border-radius: 15px;
+
+    &-right {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -36px;
+        width: 1px;
+        height: 100%;
+        background-color: #858585;
+      }
+    }
+  }
+
+  &-info {
+    &-label {
+      line-height: 2em;
+      text-transform: capitalize;
+      min-width: 14em;
+      display: inline-block;
+      color: #858585;;
+    }
+
+    &-value {
+      font-weight: bold;
+      margin-left: 1em;
+    }
+  }
+}
+
+.text-dark {
+  font-size: 1.2em;
+}
+

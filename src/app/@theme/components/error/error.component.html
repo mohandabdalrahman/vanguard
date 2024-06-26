@@ -1,0 +1,19 @@
+<div class="ui basic red pointing prompt label transition visible" *ngIf="ref?.invalid &&ref?.touched && !errorType">
+  <small *ngIf="ref.errors?.['required']">
+    <nb-icon icon="alert-triangle"></nb-icon>
+    {{!message ? ('app.required' | translate) : (message | translate)}}
+  </small>
+  <small *ngIf="ref.errors?.['pattern']" class="d-flex">
+    <nb-icon icon="alert-triangle"></nb-icon>
+    <div *ngIf="ref.name==='email' || ref.name==='mail'">{{'login.validEmail' | translate}}</div>
+    <div *ngIf="ref.name==='username'">{{'login.validUsername' | translate}}</div>
+  </small>
+  <small *ngIf="ref.errors?.['minlength']">
+    <nb-icon icon="alert-triangle"></nb-icon>
+    Your input is required to be at least {{ref.errors?.['minlength']['requiredLength']}}.
+  </small>
+  <small *ngIf="ref.errors?.['maxlength']">
+    <nb-icon icon="alert-triangle"></nb-icon>
+    Your input cannot be longer than {{ref.errors?.['maxlength']['requiredLength']}}.
+  </small>
+</div>

@@ -1,0 +1,74 @@
+
+
+<ng-container>
+  <app-data-table [saleView]="true" [tableControls]="false" [gridData]="gridData" [colData]="colData">
+
+    <ng-container header>
+      <app-left-table-header [length]="totalGroup?.length" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"
+      ></app-left-table-header>
+      <div class="header-actions" *ngIf="totalGroup?.length">
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+    </ng-container>
+    <app-search search>
+      <form novalidate #reportForm="ngForm">
+        <div class="row">
+          <div class="col-5">
+            <div class="select-control">
+              <app-label [label]="'city.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'cities')" [multiple]="true" [(ngModel)]="cityIds"
+                         name="cities" placeholder="{{'city.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let city of cities" [value]="city.id">
+                  {{currentLang === 'en' ? city?.enName : city?.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-5">
+            <div class="select-control" *ngIf="assetType ==='HARDWARE'">
+              <app-label [label]="'corporateHardware.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'corporateHardwares')" [multiple]="true" [(ngModel)]="assetIds"
+                         name="corporateHardwares" placeholder="{{'corporateHardware.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let hardware of corporateHardwares" [value]="hardware.id">
+                  {{hardware.id}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="select-control" *ngIf="assetType ==='VEHICLE'">
+              <app-label [label]="'corporateVehicle.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'corporateVehicles')" [multiple]="true" [(ngModel)]="assetIds"
+                         name="corporateVehicles" placeholder="{{'corporateVehicle.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let vehicle of corporateVehicles" [value]="vehicle.id">
+                  {{vehicle.plateNumber}}
+                </ng-option>
+              </ng-select>
+            </div>
+            <div class="select-control" *ngIf="assetType ==='CONTAINER'">
+              <app-label [label]="'corporateContainer.name'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'corporateContainers')" [multiple]="true" [(ngModel)]="assetIds"
+                         name="corporateContainers" placeholder="{{'corporateContainer.name' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let container of corporateContainers" [value]="container.id">
+                  {{container.id}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-2">
+            <button  class="ui button btn-primary"
+                    (click)="searchCity()">{{'report.applyBtn' | translate}}</button>
+          </div>
+        </div>
+      </form>
+
+    </app-search>
+  </app-data-table>
+
+
+  <app-total-sales *ngIf="merchantTotal" [totalSales]="merchantTotal"></app-total-sales>
+</ng-container>

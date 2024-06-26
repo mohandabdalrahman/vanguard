@@ -1,0 +1,248 @@
+
+
+<!--start main unit info -->
+<nb-card class="nb-card-container">
+  <nb-card-body>
+    <div class="unit">
+      <div class="unit_info">
+        <div class="unit_info_name">
+          <div class="unit_info_icon">
+            <img
+              *ngIf="corporateOu.type === 'MAIN'"
+              src="./assets/img/pending-requests/icons-master-corporate.svg"
+              alt="main-icon"
+            />
+            <img
+              *ngIf="corporateOu.type === 'BRANCH'"
+              src="./assets/img/icons-corporates.svg"
+              alt="branch-icon"
+            />
+            <img
+              *ngIf="corporateOu.type === 'ROOT'"
+              src="./assets/img/root-bg.png"
+              alt="root-icon"
+            />
+          </div>
+          <h4>
+            {{
+              currentLang === "en"
+                ? corporateOu?.enName
+                : corporateOu?.localeName
+            }}
+          </h4>
+        </div>
+        <div class="unit_info_type">
+          <span class="separator"></span>
+          <p>{{ "unit." + corporateOu?.type | translate }}</p>
+        </div>
+      </div>
+      <div class="unit_actions">
+        <button
+          [routerLink]="[rootUtl, corporateOu.id, 'update']"
+          class="btn btn-primary"
+        >
+          <img src="./assets/img/icons-edit.svg" alt="edit" />
+          {{ "contextMenu.edit" | translate }}
+        </button>
+        <span class="separator"></span>
+        <button
+          [routerLink]="[rootUtl, 'create']"
+          [state]="corporateOu"
+          class="btn btn-transparent"
+        >
+          <img src="./assets/img/icons-add.svg" alt="add" />
+          {{ "unit.createSubsidiaryUnit" | translate }}
+        </button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+<!--start unit data-->
+<nb-card class="nb-card-container">
+  <nb-card-body>
+    <div class="unit-data">
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "corporateVehicle.assetPolicies" | translate }}</h6>
+          <span class="inactive-highlight">
+            {{ policyCount?.totalCountsPerType["RECURRING"] ?? 0 }}
+            {{ "unit.recurringPolicy" | translate }}
+          </span>
+          <span class="inactive-highlight">
+            {{ policyCount?.totalCountsPerType["ONE_TIME"] ?? 0 }}
+            {{ "unit.oneTimePolicy" | translate }}
+          </span>
+        </div>
+      </div>
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "app.city" | translate }}</h6>
+          <p>
+            <img src="./assets/img/icons-location.svg" alt="location" />
+            {{ currentLang === "en" ? city?.enName : city?.localeName }}
+          </p>
+        </div>
+      </div>
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "app.admins" | translate }}</h6>
+          <p *ngIf="corporateOuAdmins?.length">
+            <img src="./assets/img/icons-admin.svg" alt="admins" />
+            {{
+              currentLang === "en"
+                ? corporateOuAdmins[0]["enName"]
+                : corporateOuAdmins[0]["localeName"]
+            }}
+
+            <span
+              class="count-ou-admin-users"
+              (click)="
+                corporateOuService?.showRestAdminUsers(corporateOuAdmins)
+              "
+              *ngIf="corporateOuAdmins.length - 1"
+            >
+              +{{ corporateOuAdmins.length - 1 }}</span
+            >
+          </p>
+          <p *ngIf="!corporateOuAdmins?.length">
+            <img src="./assets/img/icons-admin.svg" alt="admins" />
+            0 {{ "app.admins" | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "tabs.corporate.users" | translate }}</h6>
+          <p>
+            <img src="./assets/img/icons-user-management.svg" alt="users" />
+            {{ this.usersCount ?? 0 }}
+            {{ "assetType.USER" | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "tabs.corporate.cardHolders" | translate }}</h6>
+          <p>
+            <img src="./assets/img/icons-user-management.svg" alt="users" />
+            {{ this.assetObj?.USER ?? 0 }}
+            {{ "cardHolder.title" | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="unit-data-item">
+        <div class="unit-data-item__info">
+          <h6>{{ "corporateVehicle.name" | translate }}</h6>
+          <p>
+            <img src="./assets/img/icons-truck-merchants.svg" alt="trucks" />
+            {{ this.assetObj?.VEHICLE ?? 0 }}
+            {{ "app.assetType.VEHICLE" | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+<!--start unit balance-->
+<div class="row">
+  <div class="col-md-3">
+    <nb-card class="nb-card-container">
+      <nb-card-body>
+        <div class="unit-balance">
+          <div class="unit-balance__icon primary">
+            <img src="./assets/img/icons-balance-type.svg" alt="balance type" />
+          </div>
+          <div class="unit-balance__info">
+            <p>{{ "unit.balanceDistType" | translate }}</p>
+            <h6>
+              {{
+                "unit." +
+                  corporateOu?.billingAccount?.outputBalanceDistributionMode
+                  | translate
+              }}
+            </h6>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+    <nb-card class="nb-card-container">
+      <nb-card-body>
+        <div class="unit-balance">
+          <div class="unit-balance__icon positive">
+            <img
+              src="./assets/img/icons-billing-account.svg"
+              alt="billing account"
+            />
+          </div>
+          <div class="unit-balance__info">
+            <p>{{ "app.currentBalance" | translate }}</p>
+            <h6>{{ corporateOu?.billingAccount?.currentBalance ?? 0 }}</h6>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+    <nb-card class="nb-card-container">
+      <nb-card-body>
+        <div class="unit-balance">
+          <div class="unit-balance__icon secondary">
+            <img src="./assets/img/icons-transactions.svg" alt="transactions" />
+          </div>
+          <div class="unit-balance__info">
+            <p>{{ "unit.monthlyConsumption" | translate }}</p>
+            <h6>{{ corporateOu?.billingAccount?.monthlyConsumption ?? 0 }}</h6>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+    <nb-card class="nb-card-container">
+      <nb-card-body>
+        <div class="unit-balance">
+          <div class="unit-balance__icon orange">
+            <img src="./assets/img/icons-branch.svg" alt="branch" />
+          </div>
+          <div class="unit-balance__info">
+            <p>{{ "unit.numOFUnits" | translate }}</p>
+            <h6>
+              {{
+                corporateOuChildren.length ? corporateOuChildren.length - 1 : 0
+              }}
+            </h6>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!--start unit products -->
+<nb-card class="nb-card-container">
+  <nb-card-body>
+    <h5>{{ "unit.allowedProductCategories" | translate }}</h5>
+    <nb-tag-list *ngIf="trees.length">
+      <nb-tag *ngFor="let tree of trees" [text]="tree"></nb-tag>
+    </nb-tag-list>
+    <p class="no-data" *ngIf="!trees.length">
+      {{ "error.noProductCategoriesFound" | translate }}
+    </p>
+  </nb-card-body>
+</nb-card>
+
+<app-modal #adminUsersModal [size]="'sm'">
+  <nb-card size="small" body>
+    <nb-card-header>
+      <h5 style="text-align: center">
+        {{ "app.superAdminUsers" | translate }}
+      </h5>
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let user of restAdminUsers">
+        {{ currentLang === "en" ? user.enName : user.localeName }}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</app-modal>

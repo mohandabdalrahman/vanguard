@@ -1,0 +1,195 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView ? ('merchant.add' | translate) : ('merchant.update' | translate)}}</h6>
+
+  <!--  <div class="ui dividing header"></div>-->
+  <form #createMerchantForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [label]="'merchant.localeName'"
+                         [placeholder]="'merchant.localeName'" [(ngModel)]="merchant.localeName"
+                         name="localeName"></app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [required]="true" #enName="ngModel" [ref]="enName" [(ngModel)]="merchant.enName" name="enName"
+                         [label]="'merchant.enName'" [placeholder]="'merchant.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="CRNumber" #CRNumber="ngModel" [required]="true"
+                         [(ngModel)]="merchant.commercialRegisterationNumber" name="CRNumber"
+                         [placeholder]="'merchant.crNumber'" [label]="'merchant.crNumber'"></app-input-field>
+        <app-error [ref]="CRNumber"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [ref]="capitalValue" #capitalValue="ngModel"
+                         [(ngModel)]="merchant.capitalValue" name="capitalValue" [placeholder]="'merchant.capitalValue'"
+                         [label]="'merchant.capitalValue'">
+        </app-input-field>
+        <app-error [ref]="capitalValue"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [ref]="taxId" #taxId="ngModel" [(ngModel)]="merchant.taxId"
+                         name="taxId" [placeholder]="'merchant.taxId'" [label]="'merchant.taxId'"></app-input-field>
+        <app-error [ref]="taxId"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [required]="true" [ref]="invoicePeriodDays" #invoicePeriodDays="ngModel"
+                         [(ngModel)]="merchant.invoicePeriodDays" name="invoicePeriodDays"
+                         [placeholder]="'merchant.invoicePeriodDays'"
+                         [label]="'merchant.invoicePeriodDays'">
+        </app-input-field>
+        <app-error [ref]="invoicePeriodDays"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [type]="'number'" [ref]="commissionRate" #commissionRate="ngModel"
+                         [(ngModel)]="merchant.commissionRate" name="commissionRate"
+                         [placeholder]="'merchant.commissionRate'"
+                         [label]="'merchant.commissionRate'"></app-input-field>
+        <app-error [ref]="commissionRate"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'merchant.mGroupId'"></app-label>
+        <ng-select dropdownPosition='bottom' name="masterMerchantId" [(ngModel)]="merchant.masterMerchantId"
+                   placeholder="{{'merchant.mGroupId' | translate}}">
+          <ng-option *ngFor="let masterMerchant of masterMerchants"
+                     [value]="masterMerchant.id">{{currentLang === 'en' ? masterMerchant.enName : masterMerchant.localeName}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field checkbox">
+        <nb-checkbox required="true" [(ngModel)]="merchant.skipHoldingTax"
+                     name="skipHoldingTax">{{'merchant.skipHoldingTax' | translate}}</nb-checkbox>
+      </div>
+
+      <div class="field" style="width: 100%;">
+        <app-label [label]="'app.description'"></app-label>
+        <textarea [maxlength]="250" placeholder="{{'app.description' | translate}}" [(ngModel)]="merchant.description"
+                  nbInput fullWidth name="note" rows="3"></textarea>
+      </div>
+    </div>
+
+    <h6>{{'merchant.billingAddress' | translate | titlecase}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [required]="true" [label]="'merchant.country'"></app-label>
+        <ng-select dropdownPosition='bottom' #countryId="ngModel" [required]="true" name="countryId" [(ngModel)]="merchant.countryId"
+                   (change)="getCities($event);" placeholder="'{{'app.country' | translate}}'">
+          <ng-option *ngFor="let country of countries"
+                     [value]="country.id"> {{currentLang === 'en' ? country.enName : country.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="countryId" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'app.city'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="cityId" [(ngModel)]="merchant.cityId" [disabled]="!cities.length"
+                   #cityId="ngModel" (change)="getZones(merchant.countryId, $event);"
+                   placeholder="'{{'app.city' | translate}}'">
+          <ng-option *ngFor="let city of cities"
+                     [value]="city.id"> {{currentLang === 'en' ? city.enName : city.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="cityId" [message]="'app.selectRequired'"></app-error>
+
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'app.zone'"></app-label>
+        <ng-select dropdownPosition='bottom' [required]="true" name="zoneId" [(ngModel)]="merchant.zoneId"
+                   placeholder="'{{'app.zone' | translate}}'" [disabled]="!zones.length">
+          <ng-option *ngFor="let zone of zones"
+                     [value]="zone.id"> {{currentLang === 'en' ? zone.enName : zone.localeName}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="field">
+        <app-label [required]="true" [label]="'app.address'"></app-label>
+        <textarea placeholder="{{'app.address' | translate}}" nbInput fullWidth name="billingAdress"
+                  [(ngModel)]="merchant.billingAddress" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="field" >
+      <app-label [label]="'merchant.depositTypeEnum'"></app-label><span class="required m-1">*</span>
+      <div class="mode">
+        <nb-radio-group class="d-inline-flex align-self-center" [disabled]="isUpdateView" required="true" name="depositeType" [ngModel]="oldDepositType" (ngModelChange)="merchant.depositTypeEnum = $event">
+          <nb-radio  [value]="'MERCHANT_DEPOSIT'">
+            {{ 'depositTypeEnum.MERCHANT_DEPOSIT'  | translate }}
+          </nb-radio>
+          <nb-radio  [value]="'SITE_DEPOSIT'">
+            {{ 'depositTypeEnum.SITE_DEPOSIT'  | translate }}
+          </nb-radio>
+        </nb-radio-group>
+      </div>
+    </div>
+    <div class="field" *ngIf="isUpdateView">
+      <app-label [label]="'merchant.currentBalance'"></app-label>
+      <input type="number" [value]="merchantCurrentBalance" [disabled]="isUpdateView">
+    </div>
+
+    <!-- legal -->
+    <h6>{{'corporates.legalrepresentative' | translate | titlecase}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="legalrepresentativeName " #legalrepresentativeName="ngModel" [required]="true"
+                         [(ngModel)]="merchant.legalrepresentativeName " name="legalrepresentativeName "
+                         [placeholder]="'corporates.legalrepresentativeName'"
+                         [label]="'corporates.legalrepresentativeName'"></app-input-field>
+        <app-error [ref]="legalrepresentativeName "></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="legalrepresentativeId " #legalrepresentativeId="ngModel" [required]="true"
+                         [(ngModel)]="merchant.legalrepresentativeId " name="legalrepresentativeId "
+                         [placeholder]="'corporates.legalrepresentativeId'"
+                         [label]="'corporates.legalrepresentativeId'"></app-input-field>
+        <app-error [ref]="legalrepresentativeId "></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="designation " #designation="ngModel" [required]="true"
+                         [(ngModel)]="merchant.designation " name="designation "
+                         [placeholder]="'corporates.designation'" [label]="'corporates.designation'"></app-input-field>
+        <app-error [ref]="designation "></app-error>
+      </div>
+
+    </div>
+
+    <!-- Attachment -->
+    <ng-container *ngIf="!isUpdateView">
+      <h6>{{'merchant.attachments' | translate }}</h6>
+      <div class="ui dividing header"></div>
+      <app-attachment [controller]="merchant"></app-attachment>
+    </ng-container>
+
+    <!-- <h6 style="margin-top: 30px;">Merchant Status</h6> -->
+    <div style="margin-top: 30px;" class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle name="toggle" [(ngModel)]="active" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+
+    <div class="checkbox">
+      <div class="ui dividing header"></div>
+      <nb-checkbox required="true" (checkedChange)="toggle($event,'checked')"
+                   name="checkbox">{{'app.disclaimer' | translate}}</nb-checkbox>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!createMerchantForm.form.valid || !checked" (click)="createMerchant()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'merchant.add' | translate}}</button>
+      <button [disabled]="!createMerchantForm.form.valid || !checked" (click)="updateMerchant()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+
+  </form>
+</div>

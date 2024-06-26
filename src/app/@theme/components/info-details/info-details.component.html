@@ -1,0 +1,10 @@
+<div [ngClass]="addClass">
+    <h6>{{ head | translate }} <span *ngIf="useColon">:</span></h6>
+  <p [ngClass]="backGroundClass" [ngStyle]="{'color':bodyTextColor,'font-size':bodyTextSize}">
+    <app-info-details-status *ngIf="useStatus" [suspended]="suspended" ></app-info-details-status>
+    <app-plate-number *ngIf="usePlateComponent" [plateNumber]="plateNumber"></app-plate-number>
+    <span *ngIf="useIcon"><img [src]="image" alt=""></span>
+    {{ body|translate }}
+  </p>
+  
+  </div>

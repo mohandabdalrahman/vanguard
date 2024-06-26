@@ -1,0 +1,446 @@
+@import "../../../scss/variables";
+
+.grid-view {
+    margin-top: 1em;
+
+}
+
+.row {
+    row-gap: 10px;
+}
+
+.containerx {
+
+    // overflow-x: hidden;
+    .in {
+        padding: 24px 24px 0 24px;
+    }
+
+    background-color: #ffff;
+    border-radius: 18px;
+}
+
+.LimitHeight {
+    height: 45px;
+
+}
+
+.Limit {
+    .icon span {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 7px;
+        padding: 11px 11px 11px;
+        margin-inline-end: 14px;
+        background-color: $primary;
+
+        img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+    }
+
+    .ExpectedLimitIcon span {
+        display: inline-block;
+        width: 30px;
+        height: 40px;
+        margin: 0 8px;
+        padding: 11px 6px;
+        border-radius: 7px;
+        background-color: rgba(45, 65, 144, 0.14);
+
+        img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+    }
+
+    .payed {
+        width: 100%;
+
+        span {
+            font-size: 12px;
+            white-space: nowrap;
+            color: $misty;
+        }
+
+
+        p {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+    }
+
+    .status {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin: 0 4px;
+        border-radius: 50%;
+    }
+
+    .payed p {
+        font-size: 18px;
+        color: $alpha;
+        text-overflow: ellipsis;
+
+        font-weight: bold;
+
+    }
+
+}
+
+
+
+.Percentage {
+    position: relative;
+    height: 18px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    background-color: $light;
+
+    .Gradiant {
+        position: absolute;
+
+        height: 100%;
+        padding: 4px 0 3px 0;
+        z-index: 999;
+        border-radius: 5px;
+        background-image: linear-gradient(86deg, #308df2 14%, #95a5ea 59%, #67e5d8 139%);
+
+        div {
+            position: absolute;
+            left: 8px;
+            background-color: white;
+            width: 2px;
+            height: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+
+}
+
+.ExpectedLimit {
+    height: 68px;
+    margin: 16px 0;
+    padding: 24px;
+    border-radius: 18px;
+    background-color: $haze;
+
+    p:first-of-type {
+        font-size: 12px;
+        color: $legend;
+    }
+
+    p:nth-of-type(2) {
+        font-size: 16px;
+        color: $primary;
+    }
+}
+
+.policy-Type {
+    height: 50px;
+
+    div p:first-of-type {
+        font-size: 12px;
+        color: $misty;
+    }
+
+    img {
+        margin-inline-end: 8px;
+    }
+
+    div:nth-of-type(2) {
+        margin-inline-start: 66px;
+    }
+
+    div p:nth-of-type(2) {
+        font-size: 16px;
+        color: $legend;
+    }
+}
+
+
+
+
+.policyCycleType,
+.assetType {
+    p {
+        white-space: nowrap;
+    }
+
+}
+
+.alllimit {
+    div:first-of-type {
+        p:first-of-type {
+            font-size: 12px;
+            color: $misty;
+        }
+
+        p:nth-of-type(2) {
+            color: $alpha;
+            font-weight: bolder;
+            font-size: 16px;
+
+            span img {
+                width: 12px;
+                height: 12px;
+                margin: 8px 0;
+                margin-inline-start: 4px;
+            }
+        }
+
+    }
+
+    div:nth-of-type(3) {
+        p:first-of-type {
+            font-size: 12px;
+            color: $misty;
+        }
+
+        p:nth-of-type(2) {
+            color: $alpha;
+            font-size: 16px;
+        }
+    }
+}
+
+
+
+.icon-drop {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: solid 1px $light;
+    display: flex;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    top: 24px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+.dropdownMenu {
+    position: absolute;
+    width: 219px;
+    height: 225px;
+    padding: 10px 24px;
+    border-radius: 22px;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.11);
+    border: solid 1px $ray;
+    background-color: #ffff;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1035;
+
+    ul {
+        list-style: none;
+
+        li {
+            padding: 14px 0;
+            font-size: 16px;
+            color: $primary;
+            cursor: pointer;
+        }
+
+        li:nth-of-type(3) {
+            padding: 14px 0 8px 0;
+        }
+
+        li img {
+            width: 12px;
+            height: 12px;
+            margin-inline-end: 8px;
+        }
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    p img {
+        width: 12px;
+        height: 12px;
+        margin-inline-end: 8px;
+    }
+}
+
+
+
+.containerx:hover .icon-drop {
+    opacity: 1;
+
+
+}
+
+.transactionContainer {
+    display: flex;
+    margin: 17px 24px 8px;
+    border: 1px solid $ray;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .Icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        margin-inline-end: 13px;
+        background-color: rgba(255, 0, 0, 0.344);
+
+        .img {
+            width: 14px;
+            height: 14px;
+        }
+    }
+
+    .nextTransaction {
+        padding: 4px 0;
+
+        p {
+            color: $legend;
+            margin-bottom: 4px;
+        }
+
+        h4 {
+            margin: 0;
+            color: $alpha;
+            margin-bottom: 3px;
+        }
+    }
+}
+
+.userConsumptionview {
+    background-color: white;
+    padding-bottom: 24px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+--p {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+}
+
+.pie {
+    --p: 20;
+    --b: 22px;
+    --c: darkred;
+    --w: 200px;
+
+    width: var(--w);
+    aspect-ratio: 1;
+    position: relative;
+    display: inline-grid;
+    margin: 5px;
+    place-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.pie:before,
+.pie:after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+}
+
+.pie:before {
+    inset: 0;
+    background:
+        radial-gradient(farthest-side, var(--c) 98%, #0000) top/var(--b) var(--b) no-repeat,
+        conic-gradient(var(--c) calc(var(--p)*1%), #0000 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--b)), #000 calc(100% - var(--b)));
+}
+
+.pie:after {
+    inset: calc(50% - var(--b)/2);
+    background: var(--c);
+    transform: rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+}
+
+.animate {
+    animation: p 1s .5s both;
+}
+
+.no-round:before {
+    background-size: 0 0, auto;
+}
+
+.no-round:after {
+    content: none;
+}
+
+@keyframes p {
+    from {
+        --p: 0
+    }
+}
+
+
+.Dashedborder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 2px dashed #c9cbd5;
+}
+
+.circularContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 4px 16px 0 rgba(10, 20, 58, 0.12);
+
+    img {
+        width: 16px;
+        height: 16px;
+    }
+
+    p {
+        color: #6a6d7e;
+    }
+
+    h4 {
+        color: $alpha;
+        margin: 0;
+    }
+}
+
+
+.greenBackground {
+    background-color: rgba(40, 190, 137, 0.14) !important;
+}
+
+.redBackground {
+    background-color: rgba(230, 81, 81, 0.14) !important;
+}
+
+.yellowBackground {
+    background-color: rgba(255, 172, 58, 0.14) !important;
+}
+
+.legendBackground {
+  background-color: #63688840 !important;
+}

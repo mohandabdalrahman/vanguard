@@ -1,0 +1,13 @@
+@import "./common";
+
+.home {
+  @include card;
+  margin-top: 3em;
+}
+.grid {
+  .column {
+    @media (max-width: 575.98px) {
+      width: 50% !important;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@import "../../../scss/variables";
+h6 {
+  text-transform: capitalize;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+p {
+  color: #9e9e9e;
+  line-break: anywhere;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  span{
+    margin-inline-end: 10px;
+  }
+}
+
+.black-gray {
+}
+
+.gray {
+  h6 {
+    color: $misty;
+    font-size: 12px;
+    font-weight: normal;
+  }
+  
+  p {
+    color: $misty;
+    font-size: 16px;
+
+  }
+}
+
+.gray-background{
+    background-color: rgba(201, 203, 213, 0.5);
+    width: fit-content;
+    padding: 0 4px;
+    border-radius: 4px;
+}

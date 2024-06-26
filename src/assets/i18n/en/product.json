@@ -1,0 +1,46 @@
+{
+  "product": {
+    "title": "All Global Product",
+    "id": "ID",
+    "localeName": "Product Name (Arabic)",
+    "enName": "Product Name (English)",
+    "unit": "Measuring Unit",
+    "monetaryValue": "Unit Price",
+    "country": "Country",
+    "assetAssociated": "Asset Associated",
+    "status": "Enabled",
+    "createGlobalProduct": "Create global Product",
+    "createBtn": "Create Global Product",
+    "updateBtn": "Update Global Product",
+    "description": "Product Description",
+    "vat": "VAT%",
+    "price": "Unit Price",
+    "enabled": "Enabled",
+    "taxCode": "Product Tax Code",
+    "categoryTag": "Category Grouping",
+    "category": {
+      "add": "Add Product Category",
+      "update": "Update Product Category",
+      "title": "Product Category",
+      "name": "Product Categories"
+    },
+    "global": {
+      "add": "Add Global Product",
+      "update": "Update Global Product",
+      "title": "Global Product",
+      "name": "Global Products"
+    },
+    "merchant": {
+      "add": "Add Product",
+      "update": "Update Product",
+      "title": "Products"
+    },
+    "valueAddedTaxPercent": "VAT%",
+    "suspended": "Enabled",
+    "type": " product Type",
+    "measurementUnit": "Measuring Unit",
+    "deletedTitle": "Product",
+    "creationDate": "Creation Date",
+    "lastModifiedDate": "last modified date"
+  }
+}

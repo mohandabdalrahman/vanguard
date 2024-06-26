@@ -1,0 +1,17 @@
+<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path id="bnbs5upgla" d="M0 0h14v14H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" opacity=".4">
+        <mask id="pbiyfaq34b" fill="#fff">
+            <use xlink:href="#bnbs5upgla"/>
+        </mask>
+        <use fill="#D8D8D8" xlink:href="#bnbs5upgla"/>
+        <g mask="url(#pbiyfaq34b)">
+            <path fill="#002776" d="M-3.5 14h21V0h-21z"/>
+            <path fill="#FFF" d="M8.473 14H9.3v-3.908l5.853 3.9H17.5v-1.565l-4.65-3.098h4.65V4.667h-4.657L17.5 1.565V.005h-2.354L9.299 3.9V0H4.701v3.899L-1.145.005h-2.351v1.562l4.654 3.1H-3.5v4.662h4.651l-4.647 3.096v1.567H-3.5l.003.007v-.004l.003-.003h2.342l5.852-3.9V14h.716z"/>
+            <path fill="#DE0034" d="M17.5.005v.217l-4.49 2.993-.005.003-2.178 1.453H9.256l.043-.029L16.254.005zM3.834 4.671H2.266L-3.496.823-3.5.82V0h.326l.008.005L1.088 2.84l.003.004zM4.755 9.323l-7.003 4.669-.012.007H-3.5v-.213l.004-.002 2.223-1.481.003-.004 4.465-2.976zM17.5 13.16V14h-.316l-.011-.008-3.118-2.069-.003-.005-3.895-2.595h1.569z"/>
+            <path fill="#DE0034" d="M17.5 5.602H8.378V.001H5.622v5.601H-3.5v2.8h9.122V14h2.756V8.402H17.5z"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,38 @@
+@import "../../../scss/variables";
+
+.plateNumber {
+  width: fit-content;
+  position: relative;
+  height: 23px;
+  background-color: $primary;
+  border-radius: 4px;
+  padding: 0 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p{
+    color: white;
+  }
+  
+}
+
+.plateNumber::before{
+    content: ".";
+    position: absolute;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    /* top: -23%; */
+    transform: translateY(-50%);
+    left: 3px;
+  }
+  .plateNumber::after{
+    content: ".";
+    position: absolute;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    /* top: -23%; */
+    transform: translateY(-50%);
+    right: 3px;
+  }

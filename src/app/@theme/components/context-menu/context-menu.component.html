@@ -1,0 +1,31 @@
+<div class="more-icon" (click)="handleShowMenu()">
+  <img src="./assets/img/icons-more-menu.svg" alt="more-icon">
+</div>
+<div class="context-menu-container" [ngClass]="node?.cssClass">
+  <nb-card *ngIf="showMenu && items.length">
+    <ul>
+      <ng-container *ngFor="let item of items">
+        <li *appHasRole="[item.role]">
+          <a *ngIf="item.path"
+             [routerLink]="[ item.isRelative ?  (item.path === 'update' ? node.id +'/'+ item.path : item.path) : '/' + item.path]"
+             [state]="node ? node: item.data">
+            <img [src]="'./assets/img/context-menu/' + item.icon +'.svg'" alt="icon">
+            {{'contextMenu.' + item.title | translate}}
+          </a>
+          <p *ngIf="item.hasClickAction" (click)="showDrawerDetails()">
+            <img [src]="'./assets/img/context-menu/' + item.icon +'.svg'" alt="icon">
+            {{'contextMenu.' + item.title | translate}}
+          </p>
+          <p *ngIf="item.actionMethod" (click)="item.actionMethod()">
+            <img [src]="'./assets/img/context-menu/' + item.icon +'.svg'" alt="icon">
+            {{'contextMenu.' + item.title | translate}}
+          </p>
+        </li>
+      </ng-container>
+    </ul>
+
+  </nb-card>
+  <app-details-drawer *ngIf="showDrawer" (onCloseDrawer)="showDrawerDetails()"
+                      [node]="node" [showDrawer]="showDrawer"
+  ></app-details-drawer>
+</div>

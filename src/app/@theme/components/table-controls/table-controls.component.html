@@ -1,0 +1,55 @@
+<div class="table-controls">
+  <button class="click" [nbPopover]="templateRef" [nbPopoverPlacement]="'bottom'" [nbPopoverTrigger]="'click'">
+    <nb-icon icon="more-vertical-outline"></nb-icon>
+  </button>
+  <ng-template #templateRef>
+    <div class="click-controls">
+      <ng-container>
+        <a *ngIf="showInvoice" (click)="emitId(id)">
+          <nb-icon icon="file-text-outline"></nb-icon>
+          Show Invoice
+        </a>
+      </ng-container>
+      <ng-container *appHasRole="[entityName +'_VIEW']">
+        <ng-container *ngIf="showView">
+          <a *ngIf="viewLink" [routerLink]="[id,'details',viewLink]">
+            <nb-icon icon="eye-outline"></nb-icon>
+            {{'app.view' | translate}}
+          </a>
+          <a class="eye" *ngIf="!viewLink && !userTypeId && !Goto" [routerLink]="[id,'details']">
+            <nb-icon icon="eye-outline"></nb-icon>
+          {{'app.view' | translate}}
+          </a>
+          <a class="eye" *ngIf="!viewLink && !userTypeId && Goto" [routerLink]="[Goto,id,'details']">
+            <nb-icon icon="eye-outline"></nb-icon>
+          {{'app.view' | translate}}
+          </a>
+          <a class="eye" *ngIf="!viewLink && userTypeId" [routerLink]="[id,'userTypeId',userTypeId ,'details']">
+            <nb-icon icon="eye-outline"></nb-icon>
+          {{'app.view' | translate}}
+          </a>
+        </ng-container>
+      </ng-container>
+      <ng-container *appHasRole="[entityName +'_UPDATE']">
+        <ng-container *ngIf="showUpdate">
+          <div class="ui dividing header"></div>
+          <a class="edit" [routerLink]="[id,'update']">
+            <nb-icon icon="edit-outline"></nb-icon>
+            {{'app.update' | translate}}
+          </a>
+        </ng-container>
+      </ng-container>
+      <ng-container *appHasRole="[entityName +'_DELETE']">
+        <ng-container *ngIf="showDelete">
+          <div class="ui dividing header"></div>
+          <a class="trash" (click)="emitId(id)">
+            <nb-icon icon="trash-2-outline"></nb-icon>
+            {{'app.delete' | translate}}
+          </a>
+        </ng-container>
+      </ng-container>
+    </div>
+  </ng-template>
+
+
+</div>

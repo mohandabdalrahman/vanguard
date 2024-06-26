@@ -1,0 +1,12 @@
+{
+  "contextMenu": {
+    "details": "التفاصيل",
+    "edit": "تعديل",
+    "addUnit": "إنشاء وحدة",
+    "addPolicy": "إضافة سياسة",
+    "addVehicle": "إضافة مركبة",
+    "addCardHolder": "إضافة حامل كارت",
+    "addEquipment": "إضافة مُعدة",
+    "attachments": "ملفات"
+  }
+}

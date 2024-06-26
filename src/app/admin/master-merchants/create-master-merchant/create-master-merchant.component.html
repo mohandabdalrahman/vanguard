@@ -1,0 +1,39 @@
+
+<app-back-button></app-back-button>
+
+<div class="create">
+  <h6 class="create-title">{{!isUpdateView? ('masterMerchant.add' | translate) :('masterMerchant.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #createMasterMerchantForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" name="enName" [(ngModel)]="masterMerchant.enName" [label]="'masterMerchant.enName'" [placeholder]="'masterMerchant.enName'"></app-input-field>
+        <app-error [ref]="enName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" name="arName" [(ngModel)]="masterMerchant.localeName" [label]="'masterMerchant.localeName'" [placeholder]="'masterMerchant.localeName'"></app-input-field>
+        <app-error [ref]="arName" [message]="'app.required'"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field name="description" [(ngModel)]="masterMerchant.description" [label]="'masterMerchant.description'" [placeholder]="'masterMerchant.description'"></app-input-field>
+      </div>
+      <div class="field" *ngIf="isUpdateView">
+        <app-input-field name="masterMerchantBalance" [(ngModel)]="masterMerchant.balance" [disabled]="isUpdateView" [label]="'masterMerchant.balance'" [placeholder]="'masterMerchant.balance'"></app-input-field>
+      </div>
+    </div>
+
+    <h6>{{'masterMerchant.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <nb-toggle name="active" labelPosition="start" [(ngModel)]="isActive">{{'masterMerchant.active' |translate}}: </nb-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <button *ngIf="!isUpdateView" [disabled]="!createMasterMerchantForm.form.valid" class="ui button btn-primary" (click)="createMasterMerchant()">{{'masterMerchant.create' | translate}}</button>
+      <button *ngIf="isUpdateView" [disabled]="!createMasterMerchantForm.form.valid" class="ui button btn-primary" (click)="updateMasterMerchant()">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

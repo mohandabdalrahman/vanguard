@@ -1,0 +1,93 @@
+
+<app-back-button *ngIf="userType==='corporate' && !isTabView"></app-back-button>
+
+<div class=" create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('corporateContainer.add' | translate) : ('corporateContainer.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #corporateContainerForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+      <div class="field">
+        <app-label [label]="'corporateVehicle.assetTag'"></app-label>
+        <input #autoInput
+               (keyup.enter)="createAssetTag()"
+               nbInput
+               type="text"
+               placeholder="{{'corporateVehicle.assetTag' | translate}}"
+               [nbAutocomplete]="auto"
+               name="assetTagId"
+               [ngModel]="assetTagName"
+        />
+        <nb-autocomplete #auto>
+          <nb-option *ngFor="let asset of assetTags" [value]="asset.enName">
+            {{currentLang === 'en' ? asset.enName : asset.localeName}}
+          </nb-option>
+        </nb-autocomplete>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateCard.serialNumber'"></app-label>
+        <ng-select dropdownPosition='bottom' required="true" [(ngModel)]="corporateContainer.nfcId" name="cardId"
+                   placeholder="{{'corporateCard.serialNumber' | translate}}">
+          <ng-option *ngFor="let card of corporateNfcs" [value]="card.id">
+            {{card.serialNumber}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-input-field #size="ngModel" [ref]="size" [required]="true" [type]="'number'"
+                         [(ngModel)]="corporateContainer.size" name="size" [placeholder]="'corporateContainer.size'"
+                         [label]="'corporateContainer.size'">
+        </app-input-field>
+        <app-error [ref]="size"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateVehicle.authUser'"></app-label>
+        <ng-select dropdownPosition='bottom' [(ngModel)]="corporateContainer.authorizedUserIds" required="true"
+                   [multiple]="true"
+                   name="authorizedUserIds" placeholder="{{'corporateVehicle.authUser' | translate}}">
+          <ng-option *ngFor="let user of corporateUsers"
+                     [value]="user.id">{{currentLang === 'en' ? user.enName : user.localeName}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [label]="'corporateVehicle.policy'"></app-label>
+        <ng-select dropdownPosition='bottom' [(ngModel)]="policyIds" [multiple]="true" name="assetPolicies"
+                   placeholder="{{'corporateVehicle.policy' | translate}}">
+          <ng-option *ngFor="let policy of policies" [value]="policy.id">
+            {{currentLang === 'en' ? policy.enName : policy.localeName}}
+          </ng-option>
+        </ng-select>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'corporateVehicle.fuelType'"></app-label>
+        <ng-select dropdownPosition='bottom' #fuelType="ngModel" required="true"
+                   [(ngModel)]="corporateContainer.fuelType" name="fuelType"
+                   placeholder="{{'corporateVehicle.fuelType' | translate}}">
+          <ng-option *ngFor="let type of fuelTypes" [value]="type.value">
+            {{type.value}}
+          </ng-option>
+        </ng-select>
+        <app-error [ref]="fuelType" [message]="'app.selectRequired'"></app-error>
+      </div>
+
+    </div>
+    <h6>{{'corporateContainer.status' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button [disabled]="!corporateContainerForm.form.valid" *ngIf="!isUpdateView" (click)="createCorporateContainer()"
+              class="ui button btn-primary">{{'corporateContainer.add' | translate}}</button>
+      <button [disabled]="!corporateContainerForm.form.valid" *ngIf="isUpdateView" (click)="updateCorporateContainer()"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>

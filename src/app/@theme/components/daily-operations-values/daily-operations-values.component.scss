@@ -1,0 +1,18 @@
+@import "../../../scss/variables";
+
+.daily-operations-values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    color: $legend;
+    font-size: 12px;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: bold;
+    color: $primary !important;
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "pendingRequest": {
+    "from": "Request From",
+    "details": "request details",
+    "acceptChange": "Accept change request",
+    "rejectChange": "Please choose a reason for rejection",
+    "finish": "No pending Requests Exist",
+    "rejectReasons": {
+      "MISSING_ATTRIBUTE": "MISSING ATTRIBUTE",
+      "FIELD_NOT_ENTERED_PROPERLY": "FIELD NOT ENTERED PROPERLY"
+    }
+  }
+}

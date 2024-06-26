@@ -1,0 +1,26 @@
+<div class="consumptionRate position-relative">
+
+    <div class="header ">
+      <div class="tabs-header">
+        <h4 ><span ><img [src]="title=='VEHICLE'?'./assets/img/icons-truck-merchants.svg':'./assets/img/icons-user-management@2x.png'" alt=""></span> {{(title=='VEHICLE'?'corporatePolicy.ConsumptionrateforVehicle':'corporatePolicy.Consumptionrateforuser' )| translate}}</h4>
+
+        <div   class="list-view">
+          <span  (click)="ShowTable=false" ><img src="./assets/img/icons-layout.svg" alt=""></span>
+          <span  (click)="ShowTable=true" ><img src="./assets/img/icons-table.svg" alt=""></span>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="user-table" *ngIf="ShowTable" id="Table">
+        <app-data-table  [Goto]="Goto" [showUpdate]="showUpdate" [gridData]="gridData" [showTopContainer]="false"
+        [colData]="colData" [entityName]="'POLICY'" [enableSorting]="false"
+        >
+      </app-data-table>
+    </div>
+    <div class="user-grid" *ngIf="ShowTable==false" id="grid">
+        <app-grid-view [queryParamName]="'assetIds'" [type]="'userConsumption'"  [userDetails]="userDetails" [vehicleDetails]="vehicleDetails"  [Goto]="Goto" [currentLang]="currentLang" [gridData]="gridData"></app-grid-view>
+    </div>
+
+</div>

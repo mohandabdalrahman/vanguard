@@ -1,0 +1,62 @@
+<app-modal #manualReviewModal [showCloseBtn]="false">
+  <div head class="review-header">
+    <div class="icon">
+      <img src="./assets/img/icons-edit.svg" alt="edit">
+    </div>
+    <div class="info">
+      <h5>{{"corporateVehicle.manualReviewOf" | translate}} : {{currentReviewName}} </h5>
+      <ng-container  *ngIf="!showVehicles">
+      <p>
+        {{'corporateVehicle.vehicleCode' | translate}} : {{corporateVehicle?.vehicleCode}}
+      </p>
+      <span>{{corporateVehicle?.plateNumber}}</span>
+      </ng-container>
+      <div class="select-control" *ngIf="showVehicles">
+        <app-label [label]="'corporateVehicle.selectPlateNumber'"></app-label>
+        <ng-select dropdownPosition='bottom'   [(ngModel)]="assetId" (change)="handleAssetId($event)">
+          name="corporateVehicle" placeholder="{{'corporateVehicle.selectPlateNumber' | translate}}">
+          <ng-option *ngFor="let vehicle of corporateVehicles" [value]="vehicle.id">
+            {{vehicle.plateNumber}}
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+
+  </div>
+
+  <div body class="review-body">
+    <div class="review-section">
+      <h5>{{"report.mileageReading" | translate}}</h5>
+      <div class="options-container">
+        <nb-radio-group [ngModel]="currentReadingDistance" (ngModelChange)="handleCurrentDistance($event)" [disabled]="showVehicles && !!(!assetId)">
+          <nb-radio value="currentDistance">
+            {{"corporateVehicle.manualEntry" | translate}}
+            <input [disabled]="(currentReadingDistance !== 'currentDistance') || (showVehicles && !!(!assetId))" type="number" name="currentReadingDistance"
+                   [(ngModel)]="currentDistanceValue" [placeholder]="('report.mileageReading' | translate)">
+            <input type="date" name="reviewDate" [(ngModel)]="reviewDate" [disabled]="showVehicles && !!(!assetId)">
+          </nb-radio>
+          <nb-radio value="lastDistance">
+            {{"corporateVehicle.lastReading" | translate}} {{corporateVehicle?.lastDistanceReading}} {{"corporateVehicle.kiloMeter" | translate}}
+          </nb-radio>
+        </nb-radio-group>
+      </div>
+    </div>
+    <div class="review-section">
+      <h5>{{"corporateVehicle.costInEgp" | translate}}</h5>
+      <input type="number" name="price" [(ngModel)]="manualReview.price" [disabled]="showVehicles && !!(!assetId)">
+    </div>
+    <div class="review-section">
+      <h5>{{"app.optionalNotes" | translate}}</h5>
+      <textarea [(ngModel)]="manualReview.note" placeholder="{{'app.description' | translate}}" nbInput fullWidth [disabled]="showVehicles && !!(!assetId)"
+                name="description" rows="2"
+      ></textarea>
+    </div>
+  </div>
+
+  <div footer class="review-footer">
+    <button class="ui button btn-primary" [disabled]="(showVehicles && !!(!assetId))" (click)="createManualReview()">{{"app.confirm" | translate}}</button>
+    <button class="ui button btn-transparent"
+            (click)="manualReviewModal.closeModal()">{{"app.cancel" | translate}}</button>
+  </div>
+
+</app-modal>

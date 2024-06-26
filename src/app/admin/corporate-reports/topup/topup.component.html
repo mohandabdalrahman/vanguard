@@ -1,0 +1,69 @@
+
+
+<ng-container>
+  <app-data-table [enableSorting]="viewType==='admin'" [saleView]="true" [tableControls]="false" [gridData]="gridData"
+                  [colData]="colData" (onSortChange)="handleSortViewChange($event)">
+
+    <ng-container header>
+      <app-left-table-header [length]="totalElements" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"></app-left-table-header>
+
+      <div class="header-actions" *ngIf="!viewType">
+        <button class="ui button btn-primary" (click)="searchTopup()">{{'report.applyBtn' | translate}}</button>
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+      <button *ngIf="viewType"
+              [ngStyle]="{'backgroundColor':showAdvanceSearch?'#413a90':'#fff',color:showAdvanceSearch?'#fff':''}"
+              (click)="showAdvanceSearch=!showAdvanceSearch" class="advance-search" type="button">
+        <nb-icon icon="options-2-outline"></nb-icon>
+        {{'app.filter' | translate}}
+      </button>
+    </ng-container>
+    <app-search *ngIf="showAdvanceSearch && viewType" search>
+      <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch(true)">
+        <div class="ui dividing header"></div>
+        <div class="fields">
+          <div class="field">
+            <app-label [label]="'transaction.corporateName'"></app-label>
+            <ng-select [multiple]="true" [ngModel] name="corporateIds" placeholder="{{'transaction.corporateName' | translate}}">
+              <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+                {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+              </ng-option>
+            </ng-select>
+          </div>
+          <div class="field" *ngIf="viewType === 'master_corporate'">
+            <app-label [label]="'transaction.topUpAmount'"></app-label>
+            <ng-select [ngModel] name="amount" placeholder="{{'transaction.topUpAmount' | translate}}">
+              <ng-option *ngFor="let amount of amounts" [value]="amount">
+                {{amount}}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="field">
+            <app-label [label]="'app.fromDate'"></app-label>
+            <input #fromDate type="date" [ngModel] name="transactionDateFrom">
+          </div>
+          <div class="field">
+            <app-label [label]="'app.toDate'"></app-label>
+            <input type="date" [ngModel] name="transactionDateTo" [min]="fromDate.value">
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="field search">
+            <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+          </div>
+        </div>
+      </form>
+    </app-search>
+  </app-data-table>
+
+</ng-container>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements"
+                (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<app-total-sales *ngIf="!viewType" [TransactionsReportDto]="topUpDto" [reportName]="'TOP_UP_DETAILS'"></app-total-sales>

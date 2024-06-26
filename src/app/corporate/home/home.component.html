@@ -1,0 +1,121 @@
+<div class="home">
+  <app-home-card [img]="'/assets/img/home/home.svg'" [userType]="userType">
+    <h3>{{'dashboard.greeting' | translate }} {{currentLang === 'en' ? corporate?.enName : corporate?.localeName}}</h3>
+    <p>{{'dashboard.corporate.welcome' | translate}}</p>
+  </app-home-card>
+</div>
+
+<div class="dashboard" *appHasRole="['DASHBOARD_VIEW']">
+  <div class="row">
+    <div class="col-12" *ngIf="availableBalance.length>0">
+      <ngx-charts-number-card
+        [results]="availableBalance">
+      </ngx-charts-number-card>
+    </div>
+    <div class="col-md-6" *ngIf="totalSalesPerCategory.length>0">
+      <h5>{{'dashboard.corporate.totalExpensesPerCategory' | translate}}</h5>
+      <ngx-charts-gauge
+        [results]="totalSalesPerCategory"
+        [legend]="legend"
+        [legendTitle]="''"
+      >
+      </ngx-charts-gauge>
+    </div>
+    <div class="col-md-6" *ngIf="totalSalesPerCity.length>0">
+      <h5>{{'dashboard.corporate.totalExpensesPerCity' | translate}}</h5>
+      <ngx-charts-gauge
+        [results]="totalSalesPerCity"
+        [legend]="legend"
+        [legendTitle]="''"
+      >
+      </ngx-charts-gauge>
+    </div>
+    <div class="col-12" *ngIf="totalSalesAcrossMonthsPerCategory.length>0">
+      <h5>{{'dashboard.corporate.totalSalesAcrossMonthsPercategory' | translate}}</h5>
+      <ngx-charts-bar-horizontal-stacked
+        [results]="totalSalesAcrossMonthsPerCategory"
+        [legendTitle]="ProductXAxisLabel"
+
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="yAxisLabel"
+        [yAxisLabel]="MonthsXAxisLabel"
+        [barPadding]="15"
+        [scheme]="'vivid'">
+
+      </ngx-charts-bar-horizontal-stacked>
+    </div>
+    <div class="col-12" *ngIf="totalSalesAcrossMonthsPerZone.length>0">
+      <h5>{{'dashboard.corporate.totalSalesAcrossMonthsPerZone' | translate }}</h5>
+      <!--      <ngx-charts-pie-grid-->
+      <!--        [results]="totalSalesAcrossMonthsPerZone"-->
+      <!--      >-->
+      <!--      </ngx-charts-pie-grid>-->
+      <ngx-charts-bar-horizontal-stacked
+        [results]="totalSalesAcrossMonthsPerZone"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [legendTitle]="ZoneXAxisLabel"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="yAxisLabel"
+        [yAxisLabel]="MonthsXAxisLabel"
+        [animations]="animations"
+        [barPadding]="15"
+        [scheme]="'picnic'">
+      </ngx-charts-bar-horizontal-stacked>
+    </div>
+    <br>
+    <div class="col-md-6" *ngIf="topTenCardHolders.length>0">
+      <nb-card>
+        <nb-card-header><h5>{{'dashboard.corporate.topTenCardHolders' | translate}}</h5></nb-card-header>
+        <nb-card-body>
+          <app-dashboard-table [isAsset]="false" [chartData]="topTenCardHolders"></app-dashboard-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col-md-6" *ngIf="topTenVehicles.length>0">
+      <nb-card>
+        <nb-card-header><h5>{{'dashboard.corporate.topTenVehicles' | translate}}</h5></nb-card-header>
+        <nb-card-body>
+          <app-dashboard-table [chartData]="topTenVehicles"></app-dashboard-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-6" *ngIf="topTenHardware.length>0">
+      <nb-card>
+        <nb-card-header><h5>{{'dashboard.corporate.topTenHardware' | translate}}</h5></nb-card-header>
+        <nb-card-body>
+          <app-dashboard-table [chartData]="topTenHardware"></app-dashboard-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-6" *ngIf="topTenContainers.length>0">
+      <nb-card>
+        <nb-card-header><h5>{{'dashboard.corporate.topTenContainers' | translate}}</h5></nb-card-header>
+        <nb-card-body>
+          <app-dashboard-table [chartData]="topTenContainers"></app-dashboard-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-12" *ngIf="currentMonthTotalSalesPerCategory.length>0">
+      <h5>{{'dashboard.corporate.currentMonthTotalSalesPerCategory' | translate}}</h5>
+      <ngx-charts-bar-vertical
+        [results]="currentMonthTotalSalesPerCategory"
+        [legend]="legend"
+        [legendTitle]="ProductXAxisLabel"
+        [showDataLabel]="true"
+        [yAxis]="showYAxis"
+        [barPadding]="15"
+        [scheme]="'forest'"
+      >
+      </ngx-charts-bar-vertical>
+    </div>
+  </div>
+</div>

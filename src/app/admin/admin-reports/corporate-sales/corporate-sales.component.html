@@ -1,0 +1,149 @@
+
+<ng-container>
+  <app-data-table [itemsColData]="itemsColData" [saleView]="true" [tableControls]="false" [gridData]="gridData"
+                  [colData]="colData" (onCellClick)="handleCellClick($event)">
+    <ng-container header>
+      <app-left-table-header [length]="totalElements" [title]="'app.results'"
+                             [name]="currentLang === 'en' ? 'Records' : 'سجل'"></app-left-table-header>
+      <div class="header-actions" *ngIf="resultLength">
+        <button class="ui button btn-primary" (click)="openPDF()">{{'app.print' | translate}}</button>
+        <app-export-button [exportFunc]="exportAsXLSX.bind(this)"></app-export-button>
+      </div>
+
+    </ng-container>
+    <app-search search>
+      <form class="ui form" #reportForm="ngForm" novalidate>
+        <div class="row">
+          <div class="col-md-4"
+               *ngIf="(reportName === 'CORPORATE_SALES') || (reportName === 'PRODUCT_CATEGORY_BUDGET_POLICY') || (reportName === 'COMMISSION_BY_CORPORATE')">
+            <div class="select-control">
+              <app-label [label]="'corporates.corporateName'"></app-label>
+              <ng-select dropdownPosition='bottom' [(ngModel)]="corporateIds" (change)="selectAll($event,'corporates')"
+                         [multiple]="true"
+                         name="corporates" placeholder="{{'corporates.corporateName' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+                  {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-4"
+               *ngIf="reportName === 'CORPORATE_VEHICLE_DETAILS'">
+            <div class="select-control">
+              <app-label [required]="true" [label]="'corporates.corporateName'"></app-label>
+              <ng-select dropdownPosition='bottom' [(ngModel)]="corporateId"
+                         name="corporates" placeholder="{{'corporates.corporateName' | translate}}">
+                <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+                  {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-4"
+               *ngIf="reportName === 'CORPORATE_VEHICLE_CONSUMPTION'">
+            <div class="select-control">
+              <app-label [required]="true" [label]="'corporates.corporateName'"></app-label>
+              <ng-select dropdownPosition='bottom' [(ngModel)]="selectedCorporateId"  (change)="selectCorporate($event)"
+                         name="corporateID" placeholder="{{'corporates.corporateName' | translate}}">
+                <ng-option *ngFor="let corporate of corporates" [value]="corporate.id">
+                  {{currentLang === 'en' ? corporate.enName : corporate.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-4"
+               *ngIf="reportName=== 'PRODUCT_CATEGORY_BUDGET_POLICY'">
+            <div class="select-control">
+              <app-label [required]="true" [label]="'product.category.title'"></app-label>
+              <ng-select dropdownPosition='bottom'
+                         [(ngModel)]="productCategoryId"
+                         name="productCategories" placeholder="{{'product.category.title' | translate}}">
+                <ng-option *ngFor="let product of productCategories" [value]="product.id">
+                  {{currentLang === 'en' ? product.enName : product.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="reportName === 'PRODUCT_CATEGORY_CONSUMPTION'">
+            <div class="select-control">
+              <app-label [label]="'product.category.title'"></app-label>
+              <ng-select dropdownPosition='bottom'
+                         (change)="selectAll($event,'productCategories')"
+                         [(ngModel)]="productCategoryIds"
+                         [multiple]="true"
+                         name="productCategories" placeholder="{{'product.category.title' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let product of productCategories" [value]="product.id">
+                  {{currentLang === 'en' ? product.enName : product.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+
+          </div>
+          <div class="col-md-4" *ngIf="reportName === 'CORPORATE_VEHICLE_CONSUMPTION'">
+            <div class="select-control">
+              <app-label [label]="'corporateVehicle.type'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'vehicleTypes')" [multiple]="true"
+                         [(ngModel)]="vehicleTypeIds"
+                         name="vehicleTypes" placeholder="{{'corporateVehicle.type' | translate}}">
+                <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                <ng-option *ngFor="let type of vehicleTypes" [value]="type.id">
+                  {{currentLang === 'en' ? type.enName : type.localeName}}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-md-4" *ngIf="reportName=== 'COMMISSION_BY_CORPORATE'">
+            <app-input-field [type]="'number'" [(ngModel)]="commissionRate" name="commission"
+                             [placeholder]="'report.commissionRate'"
+                             [label]="'report.commissionRate'"></app-input-field>
+          </div>
+          <div class="col-4" *ngIf="reportName === 'CORPORATE_VEHICLE_CONSUMPTION'">
+            <div class="select-control">
+              <app-label [label]="'corporateVehicle.plateNumber'"></app-label>
+              <ng-select dropdownPosition='bottom' (change)="selectAll($event,'corporateVehicles')" [multiple]="true"
+                         [(ngModel)]="assetIds"
+                         name="corporateVehicles" placeholder="{{'corporateVehicle.plateNumber' | translate}}"
+                         >
+                <ng-container *ngIf="corporateVehicles.length">
+                  <ng-option value="selectAll">{{'app.selectAll' | translate}}</ng-option>
+                  <ng-option *ngFor="let vehicle of corporateVehicles" [value]="vehicle.id">
+                    {{vehicle.plateNumber}}
+                  </ng-option>
+                </ng-container>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-md-2" [class.center]="reportName === 'CORPORATE_VEHICLE_CONSUMPTION'">
+            <label></label>
+            <button
+              (click)="search()"
+              [disabled]="((reportName === 'PRODUCT_CATEGORY_BUDGET_POLICY') && !productCategoryId) || ((reportName === 'CORPORATE_VEHICLE_CONSUMPTION') && !selectedCorporateId) || ((reportName ==='CORPORATE_VEHICLE_DETAILS') && !corporateId)"
+              class="ui w-100 button btn-primary">{{'app.apply'| translate}}</button>
+          </div>
+        </div>
+      </form>
+
+    </app-search>
+  </app-data-table>
+
+  <app-pagination *ngIf="reportName === 'MANAGEMENT_REPORT'" [totalElements]="totalElements" (onPageChange)="loadPage($event)"
+  (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+  <!--  <app-total-sales *ngIf="salesTotal" [merchantSale]="salesTotal"></app-total-sales>-->
+</ng-container>
+
+<!--report modal -->
+<app-modal #reportDataModal [size]="'md'">
+  <nb-card size="small" body>
+    <nb-card-header>
+      {{'report.' + cellData?.field  | translate}}
+    </nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let item of dataModal">
+        {{ currentLang === 'en' ? item.enName : item.localeName }}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</app-modal>

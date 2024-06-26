@@ -1,0 +1,96 @@
+
+<app-data-table [gridData]="gridData" [colData]="colData" [enableCheckBox]="true" (onItemSelect)="onItemSelect($event)" [entityName]="'ASSET'" [enableSorting]="true" (onSortChange)="handleSortViewChange($event)">
+
+  <ng-container header>
+    <app-left-table-header [title]="'corporateContainer.title'" [name]="'corporateContainer.name'" [length]="totalElements"></app-left-table-header>
+
+    <app-right-table-header [role]="'ASSET_CREATE'" [addText]="'corporateContainer.add'">
+
+
+      <button [ngStyle]="{'backgroundColor':showAdvanceSearch?'#2d4190':'#fff',color:showAdvanceSearch?'#fff':''}" (click)="showAdvanceSearch=!showAdvanceSearch" class="advance-search" type="button">
+        <nb-icon icon="options-2-outline"></nb-icon>
+        {{'app.filter' | translate}}
+      </button>
+      <button *ngIf="showAssignPolicyBtn" (click)="openAssignPolicy();" type="button" class="ui button btn-primary">
+        {{ 'corporateContainer.assignPolicy' | translate}} </button>
+
+
+    </app-right-table-header>
+  </ng-container>
+
+  <app-search *ngIf="showAdvanceSearch" search>
+    <form #advanceSearchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="ui dividing header"></div>
+      <div class="fields">
+        <div class="field">
+          <app-input-field ngModel name="localeName" [placeholder]="'corporateContainer.localeName'" [label]="'corporateContainer.localeName'"></app-input-field>
+        </div>
+        <div class="field">
+          <app-input-field ngModel name="enName" [placeholder]="'corporateContainer.enName'" [label]="'corporateContainer.enName'"></app-input-field>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.assetTag'"></app-label>
+          <ng-select dropdownPosition='bottom' [ngModel] name="assetTagId" placeholder="{{'corporateVehicle.assetTag' | translate}}">
+            <ng-option *ngFor="let assetTag of assetTags" [value]="assetTag.id">
+              {{currentLang === 'en' ? assetTag.enName : assetTag.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field">
+          <app-label [label]="'corporateVehicle.authUser'"></app-label>
+          <ng-select dropdownPosition='bottom' [multiple]="true" name="authorizedUserIds" placeholder="{{'corporateVehicle.authUser' | translate}}">
+            <ng-option *ngFor="let user of corporateUsers" [value]="user.id">{{currentLang === 'en' ? user.enName : user.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-label [label]="'corporateVehicle.policy'"></app-label>
+          <ng-select dropdownPosition='bottom' [multiple]="true" name="assetPoliciesIds" placeholder="{{'corporateVehicle.policy' | translate}}">
+            <ng-option *ngFor="let policy of policies" [value]="policy.id">
+              {{currentLang === 'en' ? policy.enName : policy.localeName}}
+            </ng-option>
+          </ng-select>
+        </div>
+        <div class="field">
+          <app-status ngModel name="suspended"></app-status>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field search">
+          <button type="submit" class="ui button">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </app-search>
+</app-data-table>
+
+<!--PAGINATION-->
+<app-pagination [totalElements]="totalElements" [currentPage]="currentPage" (onPageChange)="loadPage($event)" (onPageSizeChange)="handlePageSizeChange($event)"></app-pagination>
+
+<!--DELETE MODAL-->
+<app-delete-modal #modal [name]="'corporateContainer.deletedTitle'">
+  <button footer class="btn btn-danger" (click)="deleteCorporateContainer()">{{'app.confirm' | translate}}</button>
+</app-delete-modal>
+
+<!--assign policy modal -->
+<app-modal #assignPolicyModal>
+  <h4 head class="modal-title">{{'corporateVehicle.assignPolicy' | translate}}</h4>
+  <form body class="ui form">
+    <ng-select dropdownPosition='bottom' [multiple]="true" [(ngModel)]="assignedPolicy" name="assignedPolicy">
+      <ng-option *ngFor="let policy of policies" [value]="policy.id">{{currentLang === 'en' ? policy.enName : policy.localeName}}</ng-option>
+    </ng-select>
+    <br /><br />
+    <button class="ui button btn-primary" type="submit" (click)="assignPolicy()">
+      {{'corporateVehicle.assignPolicy' | translate}}</button>
+
+  </form>
+
+</app-modal>
+
+
+<app-overwrite-confirm-modal [title]="'app.policyOverwriteTitle'" [body]="'app.policyOverwriteBody'" #overwritePolicy>
+  <button rightButton class="btn btn-primary" (click)="AssignPolicyForCorporateContainer(false)">{{'corporateVehicle.dontOverwrite' | translate}}</button>
+  <button leftButton class="btn btn-danger" (click)="AssignPolicyForCorporateContainer(true)">{{'corporateVehicle.overwrite' | translate}}</button>
+
+</app-overwrite-confirm-modal>

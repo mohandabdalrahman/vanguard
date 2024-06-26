@@ -1,0 +1,50 @@
+
+<div class="header row">
+  <div class="header_left col-md-3">
+    <div class="header_left-info">
+      <h4>{{'app.systemType.' + systemType | translate}} {{'app.requests' | translate}}</h4>
+      <p>{{'app.youHave' | translate}} <strong>{{totalPendingRequests}}</strong> {{'app.requests' | translate}}</p>
+    </div>
+  </div>
+  <div class="header_right col-md-9">
+    <form #searchForm="ngForm" class="ui form" (ngSubmit)="handleSearch()">
+      <div class="row">
+        <div class="field col-md-3">
+          <app-label [label]="'app.requestType'"></app-label>
+          <ng-select [ngModel] name="entityAction" placeholder="{{'app.requestType' | translate}}">
+            <ng-option *ngFor="let action of entityActions" [value]="action">
+              {{'app.' + action|lowercase|translate}}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field col-md-3" *ngIf="systemType==='MERCHANT'">
+          <app-label [label]="'merchant.title'"></app-label>
+          <ng-select dropdownPosition='bottom' name="merchantId" [ngModel]
+                     placeholder="{{'merchant.title' | translate}}">
+            <ng-option *ngFor="let merchant of systemData"
+                       [value]="merchant.id">{{currentLang === 'en' ? merchant.enName : merchant.localeName}}</ng-option>
+          </ng-select>
+        </div>
+        <div class="field col-md-3" *ngIf="systemType==='CORPORATE'">
+          <app-label [label]="'corporates.name'"></app-label>
+          <ng-select dropdownPosition='bottom' name="corporateId" [ngModel]
+                     placeholder="{{'corporates.name' | translate}}">
+            <ng-option *ngFor="let corporate of systemData"
+                       [value]="corporate.id">{{currentLang === 'en' ? corporate.enName : corporate.localeName}}</ng-option>
+          </ng-select>
+        </div>
+
+        <div class="field col-md-4">
+          <app-label [label]="'app.date'"></app-label>
+          <input placeholder="{{'app.date' | translate}}" name="rangeDate" [nbDatepicker]="ngmodel"
+                 [(ngModel)]="rangeDate">
+          <nb-rangepicker #ngmodel></nb-rangepicker>
+        </div>
+        <div class="field search col-md-2">
+          <button type="submit" class="ui button btn-primary">{{'app.search' | translate}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

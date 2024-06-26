@@ -1,0 +1,84 @@
+{
+  "invoice": {
+    "id": "ID",
+    "merchantTaxId": "Seller VAT ID",
+    "corporateTaxId": "Buyer VAT ID",
+    "settled": "Settled",
+    "status": "Status",
+    "title": "All Invoices",
+    "name": "Invoices",
+    "totalValue": "Amount",
+    "seller": {
+      "taxId": "Seller VAT ID",
+      "cr": "Seller Commercial Register"
+    },
+    "buyer": {
+      "taxId": "Buyer VAT ID",
+      "cr": "Buyer Commercial Register",
+      "name": "Buyer Name"
+    },
+    "product": {
+      "id": "Item No.",
+      "quantity": "Qty",
+      "productName":"Product Name",
+      "name": "Product Name",
+      "unitPrice":"Unit Price",
+      "price": "Unit Price",
+      "amount": "Amount",
+      "vat": "VAT",
+      "holdingTax": "With Holding tax",
+      "total": "Gross",
+      "totalAmountIncludingVat":"Gross"
+    },
+    "site": {
+      "id": "Site ID",
+      "name": "Site Name",
+      "localeName": "Site Name [Arabic]"
+    },
+    "merchant": {
+      "id": "seller ID",
+      "name": "Merchant Name",
+      "localeName": "seller Name [Arabic]",
+      "address": "seller address",
+      "phonenumber": "seller phonenumber",
+      "cr": "Seller Commercial Register Number"
+    },
+    "corporate": {
+      "id": "buyer ID",
+      "name": "buyer Name",
+      "localeName": "buyer Name [Arabic]",
+      "cr": "Buyer Commercial Register Number"
+    },
+    "detail": "Detailed Invoice",
+    "addSerial": "Add Serial Number",
+    "serialNumber": "Serial Number",
+    "totalHoldingTaxAmount": "Holding Tax Total Amount",
+    "totalVatAmount": "Total Vat amount",
+    "totalAmount": "Gross",
+    "totalNetAmount": "Net",
+    "setSettle": "Are you sure you want to proceed with settlement?",
+    "settleBtn": "Settle",
+    "serialNumberError": "Failed to set serial number, please try again later",
+    "startSerial": "Starting Serial Number",
+    "fromDate": "From Date",
+    "toDate": "To Date",
+    "settledAction": {
+      "true": "Done",
+      "false": "-"
+    },
+    "serialNumberOverwriteBody": "Are you sure you want to overwrite Serial number?",
+    "serialNumberOverwriteTitle": "Serial number OverWrite",
+    "settle": "Settle",
+    "search": {
+      "corporateLocaleName": "Corporate Name (Arabic)",
+      "corporateEnName": "Corporate Name",
+      "siteLocaleName": "Site Name (Arabic)",
+      "siteEnName": "Site Name",
+      "merchantLocaleName": "Merchant Name (Arabic)",
+      "merchantEnName": "Merchant Name"
+    },
+    "updateMileage": "update mileage reading",
+    "oldMileage": "old mileage reading:",
+    "errMileage": "The updated value can’t be less than the last reading mileage"
+  }
+}

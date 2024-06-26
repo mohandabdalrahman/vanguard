@@ -1,0 +1,88 @@
+
+<app-back-button *ngIf="userType==='merchant'"></app-back-button>
+
+<div class="create">
+  <h6
+    class="create-title">{{!isUpdateView ? ('product.merchant.add' | translate) : ('product.merchant.update' | translate)}}</h6>
+  <div class="ui dividing header"></div>
+  <form #merchantProductForm="ngForm" class="ui form bg-form">
+    <h6>{{'app.basicInfo' | translate}}</h6>
+    <div class="ui dividing header"></div>
+    <div class="fields">
+
+      <div class="field">
+        <app-label [required]="true" [label]="'product.category.title'"></app-label>
+        <ng-select dropdownPosition='bottom' #productCategory="ngModel" (change)="onProductCategoryChange($event)" required="true"
+                   [(ngModel)]="merchantProduct.productCategoryId"
+                   name="productCategoryId"
+                   placeholder="{{'product.category.title' | translate}}">
+          <ng-option *ngFor="let productCategory of productCategories"
+                     [value]="productCategory.id">{{currentLang === 'en' ? productCategory.enName : productCategory.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="productCategory"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'product.type'"></app-label>
+        <ng-select dropdownPosition='bottom' #productType="ngModel" required="true" [(ngModel)]="merchantProduct.productTypeId"
+                   name="productTypeId" [disabled]="isDisabled"
+                   placeholder="{{'product.type' | translate}}">
+          <ng-option *ngFor="let productType of productTypes"
+                     [value]="productType.id">{{currentLang === 'en' ? productType.enName : productType.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="productType"></app-error>
+      </div>
+
+      <div class="field">
+        <app-label [required]="true" [label]="'product.measurementUnit'"></app-label>
+        <ng-select dropdownPosition='bottom' #measurementUnitId="ngModel" required="true" [(ngModel)]="merchantProduct.measurementUnitId"
+                   name="measurementUnitId" [disabled]="isDisabled"
+                   placeholder="{{'product.measurementUnit' | translate}}">
+          <ng-option *ngFor="let measurementUnit of measurementUnits"
+                     [value]="measurementUnit.id">{{currentLang === 'en' ? measurementUnit.enName : measurementUnit.localeName}}</ng-option>
+        </ng-select>
+        <app-error [ref]="measurementUnitId"></app-error>
+      </div>
+
+      <div class="field">
+        <app-input-field [ref]="arName" #arName="ngModel" [required]="true" [(ngModel)]="merchantProduct.localeName"
+                         [disabled]="isDisabled"
+                         name="arName" [placeholder]="'product.localeName'"
+                         [label]="'product.localeName'"></app-input-field>
+        <app-error [ref]="arName"></app-error>
+      </div>
+      <div class="field">
+        <app-input-field [ref]="enName" #enName="ngModel" [required]="true" [(ngModel)]="merchantProduct.enName"
+                         [disabled]="isDisabled"
+                         name="enName" [placeholder]="'product.enName'" [label]="'product.enName'"></app-input-field>
+        <app-error [ref]="enName"></app-error>
+      </div>
+
+      <div class="field">
+        <!--        <app-input-field [disabled]="isDisabled" [type]="'number'" [(ngModel)]="merchantProduct.valueAddedTaxPercent"-->
+        <!--                         name="valueAddedTaxPercent" [placeholder]="'product.valueAddedTaxPercent'"-->
+        <!--                         [label]="'product.valueAddedTaxPercent'"></app-input-field>-->
+        <app-label [label]="'product.valueAddedTaxPercent'"></app-label>
+        <input [disabled]="isDisabled" type="number" name="valueAddedTaxPercent"
+               [(ngModel)]="merchantProduct.valueAddedTaxPercent" onkeydown="event.keyCode !== 69">
+      </div>
+
+      <div class="field">
+        <app-label [label]="'product.description'"></app-label>
+        <textarea [(ngModel)]="merchantProduct.description" nbInput fullWidth name="description" rows="2"></textarea>
+      </div>
+
+
+    </div>
+    <div class="ui dividing header"></div>
+    <div class="field">
+      <nb-toggle [(ngModel)]="active" name="toggle" labelPosition="start">{{'app.status' | translate}}:</nb-toggle>
+    </div>
+    <div class="row">
+      <button [disabled]="!merchantProductForm.form.valid" (click)="createMerchantProduct()" *ngIf="!isUpdateView"
+              class="ui button btn-primary">{{'product.merchant.add' | translate}}</button>
+      <button [disabled]="!merchantProductForm.form.valid" (click)="updateMerchantProduct()" *ngIf="isUpdateView"
+              class="ui button btn-primary">{{'app.save' | translate}}</button>
+    </div>
+  </form>
+</div>
